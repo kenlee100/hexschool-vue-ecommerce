@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=Noto+Sans+TC:wght@400;700&display=swap");
+@import "./base";
+@import "./components";
+@import "./utilities";
+@import "./variables-theme/default";
+// flex-col-grid($n: 2, $space: 24px) {
+// width: calc(50% - (24px - 24px / 2 ));
+//}
+// @mixin flex-col-grid($n: 2, $space: $space-sm) {
+//   $space-unit: $space / $n;
+//   width: calc(100% / #{$n} - (#{$space-sm} - #{$space-unit}));
+//   margin-right: $space-sm;
+//   &:nth-child(#{$n}n) {
+//     margin-right: 0;
+//   }
+// }

@@ -1,0 +1,100 @@
+@tailwind components;
+@layer components {
+  .btn-base {
+    @apply py-4 px-6 rounded-full font-bold ch-body text-center cursor-pointer;
+  }
+  .icon-pin {
+    mask-image: url("@/assets/images/img/icon/location_on@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-favorite {
+    mask-image: url("@/assets/images/img/icon/favorite@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-favorite-solid {
+    mask-image: url("@/assets/images/img/icon/favorite_solid@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-arrow {
+    mask-image: url("@/assets/images/img/icon/arrow@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-cart {
+    mask-image: url("@/assets/images/img/icon/shopping_cart@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-search {
+    mask-image: url("@/assets/images/img/icon/search@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-hotel {
+    mask-image: url("@/assets/images/img/icon/hotel@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-icecream {
+    mask-image: url("@/assets/images/img/icon/icecream@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-skateboarding {
+    mask-image: url("@/assets/images/img/icon/skateboarding@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-mall {
+    mask-image: url("@/assets/images/img/icon/local_mall@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .icon-temple {
+    mask-image: url("@/assets/images/img/icon/temple_buddhist@2x.png");
+    @apply mask-no-repeat mask-center mask-contain;
+  }
+  .container {
+    @apply px-6 mx-auto;
+  }
+  .img-overlay {
+    @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-netural-netural-500 before:opacity-40;
+  }
+
+  // .text-antonio {
+  //   @apply font-antonio font-bold;
+  // }
+  .ch-display {
+    @apply text-display leading-15;
+  }
+  .ch-heading-1 {
+    @apply text-heading-1 leading-12.5;
+  }
+  .ch-heading-2 {
+    @apply text-heading-2 leading-10;
+  }
+  .ch-heading-3 {
+    @apply text-heading-3 leading-9;
+  }
+  .ch-heading-4 {
+    @apply text-heading-4 leading-9;
+  }
+  .ch-body {
+    @apply text-body leading-6;
+  }
+  .ch-caption-1 {
+    @apply text-caption-1 leading-6;
+  }
+  .ch-caption-2 {
+    @apply text-caption-2 leading-5;
+  }
+
+  .en-display {
+    @apply font-antonio font-bold text-en-display leading-24;
+  }
+  .en-title {
+    @apply font-antonio font-bold text-en-title leading-12.5;
+  }
+  .en-body {
+    @apply font-antonio font-bold text-en-body leading-7.5;
+  }
+  .en-caption-01 {
+    @apply font-antonio font-bold text-en-caption-01 leading-5.5;
+  }
+  .en-caption-02 {
+    @apply font-antonio font-bold text-en-caption-02 leading-4;
+  }
+}

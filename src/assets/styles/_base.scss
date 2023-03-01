@@ -1,0 +1,25 @@
+@tailwind base;
+@layer base {
+  body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif, "Noto Sans TC";
+  }
+  input {
+    @apply border-0 bg-none focus:border-0 focus:outline-0;
+    &::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      @apply text-netural-netural-100;
+    }
+
+    &:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      @apply text-netural-netural-100;
+    }
+
+    &::-ms-input-placeholder {
+      /* Microsoft Edge */
+      @apply text-netural-netural-100;
+    }
+  }
+}
