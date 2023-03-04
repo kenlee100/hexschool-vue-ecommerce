@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 
 export default defineStore("navListMenu", {
+  // => 直接回傳的寫法
   state: () => ({
     navList: [
       {

@@ -54,7 +54,7 @@
     @change-page="getProducts"
     :get-products="getProducts"
   ></Pagination>
-  <VueLoading v-model:active="isLoading"></VueLoading>
+  
 </template>
 <script>
 const { VITE_URL, VITE_PATH } = import.meta.env;

@@ -29,12 +29,12 @@
   </footer>
 </template>
 <script>
-import NavListMenu from "../../stores/NavList.js";
+import useNavListMenu from "../../stores/navList.js";
 import { mapState } from "pinia";
 export default {
   computed: {
     // mapState(store名稱, ['要取得的值'])
-    ...mapState(NavListMenu, ["navList"]),
+    ...mapState(useNavListMenu, ["navList"]),
   },
 };
 </script>

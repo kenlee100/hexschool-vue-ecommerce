@@ -1,18 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require("./tailwindcss/colors.js");
+const screens = require("./tailwindcss/screens.js");
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-  safelist: [
-    // "w-[calc((theme(spacing.full)/4)-(24px-24px/2))] [&:nth-child(4n)]:mr-0 mb-20 mr-6",
-    // "w-[calc((theme(spacing.full)/2)-(24px-24px/2))] [&:nth-child(2n)]:mr-0 mb-20 mr-6",
-    // "w-[calc((theme(spacing.full)/${column})-(${gutter}-${gutter}/2))] [&:nth-child(${column}n)]:mr-0 mb-20 mr-6",
-    // "w-[calc(100%/2)-(24px-24px/2))]",
-    // "[&:nth-child(2n)]:mr-0",
-  ],
   theme: {
     fontFamily: {
       antonio: ["Antonio"],
     },
+    container: {
+      center: true,
+    },
+    screens,
     extend: {
       colors,
       fontSize: {

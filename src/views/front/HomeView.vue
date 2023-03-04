@@ -54,7 +54,7 @@
       </div>
     </div>
   </section>
-  <section class="pt-20 pb-10 lg:pb-[180px] bg-netural-netural-100">
+  <section class="pt-20 pb-10 pb-10 lg:pb-[160px] bg-netural-netural-100">
     <div class="container">
       <div
         class="px-4 lg:px-8 lg:py-2 [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20 border-l border-netural-netural-400"
@@ -66,234 +66,33 @@
         </h2>
         <p class="font-bold ch-body lg:ch-heading-3">推薦行程</p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-rows-3 grid-flow-col gap-6">
         <template v-for="(item, index) in 6" :key="index">
-          <div v-if="index % 2 === 0" class="mb-20">
-            <div class="flex w-full img-overlay">
-              <div
-                class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
-              >
-                <div
-                  class="flex-shrink-0 w-6 h-6 lg:w-9 lg:h-9 bg-netural-netural-100 transition-all ease-in-out duration-300 icon-favorite hover:icon-favorite-solid"
-                ></div>
-              </div>
-              <img
-                src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
-                class="w-full h-[480px] object-cover"
-                alt=""
-              />
-            </div>
-            <div
-              class="relative z-10 -mt-[84px] lg:ml-[110px] py-6 px-5 lg:px-9 bg-secondary-secondary-100"
-            >
-              <div
-                class="[&:not(:last-child)]:mb-3 lg:[&:not(:last-child)]:mb-8"
-              >
-                <div class="flex items-start">
-                  <div
-                    class="flex-shrink-0 w-4 h-4 mt-1 [&:not(:last-child)]:mr-3 bg-netural-netural-100 icon-pin"
-                  ></div>
-                  <p
-                    class="lg:font-bold ch-caption-2 lg:ch-body text-netural-netural-100"
-                  >
-                    東京迪士尼陸地
-                  </p>
-                </div>
-                <h3>
-                  <p
-                    class="font-bold ch-body lg:ch-heading-3 text-netural-netural-100 line-clamp-2"
-                  >
-                    東京迪士尼海洋3日遊
-                  </p>
-                </h3>
-              </div>
-              <div class="flex justify-between items-center">
-                <p
-                  class="[&:not(:last-child)]:mr-4 en-caption-01 lg:en-body text-netural-netural-100"
-                >
-                  NT$.9000
-                </p>
-                <button
-                  class="flex-shrink-0 bg-secondary-secondary-200 text-netural-netural-100 btn-base"
-                  type="button"
-                >
-                  加入購物車
-                </button>
-              </div>
-            </div>
-          </div>
-          <div v-if="index % 2 === 1" class="mb-20">
-            <div class="flex w-full img-overlay">
-              <div
-                class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
-              >
-                <div
-                  class="flex-shrink-0 w-6 h-6 lg:w-9 lg:h-9 bg-netural-netural-100 transition-all ease-in-out duration-300 icon-favorite hover:icon-favorite-solid"
-                ></div>
-              </div>
-              <img
-                src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
-                class="w-full h-[480px] object-cover"
-                alt=""
-              />
-            </div>
-            <div
-              class="relative z-10 -mt-[84px] lg:ml-[110px] py-6 px-5 lg:px-9 bg-netural-netural-200 lg:bg-netural-netural-100"
-            >
-              <div
-                class="[&:not(:last-child)]:mb-3 lg:[&:not(:last-child)]:mb-8"
-              >
-                <div class="flex items-start">
-                  <div
-                    class="flex-shrink-0 w-4 h-4 mt-1 [&:not(:last-child)]:mr-3 bg-netural-netural-400 icon-pin"
-                  ></div>
-                  <p class="lg:font-bold ch-caption-2 lg:ch-body">
-                    東京迪士尼陸地
-                  </p>
-                </div>
-                <h3>
-                  <p class="font-bold ch-body lg:ch-heading-3 line-clamp-2">
-                    東京迪士尼海洋3日遊
-                  </p>
-                </h3>
-              </div>
-              <div class="flex justify-between items-center">
-                <p class="[&:not(:last-child)]:mr-4 en-caption-01 lg:en-body">
-                  NT$.9000
-                </p>
-                <button
-                  class="flex-shrink-0 bg-secondary-secondary-200 text-netural-netural-100 btn-base"
-                  type="button"
-                >
-                  加入購物車
-                </button>
-              </div>
-            </div>
-          </div>
+          <ProductItem :item-index="index" />
         </template>
       </div>
-      <!-- <div class="flex flex-wrap justify-between">
-        <template v-for="(item, index) in 2" :key="index">
-          <div
-            v-if="index % 2 === 0"
-            class="w-[calc((theme(spacing.full)/2)-(theme(spacing.6)-theme(spacing.6)/2))] [&:nth-child(2n)]:mr-0 mb-20 mr-6"
-          >
-            <div class="flex w-full img-overlay">
-              <div
-                class="absolute right-10 top-10 z-10 flex-shrink-0 w-[30px] h-[30px] bg-netural-netural-100 cursor-pointer icon-favorite hover:icon-favorite-solid"
-              ></div>
-              <img
-                src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
-                class="w-full h-[480px] object-cover"
-                alt=""
-              />
-            </div>
-            <div
-              class="relative z-10 -mt-[84px] ml-[110px] py-6 px-9 bg-secondary-secondary-100"
-            >
-              <div class="[&:not(:last-child)]:mb-8">
-                <div class="flex items-start">
-                  <div
-                    class="flex-shrink-0 w-4 h-4 mt-1 [&:not(:last-child)]:mr-3 bg-netural-netural-100 icon-pin"
-                  ></div>
-                  <p class="font-bold ch-body text-netural-netural-100">
-                    東京迪士尼陸地
-                  </p>
-                </div>
-                <h3>
-                  <p
-                    class="font-bold ch-body lg:ch-heading-3 text-netural-netural-100 line-clamp-2"
-                  >
-                    東京迪士尼海洋3日遊
-                  </p>
-                </h3>
-              </div>
-              <div class="flex justify-between items-center">
-                <p
-                  class="[&:not(:last-child)]:mr-4 en-body text-netural-netural-100"
-                >
-                  NT$.9000
-                </p>
-                <button
-                  class="flex-shrink-0 bg-secondary-secondary-200 text-netural-netural-100 btn-base"
-                  type="button"
-                >
-                  加入購物車
-                </button>
-              </div>
-            </div>
-          </div>
-          <div
-            v-if="index % 2 === 1"
-            class="w-[calc((theme(spacing.full)/2)-(theme(spacing.6)-theme(spacing.6)/2))] [&:nth-child(2n)]:mr-0 mb-20 mr-6"
-          >
-            <div class="flex w-full img-overlay">
-              <div
-                class="absolute right-10 top-10 z-10 flex-shrink-0 w-[30px] h-[30px] bg-netural-netural-100 cursor-pointer icon-favorite hover:icon-favorite-solid"
-              ></div>
-              <img
-                src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
-                class="w-full h-[480px] object-cover"
-                alt=""
-              />
-            </div>
-            <div
-              class="relative z-10 -mt-[84px] ml-[110px] py-6 px-9 bg-netural-netural-100"
-            >
-              <div class="[&:not(:last-child)]:mb-8">
-                <div class="flex items-start">
-                  <div
-                    class="flex-shrink-0 w-4 h-4 mt-1 [&:not(:last-child)]:mr-3 bg-netural-netural-400"
-                    style="
-                      -webkit-mask-image: url('/src/assets/images/img/icon/location_on@2x.png');
-                      mask-image: url('/src/assets/images/img/icon/location_on@2x.png');
-                      -webkit-mask-position: center;
-                      mask-position: center;
-                      -webkit-mask-size: contain;
-                      mask-size: contain;
-                      mask-repeat: no-repeat;
-                      -webkit-mask-repeat: no-repeat;
-                    "
-                  ></div>
-                  <p class="font-bold ch-body">東京迪士尼陸地</p>
-                </div>
-                <h3>
-                  <p class="font-bold ch-body lg:ch-heading-3 line-clamp-2">
-                    東京迪士尼海洋3日遊
-                  </p>
-                </h3>
-              </div>
-              <div class="flex justify-between items-center">
-                <p class="[&:not(:last-child)]:mr-4 en-body">NT$.9000</p>
-                <button
-                  class="flex-shrink-0 bg-secondary-secondary-200 text-netural-netural-100 btn-base"
-                  type="button"
-                >
-                  加入購物車
-                </button>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div> -->
       <div class="flex justify-end">
         <div
-          class="flex items-center w-60 py-4 px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
+          class="flex items-center max-w-[160px] w-full lg:max-w-none lg:w-60 py-3 px-5 lg:py-4 lg:px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
         >
           <p
-            class="en-body text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100"
+            class="ch-body lg:en-body text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100"
           >
             查看更多
           </p>
           <div
-            class="w-8 h-8 opacity-0 transition-all ease-in-out duration-500 group-hover:ml-8 group-hover:opacity-100 group-hover:bg-netural-netural-100 icon-arrow"
+            class="w-4 h-4 lg:w-8 lg:h-8 opacity-0 transition-all ease-in-out duration-500 group-hover:ml-8 group-hover:opacity-100 group-hover:bg-netural-netural-100 icon-arrow"
           ></div>
         </div>
       </div>
     </div>
   </section>
-  <section class="pt-10 lg:pt-20 pb-10 lg:pb-[180px] bg-netural-netural-200">
-    <div class="container [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20">
+  <section
+    class="pt-10 lg:pt-20 pb-10 pb-10 lg:pb-[160px] bg-netural-netural-200"
+  >
+    <div
+      class="container [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20"
+    >
       <div class="px-4 lg:px-8 lg:py-2 border-l border-netural-netural-400">
         <h2
           class="[&:not(:last-child)]:mb-2 lg:[&:not(:last-child)]:mb-3 en-body lg:en-title"
@@ -310,21 +109,21 @@
         class="relative aspect-square bg-netural-netural-400"
       >
         <div
-          class="absolute inset-0 h-full w-full pb-[50%] bg-cover bg-no-repeat bg-center img-overlay"
+          class="absolute inset-0 h-full w-full bg-cover bg-no-repeat bg-center img-overlay"
           style="
             background-image: url('https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800');
           "
         ></div>
         <div
-          class="relative z-10 flex flex-col items-center justify-center h-full"
+          class="relative z-10 flex flex-col items-center justify-center h-full p-3"
         >
           <h3
-            class="[&:not(:last-child)]:lg-2 font-bold ch-caption-1 md:ch-heading-2 text-netural-netural-100"
+            class="[&:not(:last-child)]:lg-2 font-bold ch-caption-1 lg:ch-heading-2 text-netural-netural-100"
           >
             金閣寺
           </h3>
           <p
-            class="font-bold ch-caption-1 md:ch-heading-3 text-netural-netural-100"
+            class="font-bold ch-caption-1 lg:ch-heading-3 text-netural-netural-100"
           >
             とうきょうタワー
           </p>
@@ -332,7 +131,9 @@
       </div>
     </div>
   </section>
-  <section class="pt-10 lg:pt-20 pb-10 lg:pb-[180px] bg-netural-netural-100">
+  <section
+    class="pt-10 lg:pt-20 pb-10 pb-10 lg:pb-[160px] bg-netural-netural-100"
+  >
     <div class="container">
       <div
         class="px-4 lg:px-8 lg:py-2 [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20 border-l border-netural-netural-400"
@@ -346,70 +147,29 @@
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <template v-for="(item, index) in 6" :key="index">
-          <div class="mb-20">
-            <div class="flex w-full">
-              <img
-                src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
-                class="w-full h-[280px] object-cover"
-                alt=""
-              />
-            </div>
-            <div
-              class="relative z-10 -mt-[84px] lg:ml-[110px] py-6 px-[32px] bg-netural-netural-100"
-            >
-              <div class="[&:not(:last-child)]:mb-5">
-                <h3 class="flex items-start [&:not(:last-child)]:mb-2">
-                  <p
-                    class="font-bold ch-heading-4 text-secondary-secondary-100"
-                  >
-                    東京行程規劃 帶你看日本 東京五天四夜花費
-                  </p>
-                </h3>
-                <div>
-                  <p
-                    class="font-normal ch-body text-netural-netural-300 line-clamp-5"
-                  >
-                    東京行程怎麼規劃？東京五天四夜還是七日遊、八日遊好？想要把東京晴空塔、淺草寺、上野動物園等特色景點逛好逛滿，又想在東京迪士尼樂園玩上一整天，亦或是計畫前往東京近郊泡溫泉、滑雪嗎？從成田機場抵達東京市區的選擇相當多，其中最舒適便捷的方式就是搭乘京成電鐵Skyliner，抵達京成上野站只要40分鐘左右，單程票價約2,570日元（台幣560元），全程不需要換車，相當划算，計畫東京行程時一定得安排進去！
-                  </p>
-                </div>
-              </div>
-              <div class="flex items-start">
-                <img
-                  class="flex-shrink-0 w-8 h-8 [&:not(:last-child)]:mt-1 [&:not(:last-child)]:mr-4 object-cover rounded-full"
-                  src="https://images.pexels.com/photos/9833110/pexels-photo-9833110.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load"
-                  alt=""
-                />
-                <div class="flex flex-col">
-                  <p class="ch-caption-1 font-bold text-netural-netural-400">
-                    行程規劃小編
-                  </p>
-                  <p class="ch-caption-1 font-normal text-netural-netural-300">
-                    12,Dec 2023
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ArticleItem />
         </template>
       </div>
       <div class="flex justify-end">
         <div
-          class="flex items-center w-60 py-4 px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
+          class="flex items-center max-w-[160px] w-full lg:max-w-none lg:w-60 py-3 px-5 lg:py-4 lg:px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
         >
           <p
-            class="en-body text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100"
+            class="ch-body lg:en-body text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100"
           >
             查看更多
           </p>
           <div
-            class="w-8 h-8 opacity-0 transition-all ease-in-out duration-500 group-hover:ml-8 group-hover:opacity-100 group-hover:bg-netural-netural-100 icon-arrow"
+            class="w-4 h-4 lg:w-8 lg:h-8 opacity-0 transition-all ease-in-out duration-500 group-hover:ml-8 group-hover:opacity-100 group-hover:bg-netural-netural-100 icon-arrow"
           ></div>
         </div>
       </div>
     </div>
   </section>
-  <section class="pt-10 lg:pt-20 bg-primary-primary-100">
-    <div class="container [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20">
+  <section class="pt-10 lg:pt-20 bg-primary-primary-100 pb-10 lg:pb-[160px]">
+    <div
+      class="container [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20"
+    >
       <div class="px-8 py-2 border-l border-netural-netural-400">
         <h2
           class="[&:not(:last-child)]:mb-2 lg:[&:not(:last-child)]:mb-3 en-body lg:en-title"
@@ -431,7 +191,7 @@
             class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
             ></div>
             <h3
               class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
@@ -452,7 +212,7 @@
             class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
             ></div>
             <h3
               class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
@@ -475,7 +235,7 @@
             class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
             ></div>
             <h3
               class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
@@ -496,7 +256,7 @@
             class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
             ></div>
             <h3
               class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
@@ -519,7 +279,7 @@
             class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
             ></div>
             <h3
               class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
@@ -530,29 +290,37 @@
         </div>
       </div>
     </div> -->
-    <div class="grid grid-rows-3 lg:grid-rows-4 grid-cols-2 lg:grid-cols-9 grid-flow-row lg:grid-flow-col gap-6">
-      <div class="col-span-1 lg:col-span-3 lg:row-span-3">
-        <div class="overflow-hidden relative flex h-full lg:h-[636px]">
+
+    <!-- https://stackoverflow.com/questions/63252451/how-to-get-alternating-height-in-css-grid -->
+    <div
+      class="grid grid-rows-3 lg:grid-rows-4 grid-cols-2 lg:grid-cols-9 grid-flow-row lg:grid-flow-col gap-6 px-3 lg:px-0"
+    >
+      <div
+        class="col-span-1 lg:col-span-3 lg:row-span-3 lg:w-full aspect-square lg:aspect-auto"
+      >
+        <div class="overflow-hidden relative flex h-full">
           <img
             class="w-full h-full object-cover"
             src="@/assets/images/img/image/thing_hotel.jpg"
             alt=""
           />
           <div
-            class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-200"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
             ></div>
             <h3
-              class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
+              class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-netural-netural-100"
             >
               住宿
             </h3>
           </div>
         </div>
       </div>
-      <div class="col-span-1 lg:col-span-2 lg:row-span-2">
+      <div
+        class="row-start-1 col-start-2 lg:col-span-2 lg:row-span-2 lg:aspect-auto"
+      >
         <div class="overflow-hidden relative flex h-full lg:h-[420px]">
           <img
             class="w-full h-full object-cover"
@@ -560,20 +328,22 @@
             alt=""
           />
           <div
-            class="absolute left-0 top-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-100"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-100"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-secondary-secondary-200 icon-icecream"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-secondary-secondary-200 icon-icecream"
             ></div>
             <h3
-              class="overflow-hidden ch-heading-3 font-bold text-secondary-secondary-200"
+              class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-secondary-secondary-200"
             >
               美食
             </h3>
           </div>
         </div>
       </div>
-      <div class="col-span-1 lg:col-span-2 lg:row-span-2">
+      <div
+        class="row-start-2 col-start-2 lg:col-span-2 lg:row-span-2 lg:aspect-auto"
+      >
         <div class="overflow-hidden relative flex h-full lg:h-[306px]">
           <img
             class="w-full h-full object-cover"
@@ -581,41 +351,47 @@
             alt=""
           />
           <div
-            class="absolute left-0 top-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-200"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-skateboarding"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-skateboarding"
             ></div>
             <h3
-              class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
+              class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-netural-netural-100"
             >
               玩 / 體驗
             </h3>
           </div>
         </div>
       </div>
-      <div class="col-span-1 lg:col-span-3 lg:row-span-2">
-        <div class="overflow-hidden relative flex h-full lg:h-[306px] lg:-mr-[55px]">
+      <div
+        class="col-span-1 lg:col-span-3 lg:row-span-2 aspect-square lg:aspect-auto"
+      >
+        <div
+          class="overflow-hidden relative flex w-full h-full lg:h-[306px] lg:-mr-[55px]"
+        >
           <img
             class="w-full h-full lg:ml-[110px] object-cover"
             src="@/assets/images/img/image/thing_mall.jpg"
             alt=""
           />
           <div
-            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-secondary-secondary-200"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-secondary-secondary-200"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-mall"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-mall"
             ></div>
             <h3
-              class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
+              class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-netural-netural-100"
             >
               購物
             </h3>
           </div>
         </div>
       </div>
-      <div class="col-span-1 lg:col-span-4 lg:row-span-2 lg:h-[416px] lg:-mt-[114px]">
+      <div
+        class="col-span-1 lg:col-span-4 lg:row-span-2 lg:h-[416px] lg:-mt-[114px] aspect-square lg:aspect-auto"
+      >
         <div class="overflow-hidden relative flex h-full lg:h-full">
           <img
             class="w-full h-full object-cover"
@@ -623,13 +399,13 @@
             alt=""
           />
           <div
-            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-100"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-100"
           >
             <div
-              class="w-12 h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-secondary-secondary-200 icon-temple"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-secondary-secondary-200 icon-temple"
             ></div>
             <h3
-              class="overflow-hidden ch-heading-3 font-bold text-secondary-secondary-200"
+              class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-secondary-secondary-200"
             >
               自然 / 古蹟
             </h3>
@@ -640,5 +416,30 @@
   </section>
 </template>
 <script>
-export default {};
+import { mapState } from "pinia";
+import ProductItem from "@/components/front/ProductItem.vue";
+import ArticleItem from "@/components/front/ArticleItem.vue";
+import { useLoadingState } from "@/stores/common.js";
+export default {
+  components: {
+    ProductItem,
+    ArticleItem,
+  },
+  computed: {
+    ...mapState(useLoadingState, ["isLoading"]),
+  },
+  mounted() {
+    // 讀取狀態測試
+    // const loading = useLoadingState();
+
+    // console.log("useLoadingState", useLoadingState().isLoading);
+    // setTimeout(() => {
+    //   useLoadingState().$patch((state) => {
+    //     console.log("state", state);
+    //     state.isLoading = false;
+    //   });
+    //   // loading.$patch({isLoading: false})
+    // }, 3000);
+  },
+};
 </script>

@@ -51,7 +51,7 @@
     @apply mask-no-repeat mask-center mask-contain;
   }
   .container {
-    @apply px-3 lg:px-6 mx-auto;
+    @apply px-3 lg:px-6;
   }
   .img-overlay {
     @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-netural-netural-500 before:opacity-40;
