@@ -37,7 +37,7 @@
     <div class="container">
       <div class="flex w-full pl-6 lg:pl-12 bg-primary-primary-200">
         <input
-          class="w-full py-4 lg:py-[42px] bg-primary-primary-200 font-bold ch-heading-4 text-netural-netural-100"
+          class="w-full py-4 lg:py-[42px] bg-primary-primary-200 font-bold ch-heading-4 text-netural-netural-100 placeholder:text-netural-netural-100"
           type="text"
           placeholder="搜尋地區 / 景點"
           name=""
@@ -166,7 +166,7 @@
       </div>
     </div>
   </section>
-  <section class="pt-10 lg:pt-20 bg-primary-primary-100 pb-10 lg:pb-[160px]">
+  <section class="pt-10 lg:pt-20 bg-primary-primary-100 pb-10 lg:pb-[160px]  border-b border-netural-netural-500">
     <div
       class="container [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20"
     >
@@ -430,14 +430,13 @@ export default {
   },
   mounted() {
     // 讀取狀態測試
+    useLoadingState().$patch((state) => {
+      state.isLoading = false;
+    });
     // const loading = useLoadingState();
 
     // console.log("useLoadingState", useLoadingState().isLoading);
     // setTimeout(() => {
-    //   useLoadingState().$patch((state) => {
-    //     console.log("state", state);
-    //     state.isLoading = false;
-    //   });
     //   // loading.$patch({isLoading: false})
     // }, 3000);
   },

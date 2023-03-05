@@ -1,11 +1,15 @@
 @tailwind components;
 @layer components {
+  .btn {
+    @apply py-2 px-4 text-center font-normal ch-caption-1 lg:ch-heading-4 cursor-pointer;
+  }
   .btn-base {
     @apply py-2 px-4 lg:py-4 lg:px-6 rounded-full font-normal lg:font-bold ch-caption-1 lg:ch-body text-center cursor-pointer;
   }
   .btn-large {
     @apply py-2 px-4 md:py-4 md:px-8 rounded-full font-bold ch-body md:ch-heading-3 text-center cursor-pointer;
   }
+  // icon
   .icon-pin {
     mask-image: url("@/assets/images/img/icon/location_on@2x.png");
     @apply mask-no-repeat mask-center mask-contain;
@@ -53,10 +57,13 @@
   .container {
     @apply px-3 lg:px-6;
   }
+  .layout-content {
+    @apply flex-col min-h-[calc(100vh-72px-230px)] pb-16;
+  }
   .img-overlay {
     @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-netural-netural-500 before:opacity-40;
   }
-
+  // text
   // .text-antonio {
   //   @apply font-antonio font-bold;
   // }
@@ -99,5 +106,132 @@
   }
   .en-caption-02 {
     @apply font-antonio font-bold text-en-caption-02 leading-4;
+  }
+
+  // form
+  .el-checkbox {
+    @apply relative flex items-center;
+    .el-checkbox-input {
+      @apply hidden;
+      & ~ .el-checkbox-style {
+        .material-symbols-outlined {
+          @apply hidden relative z-10 text-netural-netural-100 ch-body;
+        }
+        @apply relative flex items-center justify-center w-4 h-4 cursor-pointer
+        after:content-[''] after:absolute after:top-0 after:left-0 after:rounded after:block after:w-4 after:h-4 after:border after:border-netural-netural-300 after:bg-netural-netural-200;
+      }
+      &:checked {
+        & ~ .el-checkbox-style {
+          .material-symbols-outlined {
+            @apply block;
+          }
+          @apply after:border-secondary-secondary-200 after:bg-secondary-secondary-200;
+        }
+        &[disabled] {
+          & ~ .el-checkbox-style {
+            .material-symbols-outlined {
+              @apply block;
+            }
+            @apply before:border-netural-netural-200 before:bg-netural-netural-200 after:border-secondary-secondary-200 after:bg-secondary-secondary-200;
+          }
+        }
+        // & ~ .el-checkbox-label {
+        //   .el-checkbox-label__text {
+        //     @apply text-netural-netural-400;
+        //   }
+        // }
+      }
+      &[disabled] {
+        @apply cursor-not-allowed;
+        & ~ .el-checkbox-style {
+          @apply cursor-not-allowed hover:cursor-not-allowed before:cursor-not-allowed after:cursor-not-allowed after:bg-netural-netural-200 before:border-netural-netural-200 before:bg-netural-netural-200 after:opacity-40;
+        }
+        & ~ .el-checkbox-label {
+          @apply opacity-40 cursor-not-allowed;
+        }
+      }
+    }
+    .el-checkbox-style {
+      @apply mt-0.5 [&:not(:last-child)]:mr-1;
+    }
+    .el-checkbox-label {
+      @apply select-none cursor-pointer;
+      &__text {
+        @apply font-bold ch-body text-netural-netural-400;
+      }
+    }
+  }
+  .input-group {
+    @apply flex w-full text-netural-netural-400 ch-heading-4 appearance-none;
+  }
+  .form-select {
+    @apply relative flex items-center after:content-['\e5cf'] after:absolute after:right-2 after:text-netural-netural-400 after:font-['Material_Symbols_Outlined'] after:ch-heading-2 after:pointer-events-none;
+    select {
+      @apply relative w-full py-3 pl-4 pr-10 text-netural-netural-400 ch-heading-4 appearance-none;
+    }
+  }
+
+  .form-input {
+    @apply relative w-full py-3 px-4 text-netural-netural-400 ch-heading-4 appearance-none;
+  }
+
+  // material icon 的 偽元素用法
+  // .material {
+  //   &::after {
+  //     content: "cloud";
+  //     font-family: "Material Symbols Outlined";
+  //     margin-right: 20px;
+  //     font-size: 20px;
+  //   }
+  // }
+  .steps {
+    @apply flex justify-center items-center max-w-[800px] mx-auto py-4;
+    .steps-list {
+      @apply flex justify-between w-full;
+      &__item {
+        @apply relative flex justify-start items-start flex-1 text-center;
+        &:last-child {
+          @apply flex-none;
+          .steps-list__line {
+            @apply hidden;
+          }
+        }
+        &.-active {
+          .steps-list {
+            &__badge {
+              @apply bg-secondary-secondary-200;
+            }
+            &__title {
+              @apply text-secondary-secondary-200 font-bold;
+            }
+          }
+          &.-checked {
+            .steps-list {
+              &__line {
+                @apply before:content-[''] before:w-full;
+              }
+            }
+          }
+        }
+      }
+      &__group {
+        @apply flex justify-center flex-col;
+      }
+      &__content {
+        @apply flex flex-col items-center max-w-[80px];
+      }
+      &__badge {
+        @apply relative z-10 overflow-hidden flex items-center justify-center w-[60px] h-[60px] mx-auto [&:not(:last-child)]:mb-4 rounded-full bg-netural-netural-300 border border-netural-netural-100 transition-all;
+      }
+      &__text {
+        @apply relative flex items-center justify-center en-body text-netural-netural-100 transition-all;
+      }
+      &__title {
+        @apply ch-heading-4 text-netural-netural-300 whitespace-nowrap transition-all;
+      }
+      &__line {
+        @apply absolute top-[30px] left-[30px] w-full h-1 before:content-[''] before:block before:w-0 before:h-full bg-netural-netural-300 before:bg-secondary-secondary-200 before:transition-all;
+      }
+    }
   }
 }

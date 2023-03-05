@@ -18,5 +18,5 @@ export const useLoadingState = defineStore("loading", {
     return {
       isLoading: true,
     };
-  },
+  }
 });

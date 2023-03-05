@@ -2,7 +2,7 @@
   <footer class="bg-primary-primary-100">
     <div class="container">
       <div
-        class="flex flex-col md:flex-row md:items-center md:justify-between py-20 md:py-[54px] border-t border-netural-netural-500"
+        class="flex flex-col md:flex-row md:items-center md:justify-between py-20 md:py-[54px]"
       >
         <p class="pb-[26px] md:pb-0 whitespace-nowrap en-body md:en-title">JAPAN TRIP</p>
         <nav class="">
