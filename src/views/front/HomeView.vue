@@ -35,9 +35,11 @@
   </div>
   <section class="relative z-10 mt-4 lg:-mt-[60px]">
     <div class="container">
-      <div class="flex w-full pl-6 lg:pl-12 bg-primary-primary-200">
+      <div
+        class="flex w-full pl-6 lg:pl-12 bg-primary-primary-200 focus-within:bg-netural-netural-400 transition-all"
+      >
         <input
-          class="w-full py-4 lg:py-[42px] bg-primary-primary-200 font-bold ch-heading-4 text-netural-netural-100 placeholder:text-netural-netural-100"
+          class="w-full py-4 lg:py-[42px] bg-primary-primary-200 font-bold ch-heading-4 text-netural-netural-100 placeholder:text-netural-netural-100 focus-within:bg-netural-netural-400 transition-all"
           type="text"
           placeholder="搜尋地區 / 景點"
           name=""
@@ -72,7 +74,8 @@
         </template>
       </div>
       <div class="flex justify-end">
-        <div
+        <router-link
+          to="/products"
           class="flex items-center max-w-[160px] w-full lg:max-w-none lg:w-60 py-3 px-5 lg:py-4 lg:px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
         >
           <p
@@ -83,7 +86,7 @@
           <div
             class="w-4 h-4 lg:w-8 lg:h-8 opacity-0 transition-all ease-in-out duration-500 group-hover:ml-8 group-hover:opacity-100 group-hover:bg-netural-netural-100 icon-arrow"
           ></div>
-        </div>
+        </router-link>
       </div>
     </div>
   </section>
@@ -151,7 +154,8 @@
         </template>
       </div>
       <div class="flex justify-end">
-        <div
+        <router-link
+          to="/article"
           class="flex items-center max-w-[160px] w-full lg:max-w-none lg:w-60 py-3 px-5 lg:py-4 lg:px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
         >
           <p
@@ -162,11 +166,13 @@
           <div
             class="w-4 h-4 lg:w-8 lg:h-8 opacity-0 transition-all ease-in-out duration-500 group-hover:ml-8 group-hover:opacity-100 group-hover:bg-netural-netural-100 icon-arrow"
           ></div>
-        </div>
+        </router-link>
       </div>
     </div>
   </section>
-  <section class="pt-10 lg:pt-20 bg-primary-primary-100 pb-10 lg:pb-[160px]  border-b border-netural-netural-500">
+  <section
+    class="pt-10 lg:pt-20 bg-primary-primary-100 pb-10 lg:pb-[160px] border-b border-netural-netural-500"
+  >
     <div
       class="container [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20"
     >
@@ -305,10 +311,10 @@
             alt=""
           />
           <div
-            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-200"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-200 hover:bg-secondary-secondary-100 transition-all ease-in-out"
           >
             <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 bg-netural-netural-100 icon-hotel"
             ></div>
             <h3
               class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-netural-netural-100"
@@ -319,7 +325,7 @@
         </div>
       </div>
       <div
-        class="row-start-1 col-start-2 lg:col-span-2 lg:row-span-2 lg:aspect-auto"
+        class="row-start-1 row-span-2 col-start-2 lg:col-span-2 lg:row-span-2 lg:aspect-auto w-full h-[calc(100%-47%)] mb-[10%] place-self-center"
       >
         <div class="overflow-hidden relative flex h-full lg:h-[420px]">
           <img
@@ -328,10 +334,10 @@
             alt=""
           />
           <div
-            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-100"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-100 hover:bg-secondary-secondary-100 transition-all ease-in-out"
           >
             <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-secondary-secondary-200 icon-icecream"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 bg-secondary-secondary-200 icon-icecream"
             ></div>
             <h3
               class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-secondary-secondary-200"
@@ -342,7 +348,7 @@
         </div>
       </div>
       <div
-        class="row-start-2 col-start-2 lg:col-span-2 lg:row-span-2 lg:aspect-auto"
+        class="row-start-2 row-span-2 col-start-2 lg:col-span-2 lg:row-span-2 lg:aspect-auto w-full h-[calc(100%-47%)] mt-[10%] place-self-center"
       >
         <div class="overflow-hidden relative flex h-full lg:h-[306px]">
           <img
@@ -351,10 +357,10 @@
             alt=""
           />
           <div
-            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-200"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-200 hover:bg-secondary-secondary-100 transition-all ease-in-out"
           >
             <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-skateboarding"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 bg-netural-netural-100 icon-skateboarding"
             ></div>
             <h3
               class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-netural-netural-100"
@@ -371,15 +377,15 @@
           class="overflow-hidden relative flex w-full h-full lg:h-[306px] lg:-mr-[55px]"
         >
           <img
-            class="w-full h-full lg:ml-[110px] object-cover"
+            class="w-full h-full lg:ml-[110px] object-cover object-top"
             src="@/assets/images/img/image/thing_mall.jpg"
             alt=""
           />
           <div
-            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-secondary-secondary-200"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-secondary-secondary-200 hover:bg-secondary-secondary-100 transition-all ease-in-out"
           >
             <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-mall"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 bg-netural-netural-100 icon-mall"
             ></div>
             <h3
               class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-netural-netural-100"
@@ -399,10 +405,10 @@
             alt=""
           />
           <div
-            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-100"
+            class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-100 hover:bg-secondary-secondary-100 transition-all ease-in-out"
           >
             <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-secondary-secondary-200 icon-temple"
+              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 bg-secondary-secondary-200 icon-temple"
             ></div>
             <h3
               class="overflow-hidden ch-caption-1 md:ch-heading-3 font-bold text-secondary-secondary-200"

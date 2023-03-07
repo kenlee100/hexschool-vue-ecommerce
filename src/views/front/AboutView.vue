@@ -2,10 +2,11 @@
   <div class="layout-content">
     <PageHeader />
     <div class="container">
-      <div class="grid grid-flow-row gap-6">
+      <div class="grid grid-flow-row gap-10 md:gap-0">
         <AboutItem
-          v-for="item in aboutData"
+          v-for="(item, index) in aboutData"
           :key="item.title"
+          :item-index="index"
           :title="item.title"
           :description="item.description"
         />

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-x-0 bottom-0 z-20 flex flex-col h-[calc(100%-72px)] bg-netural-netural-400 transition-all"
+    class="fixed inset-x-0 bottom-0 z-20 md:hidden flex flex-col h-[calc(100%-72px)] bg-netural-netural-400 transition-all"
     :class="toggle ? 'translate-x-0' : '-translate-x-full'"
   >
     <nav class="flex flex-col h-full justify-center items-center py-4">

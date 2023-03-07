@@ -15,9 +15,11 @@
       />
     </div>
     <div class="container">
-      <div class="flex justify-between space-x-8 pt-10 pb-16">
+      <div
+        class="flex flex-col-reverse lg:flex-row justify-between lg:space-x-8 pt-10 pb-16"
+      >
         <div
-          class="w-[66.666%] space-y-6 pb-6 border-b border-netural-netural-500"
+          class="lg:w-[66.666%] space-y-6 pb-6 border-b border-netural-netural-500"
         >
           <h1 class="font-bold ch-heading-1">
             {{ productContent.title }}
@@ -74,7 +76,7 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-col flex-1 w-[33.333%]">
+        <div class="flex flex-col lg:w-[33.333%] mb-8 lg:mb-0">
           <div
             class="sticky top-[72px] inset-x-0 p-6 space-y-6 bg-netural-netural-200"
           >
@@ -103,7 +105,12 @@
                   </option>
                 </select>
               </div>
-              <input class="form-input" type="number" min="1" v-model.number="qty" />
+              <input
+                class="form-input"
+                type="number"
+                min="1"
+                v-model.number="qty"
+              />
             </div>
 
             <div class="w-full">

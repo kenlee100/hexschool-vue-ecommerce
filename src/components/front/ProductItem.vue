@@ -1,5 +1,4 @@
 <template>
-  {{ itemData }}
   <div v-if="itemIndex % 2 === 0" class="flex flex-col mb-20">
     <div class="relative overflow-hidden flex flex-shrink-0 w-full img-overlay">
       <div

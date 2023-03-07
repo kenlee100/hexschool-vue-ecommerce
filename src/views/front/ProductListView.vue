@@ -2,12 +2,12 @@
   <div class="layout-content">
     <PageHeader />
     <div class="container">
-      <div class="flex justify-between space-x-8">
+      <div class="flex flex-col lg:flex-row justify-between lg:space-x-8">
         <div
-          class="flex flex-col self-start w-[260px] py-5 px-6 border border-netural-netural-300 rounded-md"
+          class="flex flex-col self-start w-full lg:w-[260px] mb-6 lg:mb-0 py-5 px-6 border border-netural-netural-300 rounded-md"
         >
           <div
-            class="flex w-full pl-6 lg:pl-4 [&:not(:last-child)]:mb-6 bg-netural-netural-200"
+            class="flex w-full pl-6 lg:pl-4 [&:not(:last-child)]:mb-4 lg:[&:not(:last-child)]:mb-6 bg-netural-netural-200"
           >
             <input
               class="w-full py-4 lg:py-2 bg-netural-netural-200 font-bold ch-heading-4 text-netural-netural-300"
@@ -23,8 +23,10 @@
             </button>
           </div>
           <div class="flex flex-col">
-            <h3 class="ch-heading-4 font-bold">地區篩選</h3>
-            <ul class="space-y-2">
+            <h3 class="ch-heading-4 font-bold pb-4">地區篩選</h3>
+            <ul
+              class="grid grid-cols-4 lg:grid-cols-3 gap-3 lg:flex lg:flex-col lg:space-y-2 lg:gap-0"
+            >
               <li v-for="(item, index) in 10" :key="index">
                 <div class="el-checkbox el-checkbox-primary">
                   <input
@@ -44,7 +46,7 @@
             </ul>
           </div>
         </div>
-        <div class="flex-auto w-[75%]">
+        <div class="lg:flex-auto w-full lg:w-[75%]">
           <!-- <div class="grid grid-cols-3 grid-flow-row gap-6">
             <template v-for="(item, index) in products" :key="index">
               <ProductItem
@@ -53,7 +55,7 @@
               />
             </template>
           </div> -->
-          <div class="grid grid-cols-3 grid-flow-row gap-6">
+          <div class="grid grid-cols-2 lg:grid-cols-3 grid-flow-row gap-6">
             <template v-for="(item, index) in products" :key="index">
               <ProductItem :item-index="index" />
             </template>

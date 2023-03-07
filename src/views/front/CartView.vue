@@ -99,8 +99,11 @@
           </div>
         </div>
       </div>
-      <div class="flex space-x-8" v-if="currentStep === 1">
-        <div class="w-[66.666%]">
+      <div
+        class="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8"
+        v-if="currentStep === 1"
+      >
+        <div class="lg:w-[66.666%]">
           <div class="flex flex-col space-y-4">
             <template v-if="cart.carts">
               <div
@@ -115,14 +118,16 @@
                     </div>
                   </a>
                 </div> -->
-                <div class="flex items-center justify-between w-full">
-                  <div class="flex-1">
+                <div
+                  class="flex flex-col md:flex-row md:items-center md:justify-between w-full space-y-4 md:space-y-0"
+                >
+                  <div class="w-full md:w-auto md:flex-1">
                     <h3 class="font-bold ch-heading-3">
                       <a href="">{{ item.product.title }}</a>
                     </h3>
                   </div>
                   <div
-                    class="flex flex-1 items-center justify-end flex-shrink-0 space-x-6"
+                    class="flex flex-1 justify-between items-center md:justify-end md:flex-shrink-0 space-x-6"
                   >
                     <div class="ch-body">
                       <label for="" class="hidden">Qty:</label>
@@ -148,7 +153,7 @@
                       class="flex items-center justify-end flex-shrink-0 min-w-[120px] space-x-4"
                     >
                       <div
-                        class="flex items-center p-2 rounded en-caption-02 bg-netural-netural-400 text-netural-netural-100 text-center"
+                        class="hidden lg:flex items-center p-2 rounded en-caption-02 bg-netural-netural-400 text-netural-netural-100 text-center"
                       >
                         -95%
                       </div>
@@ -278,7 +283,7 @@
             </table> -->
           </div>
         </div>
-        <div class="flex flex-col flex-1 w-[33.333%]">
+        <div class="flex flex-col lg:w-[33.333%]">
           <div class="sticky top-[72px] inset-x-0 space-y-8">
             <div class="flex flex-col p-6 space-y-4 bg-netural-netural-200">
               <h2 class="font-bold ch-heading-2">購物車</h2>
@@ -345,8 +350,11 @@
           </div>
         </div>
       </div>
-      <div class="flex space-x-8" v-if="currentStep === 2">
-        <div class="w-1/2 space-y-6">
+      <div
+        class="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8"
+        v-if="currentStep === 2"
+      >
+        <div class="lg:w-1/2 space-y-6">
           <div class="flex flex-col space-y-4">
             <template v-if="cart.carts">
               <div
@@ -370,7 +378,9 @@
                   <div
                     class="flex flex-1 items-center justify-end flex-shrink-0 space-x-6"
                   >
-                    <div class="en-caption-01">x {{ item.qty }}</div>
+                    <div class="en-caption-01 whitespace-nowrap">
+                      x {{ item.qty }}
+                    </div>
                     <div
                       class="flex items-center justify-end flex-shrink-0 min-w-[120px] space-x-4"
                     >
@@ -445,7 +455,7 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-col w-1/2">
+        <div class="flex flex-col lg:w-1/2">
           <Form
             ref="form"
             class="flex flex-col p-6 bg-netural-netural-200 space-y-6"
@@ -576,7 +586,7 @@
         <div class="flex flex-col w-full space-y-3">
           <h3 class="ch-heading-2 font-bold">{{ orderFinishInfo.message }}</h3>
           <div
-            class="flex justify-between items-start flex-wrap [&:not(:last-child)]:pb-2 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30"
+            class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-2 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30"
           >
             <p class="font-bold ch-heading-4">訂單編號：</p>
             <p class="flex-shrink-0 pt-1 en-caption-01">
@@ -584,7 +594,7 @@
             </p>
           </div>
           <div
-            class="flex justify-between items-start flex-wrap [&:not(:last-child)]:pb-2 [&:not(:last-child)]:border-b border-netural-netural-300"
+            class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-2 [&:not(:last-child)]:border-b border-netural-netural-300"
           >
             <p class="font-bold ch-heading-4">訂單建立時間：</p>
             <p class="flex-shrink-0 pt-1 en-caption-01">
@@ -601,10 +611,16 @@
           </div>
           <div class="py-4">
             已將您的訂單內容，寄送至信箱
-            <span class="font-bold text-secondary-secondary-100">{{ orderFinishInfo.email }}</span>
+            <span class="font-bold text-secondary-secondary-100">{{
+              orderFinishInfo.email
+            }}</span>
             請盡快前往信箱查看
           </div>
-          <a href="" class="btn-base bg-secondary-secondary-200 text-netural-netural-100">繼續購物</a>
+          <a
+            href=""
+            class="btn-base bg-secondary-secondary-200 text-netural-netural-100"
+            >繼續購物</a
+          >
         </div>
       </div>
     </div>
@@ -638,7 +654,7 @@ export default {
         },
         message: "",
       },
-      currentStep: 3,
+      currentStep: 1,
       orderFinishInfo: {
         success: true,
         message: "已建立訂單",
