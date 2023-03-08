@@ -1,37 +1,54 @@
 <template>
-  <div class="flex h-[375px] lg:h-[720px] img-overlay">
-    <div class="container">
-      <div
-        class="relative z-10 flex flex-col items-center justify-center h-full"
-      >
-        <div
-          class="flex flex-col items-center mx-auto [&:not(:last-child)]:mb-5 lg:[&:not(:last-child)]:mb-10 text-center text-netural-netural-100"
-        >
-          <h2
-            class="[&:not(:last-child)]:mb-5 lg:[&:not(:last-child)]:mb-10 en-body lg:en-display"
-          >
-            JAPAN TRIP
-          </h2>
-          <p class="ch-heading-3 lg:ch-display font-black">
-            <span>讓我們為你的日本之旅</span><br /><span>安排精彩的行程</span>
-          </p>
-        </div>
-
-        <router-link
-          to="/"
-          class="flex items-center bg-netural-netural-100 text-netural-netural-400 btn-large group"
-        >
-          <p>立即前往</p>
+  <div class="flex h-[375px] lg:h-[720px]">
+    <swiper
+      :slides-per-view="1"
+      :space-between="0"
+      :autoplay="{
+        delay: 2500,
+        disableOnInteraction: false,
+      }"
+      :modules="modules"
+      :loop="true"
+      navigation
+      :pagination="{ clickable: true }"
+    >
+      <swiper-slide v-for="item in sliderImages" :key="item.id">
+        <div class="flex flex-col h-full container">
           <div
-            class="w-4 h-4 -ml-4 opacity-0 transition-all ease-in-out duration-100 group-hover:ml-4 group-hover:opacity-100 group-hover:bg-netural-netural-400 icon-arrow"
+            class="relative z-10 flex flex-col items-center justify-center h-full"
+          >
+            <div
+              class="flex flex-col items-center mx-auto [&:not(:last-child)]:mb-5 lg:[&:not(:last-child)]:mb-10 text-center text-netural-netural-100"
+            >
+              <h2
+                class="[&:not(:last-child)]:mb-5 lg:[&:not(:last-child)]:mb-10 en-body lg:en-display"
+              >
+                JAPAN TRIP
+              </h2>
+              <p class="ch-heading-3 lg:ch-display font-black">
+                <span>讓我們為你的日本之旅</span><br /><span
+                  >安排精彩的行程</span
+                >
+              </p>
+            </div>
+
+            <router-link
+              to="/"
+              class="flex items-center bg-netural-netural-100 text-netural-netural-400 btn-large group"
+            >
+              <p>立即前往</p>
+              <div
+                class="w-4 h-4 -ml-4 opacity-0 transition-all ease-in-out duration-100 group-hover:ml-4 group-hover:opacity-100 group-hover:bg-netural-netural-400 icon-arrow"
+              ></div>
+            </router-link>
+          </div>
+          <div
+            class="absolute inset-0 w-full h-full bg-cover bg-no-repeat bg-center"
+            :style="`background-image: url('${item.imageUrl}')`"
           ></div>
-        </router-link>
-      </div>
-      <div
-        class="absolute inset-0 w-full h-full bg-cover bg-no-repeat bg-center"
-        style="background-image: url('/src/assets/images/img/image/banner.jpg')"
-      ></div>
-    </div>
+        </div>
+      </swiper-slide>
+    </swiper>
   </div>
   <section class="relative z-10 mt-4 lg:-mt-[60px]">
     <div class="container">
@@ -39,7 +56,7 @@
         class="flex w-full pl-6 lg:pl-12 bg-primary-primary-200 focus-within:bg-netural-netural-400 transition-all"
       >
         <input
-          class="w-full py-4 lg:py-[42px] bg-primary-primary-200 font-bold ch-heading-4 text-netural-netural-100 placeholder:text-netural-netural-100 focus-within:bg-netural-netural-400 transition-all"
+          class="w-full py-4 lg:py-[42px] bg-transparent font-bold ch-heading-4 text-netural-netural-100 placeholder:text-netural-netural-100 transition-all"
           type="text"
           placeholder="搜尋地區 / 景點"
           name=""
@@ -68,11 +85,26 @@
         </h2>
         <p class="font-bold ch-body lg:ch-heading-3">推薦行程</p>
       </div>
-      <div class="grid grid-rows-3 grid-flow-col gap-6">
-        <template v-for="(item, index) in 6" :key="index">
+      <div class="hidden lg:grid lg:grid-rows-3 lg:grid-flow-col lg:gap-6">
+        <template v-for="(item, index) in 10" :key="index">
           <ProductItem :item-index="index" />
         </template>
       </div>
+      <swiper
+        :slidesPerView="'1'"
+        :spaceBetween="24"
+        :pagination="{
+          clickable: true,
+        }"
+        :width="260"
+        :loop="true"
+        :modules="modules"
+        class="flex lg:!hidden"
+      >
+        <swiper-slide v-for="(item, index) in 6" :key="index">
+          <ProductItem :item-index="index" />
+        </swiper-slide>
+      </swiper>
       <div class="flex justify-end">
         <router-link
           to="/products"
@@ -134,9 +166,7 @@
       </div>
     </div>
   </section>
-  <section
-    class="pt-10 lg:pt-20 pb-10 pb-10 lg:pb-[160px] bg-netural-netural-100"
-  >
+  <section class="pt-10 lg:pt-20 pb-10 lg:pb-[160px] bg-netural-netural-100">
     <div class="container">
       <div
         class="px-4 lg:px-8 lg:py-2 [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20 border-l border-netural-netural-400"
@@ -148,11 +178,26 @@
         </h2>
         <p class="font-bold ch-body lg:ch-heading-3">最新文章</p>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
         <template v-for="(item, index) in 6" :key="index">
           <ArticleItem />
         </template>
       </div>
+      <swiper
+        :slidesPerView="'1'"
+        :spaceBetween="24"
+        :pagination="{
+          clickable: true,
+        }"
+        :width="260"
+        :loop="true"
+        :modules="modules"
+        class="flex lg:!hidden"
+      >
+        <swiper-slide v-for="(item, index) in 6" :key="index">
+          <ArticleItem />
+        </swiper-slide>
+      </swiper>
       <div class="flex justify-end">
         <router-link
           to="/article"
@@ -426,10 +471,51 @@ import { mapState } from "pinia";
 import ProductItem from "@/components/front/ProductItem.vue";
 import ArticleItem from "@/components/front/ArticleItem.vue";
 import { useLoadingState } from "@/stores/common.js";
+
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { FreeMode, Autoplay, Navigation, Pagination } from "swiper";
+
+// Import Swiper styles
+import "swiper/scss";
+import "swiper/scss/navigation";
+import "swiper/scss/pagination";
+import "swiper/scss/autoplay";
+import "swiper/scss/effect-fade";
+
 export default {
+  data() {
+    return {
+      modules: [FreeMode, Autoplay, Navigation, Pagination],
+      controlledSwiper: null,
+      sliderImages: [
+        {
+          id: 1,
+          imageUrl: "/src/assets/images/img/image/banner_01.jpg",
+        },
+        {
+          id: 2,
+          imageUrl: "/src/assets/images/img/image/banner_01.jpg",
+        },
+      ],
+    };
+  },
   components: {
     ProductItem,
     ArticleItem,
+    Swiper,
+    SwiperSlide,
+  },
+  methods: {
+    // onSwiper(swiper) {
+    //   console.log("swiper", swiper);
+    // },
+    // onSlideChange() {
+    //   console.log("slide change");
+    // },
+    // setControlledSwiper(swiper) {
+    //   this.controlledSwiper = swiper;
+    // },
   },
   computed: {
     ...mapState(useLoadingState, ["isLoading"]),
@@ -448,3 +534,4 @@ export default {
   },
 };
 </script>
+<style lang="scss" scope></style>
