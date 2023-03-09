@@ -1,14 +1,16 @@
 <template>
-  <div class="mb-20">
+  <div class="mb-10 lg:mb-20">
     <div class="flex w-full">
       <img
         src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
         class="w-full h-[180px] lg:h-[280px] object-cover"
         alt=""
+        :class="imageClass"
       />
     </div>
     <div
       class="relative z-10 -mt-8 lg:-mt-[84px] ml-4 lg:ml-[110px] p-4 lg:py-6 lg:px-[32px] bg-netural-netural-100 hover:bg-secondary-secondary-100 transition-all group"
+      :class="textContentClass"
     >
       <div class="[&:not(:last-child)]:mb-5">
         <h3 class="flex items-start [&:not(:last-child)]:mb-2">
@@ -48,3 +50,15 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    imageClass: {
+      type: String,
+    },
+    textContentClass: {
+      type: String,
+    },
+  },
+};
+</script>

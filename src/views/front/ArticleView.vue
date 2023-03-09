@@ -2,9 +2,9 @@
   <div class="layout-content">
     <PageHeader />
     <div class="container">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
         <template v-for="(item, index) in 6" :key="index">
-          <ArticleItem />
+          <ArticleItem text-content-class="!ml-4" />
         </template>
       </div>
       <!-- <Pagination /> -->
@@ -21,6 +21,9 @@ export default {
     PageHeader,
     Pagination,
     ArticleItem,
+  },
+  created() {
+    useLoadingState().isLoading = true;
   },
   mounted() {
     useLoadingState().isLoading = false;

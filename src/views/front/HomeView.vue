@@ -1,18 +1,22 @@
 <template>
-  <div class="flex h-[375px] lg:h-[720px]">
+  <div class="flex h-[375px] lg:h-[720px] main-slider">
     <swiper
       :slides-per-view="1"
       :space-between="0"
+      :modules="modules"
+      :loop="true"
       :autoplay="{
         delay: 2500,
         disableOnInteraction: false,
       }"
-      :modules="modules"
-      :loop="true"
       navigation
       :pagination="{ clickable: true }"
     >
-      <swiper-slide v-for="item in sliderImages" :key="item.id">
+      <swiper-slide
+        v-for="item in sliderImages"
+        :key="item.id"
+        class="img-overlay"
+      >
         <div class="flex flex-col h-full container">
           <div
             class="relative z-10 flex flex-col items-center justify-center h-full"
@@ -73,7 +77,7 @@
       </div>
     </div>
   </section>
-  <section class="pt-20 pb-10 pb-10 lg:pb-[160px] bg-netural-netural-100">
+  <section class="pt-6 lg:pt-20 pb-10 lg:pb-[160px] bg-netural-netural-100">
     <div class="container">
       <div
         class="px-4 lg:px-8 lg:py-2 [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20 border-l border-netural-netural-400"
@@ -86,12 +90,12 @@
         <p class="font-bold ch-body lg:ch-heading-3">推薦行程</p>
       </div>
       <div class="hidden lg:grid lg:grid-rows-3 lg:grid-flow-col lg:gap-6">
-        <template v-for="(item, index) in 10" :key="index">
+        <template v-for="(item, index) in 6" :key="index">
           <ProductItem :item-index="index" />
         </template>
       </div>
       <swiper
-        :slidesPerView="'1'"
+        :slidesPerView="1"
         :spaceBetween="24"
         :pagination="{
           clickable: true,
@@ -99,7 +103,7 @@
         :width="260"
         :loop="true"
         :modules="modules"
-        class="flex lg:!hidden"
+        class="flex lg:!hidden common-slider"
       >
         <swiper-slide v-for="(item, index) in 6" :key="index">
           <ProductItem :item-index="index" />
@@ -122,9 +126,7 @@
       </div>
     </div>
   </section>
-  <section
-    class="pt-10 lg:pt-20 pb-10 pb-10 lg:pb-[160px] bg-netural-netural-200"
-  >
+  <section class="pt-10 lg:pt-20 pb-10 lg:pb-[160px] bg-netural-netural-200">
     <div
       class="container [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20"
     >
@@ -137,17 +139,15 @@
         <p class="font-bold ch-body lg:ch-heading-3">熱門景點</p>
       </div>
     </div>
-    <div class="overflow-x-auto grid grid-cols-2 md:grid-cols-5 gap-1">
+    <div class="overflow-x-auto grid grid-cols-2 md:grid-cols-5 md:gap-1">
       <div
-        v-for="(item, index) in 10"
-        :key="index"
+        v-for="item in spotImages"
+        :key="item.chTitle"
         class="relative aspect-square bg-netural-netural-400"
       >
         <div
           class="absolute inset-0 h-full w-full bg-cover bg-no-repeat bg-center img-overlay"
-          style="
-            background-image: url('https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800');
-          "
+          :style="`background-image: url('${item.imageUrl}')`"
         ></div>
         <div
           class="relative z-10 flex flex-col items-center justify-center h-full p-3"
@@ -155,12 +155,12 @@
           <h3
             class="[&:not(:last-child)]:lg-2 font-bold ch-caption-1 lg:ch-heading-2 text-netural-netural-100"
           >
-            金閣寺
+            {{ item.chTitle }}
           </h3>
           <p
             class="font-bold ch-caption-1 lg:ch-heading-3 text-netural-netural-100"
           >
-            とうきょうタワー
+            {{ item.jpTitle }}
           </p>
         </div>
       </div>
@@ -178,13 +178,13 @@
         </h2>
         <p class="font-bold ch-body lg:ch-heading-3">最新文章</p>
       </div>
-      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
+      <div class="hidden lg:grid lg:grid-cols-2 lg:gap-6">
         <template v-for="(item, index) in 6" :key="index">
           <ArticleItem />
         </template>
       </div>
       <swiper
-        :slidesPerView="'1'"
+        :slidesPerView="1"
         :spaceBetween="24"
         :pagination="{
           clickable: true,
@@ -192,7 +192,7 @@
         :width="260"
         :loop="true"
         :modules="modules"
-        class="flex lg:!hidden"
+        class="flex lg:!hidden common-slider"
       >
         <swiper-slide v-for="(item, index) in 6" :key="index">
           <ArticleItem />
@@ -215,9 +215,7 @@
       </div>
     </div>
   </section>
-  <section
-    class="pt-10 lg:pt-20 bg-primary-primary-100 pb-10 lg:pb-[160px] border-b border-netural-netural-500"
-  >
+  <section class="pt-10 lg:pt-20 bg-primary-primary-100 pb-10 lg:pb-[160px]">
     <div
       class="container [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20"
     >
@@ -230,119 +228,6 @@
         <p class="font-bold ch-body lg:ch-heading-3">在日本可以做什麼</p>
       </div>
     </div>
-    <!-- <div class="relative flex gap-6 h-[746px]">
-      <div class="w-[35%] h-[80%]">
-        <div class="overflow-hidden relative flex h-full">
-          <img
-            class="w-full h-full object-cover"
-            src="@/assets/images/img/image/thing_hotel.jpg"
-            alt=""
-          />
-          <div
-            class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
-          >
-            <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
-            ></div>
-            <h3
-              class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
-            >
-              住宿
-            </h3>
-          </div>
-        </div>
-      </div>
-      <div class="left-[calc(35%+24px)] w-[20%] h-[60%]">
-        <div class="overflow-hidden relative flex h-full">
-          <img
-            class="w-full h-full object-cover"
-            src="@/assets/images/img/image/thing_hotel.jpg"
-            alt=""
-          />
-          <div
-            class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
-          >
-            <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
-            ></div>
-            <h3
-              class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
-            >
-              住宿
-            </h3>
-          </div>
-        </div>
-      </div>
-      <div
-        class="relative left-[calc(35%+24px)] top-[calc(60%+24px)] w-[20%] h-[40%]"
-      >
-        <div class="overflow-hidden relative flex h-full">
-          <img
-            class="w-full h-full object-cover"
-            src="@/assets/images/img/image/thing_hotel.jpg"
-            alt=""
-          />
-          <div
-            class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
-          >
-            <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
-            ></div>
-            <h3
-              class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
-            >
-              住宿
-            </h3>
-          </div>
-        </div>
-      </div>
-      <div class="relative left-[calc(55%+24px*2)] top-0 w-[35%] h-[40%]">
-        <div class="overflow-hidden relative flex h-full">
-          <img
-            class="w-full h-full object-cover"
-            src="@/assets/images/img/image/thing_hotel.jpg"
-            alt=""
-          />
-          <div
-            class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
-          >
-            <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
-            ></div>
-            <h3
-              class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
-            >
-              住宿
-            </h3>
-          </div>
-        </div>
-      </div>
-      <div
-        class="relative left-[calc(55%+24px*2)] top-[calc(40%+24px)] w-[42.8%] h-[40%]"
-      >
-        <div class="overflow-hidden relative flex h-full">
-          <img
-            class="w-full h-full object-cover"
-            src="@/assets/images/img/image/thing_hotel.jpg"
-            alt=""
-          />
-          <div
-            class="absolute right-0 bottom-0 flex flex-col items-center justify-center w-[196px] h-[196px] bg-primary-primary-200"
-          >
-            <div
-              class="w-[22px] h-[22px] md:w-12 md:h-12 [&:not(:last-child)]:mb-2 transition-all ease-in-out duration-300 bg-netural-netural-100 icon-hotel"
-            ></div>
-            <h3
-              class="overflow-hidden ch-heading-3 font-bold text-netural-netural-100"
-            >
-              住宿
-            </h3>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- https://stackoverflow.com/questions/63252451/how-to-get-alternating-height-in-css-grid -->
     <div
       class="grid grid-rows-3 lg:grid-rows-4 grid-cols-2 lg:grid-cols-9 grid-flow-row lg:grid-flow-col gap-6 px-3 lg:px-0"
     >
@@ -465,6 +350,9 @@
       </div>
     </div>
   </section>
+  <div class="container">
+    <div class="relative -mt-[1px] border-b border-netural-netural-500"></div>
+  </div>
 </template>
 <script>
 import { mapState } from "pinia";
@@ -496,6 +384,58 @@ export default {
         {
           id: 2,
           imageUrl: "/src/assets/images/img/image/banner_01.jpg",
+        },
+      ],
+      spotImages: [
+        {
+          chTitle: "金閣寺",
+          jpTitle: "ろくおんじ",
+          imageUrl: "/src/assets/images/img/image/spot_01.jpg",
+        },
+        {
+          chTitle: "淺草",
+          jpTitle: "せんそうじ",
+          imageUrl: "/src/assets/images/img/image/spot_02.jpg",
+        },
+        {
+          chTitle: "富士山",
+          jpTitle: "ふじさん",
+          imageUrl: "/src/assets/images/img/image/spot_03.jpg",
+        },
+        {
+          chTitle: "伏見稻荷大社",
+          jpTitle: "ふしみいなりたいしゃ",
+          imageUrl: "/src/assets/images/img/image/spot_04.jpg",
+        },
+        {
+          chTitle: "道頓堀",
+          jpTitle: "どうとんぼり",
+          imageUrl: "/src/assets/images/img/image/spot_05.jpg",
+        },
+        {
+          chTitle: "大阪城",
+          jpTitle: "おおさかじょう",
+          imageUrl: "/src/assets/images/img/image/spot_06.jpg",
+        },
+        {
+          chTitle: "淺草",
+          jpTitle: "んそうじ",
+          imageUrl: "/src/assets/images/img/image/spot_07.jpg",
+        },
+        {
+          chTitle: "迪士尼樂園",
+          jpTitle: "ディズニーランド",
+          imageUrl: "/src/assets/images/img/image/spot_08.jpg",
+        },
+        {
+          chTitle: "新宿",
+          jpTitle: "しんじゅく",
+          imageUrl: "/src/assets/images/img/image/spot_09.jpg",
+        },
+        {
+          chTitle: "東京鐵塔",
+          jpTitle: "とうきょうタワー",
+          imageUrl: "/src/assets/images/img/image/spot_10.jpg",
         },
       ],
     };
@@ -534,4 +474,31 @@ export default {
   },
 };
 </script>
-<style lang="scss" scope></style>
+<style lang="scss" scope>
+.main-slider {
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    @apply bottom-3 lg:bottom-20;
+  }
+  .swiper-pagination-bullet {
+    @apply bg-netural-netural-100 transition-all duration-500;
+    &.swiper-pagination-bullet-active {
+      @apply w-4 rounded;
+    }
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    @apply text-netural-netural-100;
+  }
+}
+.common-slider {
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    @apply static mb-10;
+  }
+  .swiper-pagination-bullet {
+    @apply bg-netural-netural-300 transition-all duration-500;
+    &.swiper-pagination-bullet-active {
+      @apply w-4 rounded bg-secondary-secondary-100;
+    }
+  }
+}
+</style>

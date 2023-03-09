@@ -129,10 +129,42 @@
         <h2 class="ch-heading-2 font-bold text-netural-netural-400">
           其他行程推薦
         </h2>
-        <div class="flex space-x-6 gap-6">
-          <template v-for="(item, index) in 4" :key="index">
-            <ProductItem :item-index="index" />
-          </template>
+        <div class="flex flex-row">
+          <swiper
+            :pagination="{
+              clickable: true,
+            }"
+            :modules="modules"
+            :breakpoints="{
+              320: {
+                slidesPerView: 1,
+                width: 260,
+                spaceBetween: 24,
+              },
+              640: {
+                slidesPerView: 2,
+                width: null,
+                spaceBetween: 24,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 24,
+              },
+              1296: {
+                slidesPerView: 4,
+                spaceBetween: 24,
+              },
+            }"
+            class="flex common-slider"
+          >
+            <swiper-slide v-for="(item, index) in 10" :key="index">
+              <ProductItem
+                :item-index="index"
+                image-class="!h-[200px]"
+                text-content-class="!ml-0 !mt-0"
+              />
+            </swiper-slide>
+          </swiper>
         </div>
       </div>
     </div>
@@ -142,15 +174,31 @@
 const { VITE_URL, VITE_PATH } = import.meta.env;
 import { useLoadingState } from "@/stores/common.js";
 import ProductItem from "@/components/front/ProductItem.vue";
+
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Autoplay, Navigation, Pagination } from "swiper";
+
+// Import Swiper styles
+import "swiper/scss";
+import "swiper/scss/navigation";
+import "swiper/scss/pagination";
+import "swiper/scss/autoplay";
+import "swiper/scss/effect-fade";
+
 export default {
   data() {
     return {
+      modules: [Autoplay, Navigation, Pagination],
+      controlledSwiper: null,
       productContent: {},
       qty: 1,
     };
   },
   components: {
     ProductItem,
+    Swiper,
+    SwiperSlide,
   },
   methods: {
     getProductItem(id) {
@@ -193,3 +241,13 @@ export default {
   },
 };
 </script>
+<style lang="scss" scope>
+.common-slider {
+  .swiper-pagination-bullet {
+    @apply bg-netural-netural-300 transition-all duration-500;
+    &.swiper-pagination-bullet-active {
+      @apply w-4 rounded bg-secondary-secondary-100;
+    }
+  }
+}
+</style>

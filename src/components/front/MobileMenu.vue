@@ -5,7 +5,7 @@
   >
     <nav class="flex flex-col h-full justify-center items-center py-4">
       <ul
-        class="overflow-y-auto flex flex-col items-center w-full space-y-2 px-[88px]"
+        class="overflow-y-auto flex flex-col items-center w-full space-y-2 px-4 sm:px-[88px]"
       >
         <li
           class="w-full border-b border-netural-netural-300 text-center"
@@ -13,7 +13,7 @@
           :key="item.path"
         >
           <router-link
-            class="block py-8 px-[70px] font-normal ch-caption-1 text-netural-netural-300"
+            class="block py-8 font-normal ch-caption-1 text-netural-netural-300"
             :to="item.path"
             >{{ item.name }}</router-link
           >

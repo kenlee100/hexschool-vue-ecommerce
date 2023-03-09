@@ -55,9 +55,15 @@
               />
             </template>
           </div> -->
-          <div class="grid grid-cols-2 lg:grid-cols-3 grid-flow-row gap-6">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
+          >
             <template v-for="(item, index) in products" :key="index">
-              <ProductItem :item-index="index" />
+              <ProductItem
+                :item-index="index"
+                image-class="!h-[200px]"
+                text-content-class="!ml-0 !mt-0"
+              />
             </template>
           </div>
           <Pagination

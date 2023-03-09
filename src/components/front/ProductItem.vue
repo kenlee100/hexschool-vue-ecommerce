@@ -1,5 +1,5 @@
 <template>
-  <div v-if="itemIndex % 2 === 0" class="flex flex-col mb-20">
+  <div v-if="itemIndex % 2 === 0" class="flex flex-col mb-10 lg:mb-20 group">
     <div class="relative overflow-hidden flex flex-shrink-0 w-full img-overlay">
       <div
         class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
@@ -10,12 +10,14 @@
       </div>
       <img
         src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
-        class="w-full h-[200px] lg:h-[480px] object-cover"
+        class="w-full h-[200px] lg:h-[480px] object-cover transition-all ease-in-out group-hover:scale-[1.1]"
+        :class="imageClass"
         alt=""
       />
     </div>
     <div
       class="relative z-10 lg:-mt-[84px] lg:ml-[110px] py-6 px-5 lg:px-9 bg-secondary-secondary-100"
+      :class="textContentClass"
     >
       <div class="[&:not(:last-child)]:mb-3 lg:[&:not(:last-child)]:mb-8">
         <div class="flex items-start">
@@ -51,7 +53,7 @@
       </div>
     </div>
   </div>
-  <div v-if="itemIndex % 2 === 1" class="flex flex-col mb-20">
+  <div v-if="itemIndex % 2 === 1" class="flex flex-col mb-10 lg:mb-20 group">
     <div class="relative overflow-hidden flex flex-shrink-0 w-full img-overlay">
       <div
         class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
@@ -62,12 +64,14 @@
       </div>
       <img
         src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
-        class="w-full h-[200px] lg:h-[480px] object-cover"
+        class="w-full h-[200px] lg:h-[480px] object-cover transition-all ease-in-out group-hover:scale-[1.1]"
+        :class="imageClass"
         alt=""
       />
     </div>
     <div
       class="relative z-10 lg:-mt-[84px] lg:ml-[110px] py-6 px-5 lg:px-9 bg-netural-netural-200 lg:bg-netural-netural-100"
+      :class="textContentClass"
     >
       <div class="[&:not(:last-child)]:mb-3 lg:[&:not(:last-child)]:mb-8">
         <div class="flex items-start">
@@ -113,6 +117,12 @@ export default {
     itemData: {
       type: Object,
       default: () => {},
+    },
+    imageClass: {
+      type: String,
+    },
+    textContentClass: {
+      type: String,
     },
     // itemWidth: {
     //   type: String,

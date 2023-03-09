@@ -23,12 +23,17 @@ export default {
     // 監聽手機選單狀態
     toggle() {
       if (this.toggle) {
-        document.body.classList.add("overflow-hidden");
+        document.body.classList.add("overflow-hidden", "md:overflow-auto");
       } else {
-        document.body.classList.remove("overflow-hidden");
+        document.body.classList.remove("overflow-hidden", "md:overflow-auto");
       }
     },
   },
   components: { RouterView, HeaderNav, FooterNav, MobileMenu },
 };
 </script>
+<style lang="scss">
+.vl-overlay .vl-background {
+  @apply bg-primary-primary-200 opacity-100;
+}
+</style>
