@@ -9,19 +9,20 @@
     </div>
     <div class="container">
       <div
-        class="relative z-10 -mt-[34px] lg:-mt-[62px] px-4 lg:px-8 lg:py-2 w-max-content [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20 bg-netural-netural-100 before:content-[''] before:absolute before:left-2 before:top-[6px] lg:before:left-4 before:bottom-2 lg:before:top-[14px] lg:before:bottom-4 before:w-[1px] before:bg-netural-netural-400"
+        class="relative z-10 -mt-[34px] lg:-mt-[62px] px-4 lg:px-8 lg:py-2 [&:not(:last-child)]:mb-10 lg:[&:not(:last-child)]:mb-20 bg-netural-netural-100 before:content-[''] before:absolute before:left-2 before:top-[6px] lg:before:left-4 before:bottom-2 lg:before:top-[14px] lg:before:bottom-4 before:w-[1px] before:bg-netural-netural-400"
       >
-      {{ getPath }}
-        <!-- <h2 class="en-body">
-          {{ getPath[0].en }}
-        </h2> -->
+        <!-- {{ matchPath }} -->
+        <h2 class="en-body">
+          <!-- {{ matchPath[0] }} -->
+          {{ this.$route.meta.enTitle }}
+        </h2>
         <p class="font-bold ch-heading-1 lg:ch-display">
-          <!-- {{ getPath[0].name }} -->
+          {{ this.$route.meta.title }}
         </p>
       </div>
       <!-- <div class="relative z-10 flex items-center justify-center -mt-10">
         <h2
-          v-if="getPath.length > 0"
+          v-if="matchPath.length > 0"
           class="relative w-full px-6 py-2 after:content-[''] after:relative after:inset-x-0 after:-bottom-2 after:block after:mx-auto after:border-b-4 after:border-netural-netural-400 ch-heading-3 lg:ch-display font-bold bg-netural-netural-100"
         >
           
@@ -32,8 +33,8 @@
   </div>
 </template>
 <script>
-import { mapState } from "pinia";
-import useNavListMenu from "@/stores/navList.js";
+// import { mapState } from "pinia";
+// import useNavListMenu from "@/stores/navList.js";
 export default {
   props: {
     pageTitle: {
@@ -41,18 +42,23 @@ export default {
       require: true,
     },
   },
-  computed: {
-    ...mapState(useNavListMenu, ["navList"]),
-    getPath() {
-      // 回傳符合navList store的路徑
-      return this.navList.filter((item) => {
-        console.log("item", item);
-        return item.path === this.$route.path;
-      });
-    },
-  },
-  // mounted() {
-  //   console.log("navlist", this.navList);
+  // computed: {
+  //   ...mapState(useNavListMenu, ["pageHeaderData"]),
+  //   // matchPath() {
+  //   //   // 回傳符合pageHeaderData store的路徑
+  //   //   return this.pageHeaderData.filter((item) => {
+  //   //     console.log("item", item.title);
+  //   //     // return item.path === this.$route.path;
+  //   //   });
+  //   // },
   // },
+  mounted() {
+    // console.log("navlist", this.navList);
+    // console.log("$router", this.$router.getRoutes());
+    console.log("$router", this.$route);
+    // this.$router.afterEach((to, from) => {
+    //   console.log("to,from", to, from);
+    // });
+  },
 };
 </script>

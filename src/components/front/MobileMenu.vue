@@ -15,7 +15,7 @@
           <router-link
             class="block py-8 font-normal ch-caption-1 text-netural-netural-300"
             :to="item.path"
-            >{{ item.name }}</router-link
+            >{{ item.title }}</router-link
           >
         </li>
       </ul>
@@ -24,7 +24,7 @@
 </template>
 <script>
 import { mapState, mapWritableState } from "pinia";
-import useNavListMenu from "../../stores/navList.js";
+import useNavListMenu from "@/stores/navList.js";
 import { useMenuStore } from "@/stores/common.js";
 export default {
   computed: {

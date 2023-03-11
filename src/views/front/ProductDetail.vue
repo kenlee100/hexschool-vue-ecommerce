@@ -238,6 +238,7 @@ export default {
   mounted() {
     useLoadingState().isLoading = true;
     this.getProductItem(this.$route.params.id);
+    // console.log('id',this.$route.params.id);
   },
 };
 </script>

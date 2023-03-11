@@ -11,7 +11,7 @@
               <router-link
                 class="block py-[12px] px-1 md:p-3 font-bold ch-body text-netural-netural-400 hover:text-secondary-secondary-200"
                 :to="item.path"
-                >{{ item.name }}</router-link
+                >{{ item.title }}</router-link
               >
             </li>
           </ul>

@@ -3,27 +3,55 @@ import { defineStore } from "pinia";
 export default defineStore("navListMenu", {
   // => 直接回傳的寫法
   state: () => ({
-    navList: [
-      {
-        path: "/products",
-        name: "推薦行程",
-        en: "RECOMMEND",
-      },
-      {
-        path: "/article",
-        name: "旅行日記",
-        en: "BLOG",
-      },
-      {
-        path: "/about",
-        name: "關於我們",
-        en: "ABOUT",
-      },
-      {
-        path: "/faq",
-        name: "常見問題",
-        en: "FAQ",
-      },
-    ],
+    webTitle: "JAPAN TRIP",
+    navRouteData: [],
   }),
+  actions: {
+    pushRouteData(content) {
+      this.navRouteData = content;
+    },
+  },
+  getters: {
+    // 給選單用
+    navList({ navRouteData }) {
+      const list = [];
+      for (let i = 0; i < navRouteData.length; i++) {
+        if (
+          navRouteData[i].path === "/" ||
+          navRouteData[i].path === "/product/:id" ||
+          navRouteData[i].path === "/cart"
+        ) {
+          continue;
+        }
+        list.push({
+          path: navRouteData[i].path,
+          title: navRouteData[i].meta.title,
+          enTitle: navRouteData[i].meta.enTitle,
+        });
+      }
+      return list;
+    },
+    // pageHeaderData({ navRouteData }) {
+    //   const list = [];
+    //   for (let i = 0; i < navRouteData.length; i++) {
+    //     if (
+    //       navRouteData[i].path === "/" ||
+    //       navRouteData[i].path === "/product/:id"
+    //     ) {
+    //       continue;
+    //     }
+    //     // else if (navRouteData[i].path === "/product/:id") {
+    //     //   list.push({
+    //     //     path: navRouteData[i].path,
+    //     //   });
+    //     // }
+    //     list.push({
+    //       path: navRouteData[i].path,
+    //       title: navRouteData[i].meta.title,
+    //       enTitle: navRouteData[i].meta.enTitle,
+    //     });
+    //   }
+    //   return list;
+    // },
+  },
 });

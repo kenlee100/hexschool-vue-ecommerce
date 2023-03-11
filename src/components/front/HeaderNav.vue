@@ -21,7 +21,7 @@
                   <a
                     class="block p-3 font-bold ch-body text-netural-netural-400 hover:text-secondary-secondary-200 group-[.nav-active]:text-secondary-secondary-200"
                     :href="href"
-                    >{{ item.name }}</a
+                    >{{ item.title }}</a
                   >
                 </li>
               </router-link>

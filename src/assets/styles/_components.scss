@@ -115,10 +115,10 @@
       @apply hidden;
       & ~ .el-checkbox-style {
         .material-symbols-outlined {
-          @apply hidden relative z-10 text-netural-netural-100 ch-body;
+          @apply hidden relative z-10 text-netural-netural-100 ch-heading-4;
         }
-        @apply relative flex items-center justify-center w-4 h-4 cursor-pointer
-        after:content-[''] after:absolute after:top-0 after:left-0 after:rounded after:block after:w-4 after:h-4 after:border after:border-netural-netural-300 after:bg-netural-netural-200;
+        @apply relative flex items-center justify-center w-5 h-5 cursor-pointer
+        after:content-[''] after:absolute after:top-0 after:left-0 after:rounded after:block after:w-5 after:h-5 after:border after:border-netural-netural-300 after:bg-netural-netural-200;
       }
       &:checked {
         & ~ .el-checkbox-style {
@@ -234,5 +234,4 @@
       }
     }
   }
-  
 }
