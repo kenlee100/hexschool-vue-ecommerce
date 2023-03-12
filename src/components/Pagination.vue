@@ -6,7 +6,7 @@
           <a
             class="flex items-center justify-center w-12 h-12 rounded bg-netural-netural-200 text-netural-netural-400 group-[.disabled]:opacity-30 group-[.disabled]:cursor-not-allowed font-semibold ch-heading-4"
             href="#"
-            @click.prevent="getProducts(pages.current_page - 1)"
+            @click.prevent="getList(pages.current_page - 1)"
           >
             <span class="material-symbols-outlined"> chevron_left </span>
           </a>
@@ -37,7 +37,7 @@
           <a
             class="flex items-center justify-center w-12 h-12 rounded bg-netural-netural-200 text-netural-netural-400 group-[.disabled]:opacity-30 group-[.disabled]:cursor-not-allowed font-semibold ch-heading-4"
             href="#"
-            @click.prevent="getProducts(pages.current_page + 1)"
+            @click.prevent="getList(pages.current_page + 1)"
           >
             <span class="material-symbols-outlined"> chevron_right </span>
           </a>
@@ -54,7 +54,7 @@ export default {
       default: () => {},
     },
     //
-    getProducts: {
+    getList: {
       type: Function,
       default: () => {},
     },

@@ -58,10 +58,13 @@
     @apply px-3 lg:px-6;
   }
   .layout-content {
-    @apply flex-col min-h-[calc(100vh-72px-230px)] pb-16;
+    @apply flex flex-col min-h-[calc(100vh-72px-230px)] pb-16;
   }
-  .img-overlay {
-    @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-netural-netural-500 before:opacity-40;
+  .color-overlay {
+    @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-netural-netural-500 before:opacity-40 before:bg-netural-netural-400;
+  }
+  .pattern-overlay {
+    @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-[url('../src/assets/images/img/image/pattern.png')];
   }
   // text
   // .text-antonio {
@@ -155,7 +158,7 @@
       @apply mt-0.5 [&:not(:last-child)]:mr-1;
     }
     .el-checkbox-label {
-      @apply select-none cursor-pointer;
+      @apply flex-1 select-none cursor-pointer;
       &__text {
         @apply font-bold ch-body text-netural-netural-400;
       }
@@ -184,6 +187,9 @@
   //     font-size: 20px;
   //   }
   // }
+  // tailwind 寫法，底線前面加 \
+  // @apply fter:content-['chevron\_right'] after:font-['Material_Symbols_Outlined']
+
   .steps {
     @apply flex justify-center items-center max-w-[800px] mx-auto py-4;
     .steps-list {
@@ -232,6 +238,15 @@
       &__line {
         @apply absolute top-[30px] left-[30px] w-full h-1 before:content-[''] before:block before:w-0 before:h-full bg-netural-netural-300 before:bg-secondary-secondary-200 before:transition-all;
       }
+    }
+  }
+  .editor-content {
+    ul,ol {
+      list-style: inherit;
+      @apply pl-5;
+    }
+    p {
+      @apply mb-5;
     }
   }
 }

@@ -25,25 +25,62 @@
           <div class="flex flex-col">
             <h3 class="ch-heading-4 font-bold pb-4">地區篩選</h3>
             <ul
-              class="grid grid-cols-4 lg:grid-cols-3 gap-3 lg:flex lg:flex-col lg:space-y-2 lg:gap-0"
+              class="grid grid-cols-4 lg:grid-cols-3 gap-3 lg:flex lg:flex-col lg:gap-0"
             >
-              <li v-for="(item, index) in 10" :key="index">
-                <div class="el-checkbox el-checkbox-primary">
-                  <input
-                    :id="index"
-                    class="el-checkbox-input"
-                    type="checkbox"
-                  />
-                  <label class="el-checkbox-style" :for="index">
-                    <!-- <i class="fa-solid fa-check fa-fw"></i> -->
-                    <span class="material-symbols-outlined"> done </span>
-                  </label>
-                  <label class="el-checkbox-label" :for="index">
-                    <span class="el-checkbox-label__text">地區</span>
-                  </label>
+              <li @click="searchCategory('全部地區')" class="group">
+                <div
+                  class="flex items-center after:content-['chevron\_right'] after:ml-auto after:ch-heading-3 after:font-['Material_Symbols_Outlined'] pb-2 px-3 border-b border-gray-200 cursor-pointer group-[.active]:bg-netural-netural-400 group-[.active]:text-netural-netural-100"
+                >
+                  <p class="flex-1 pr-2 whitespace-nowrap">全部地區</p>
+                </div>
+              </li>
+              <li
+                v-for="(item, index) in categoryData"
+                :key="item"
+                class="group"
+                @click="searchCategory(item)"
+              >
+                <div
+                  class="flex items-center after:content-['chevron\_right'] after:ml-auto after:ch-heading-3 after:font-['Material_Symbols_Outlined'] pb-2 px-3 border-b border-gray-200 cursor-pointer group-[.active]:bg-netural-netural-400 group-[.active]:text-netural-netural-100"
+                >
+                  <p class="flex-1 pr-2 whitespace-nowrap">{{ item }}</p>
                 </div>
               </li>
             </ul>
+            <!-- 多選checkbox -->
+            <!-- <ul
+              class="grid grid-cols-4 lg:grid-cols-3 gap-3 lg:flex lg:flex-col lg:space-y-2 lg:gap-0"
+            >
+              <li>
+                <div class="el-checkbox el-checkbox-primary">
+                  <input id="`all`" class="el-checkbox-input" type="checkbox" />
+                  <label class="el-checkbox-style" for="`all`">
+                    <span class="material-symbols-outlined"> done </span>
+                  </label>
+                  <label class="el-checkbox-label" for="`all`">
+                    <span class="el-checkbox-label__text">全部地區</span>
+                  </label>
+                </div>
+              </li>
+              <li v-for="(item, index) in categoryData" :key="item">
+                <div class="el-checkbox el-checkbox-primary">
+                  <input
+                    :id="`${item}-${index}`"
+                    class="el-checkbox-input"
+                    type="checkbox"
+                    v-model="selectCategoryStore"
+                    :value="item"
+                    @change="searchCategory(item)"
+                  />
+                  <label class="el-checkbox-style" :for="`${item}-${index}`">
+                    <span class="material-symbols-outlined"> done </span>
+                  </label>
+                  <label class="el-checkbox-label" :for="`${item}-${index}`">
+                    <span class="el-checkbox-label__text">{{ item }}</span>
+                  </label>
+                </div>
+              </li>
+            </ul> -->
           </div>
         </div>
         <div class="lg:flex-auto w-full lg:w-[75%]">
@@ -58,8 +95,9 @@
           <div
             class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
           >
-            <template v-for="(item, index) in products" :key="index">
+            <template v-for="(item, index) in filterProducts" :key="item.id">
               <ProductItem
+                :product-data="item"
                 :item-index="index"
                 image-class="!h-[200px]"
                 text-content-class="!ml-0 !mt-0"
@@ -69,142 +107,88 @@
           <Pagination
             :pages="pagination"
             @change-page="getProducts"
-            :get-products="getProducts"
+            :get-list="getProducts"
           ></Pagination>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col-4" v-for="item in products" :key="item.id">
-          <div class="card mb-4">
-            <router-link :to="`/product/${item.id}`">
-              <img :src="item.imageUrl" class="card-img-top" :alt="item.title" />
-            </router-link>
-            <div class="card-body">
-              <span class="badge rounded-pill bg-primary">{{ item.category }}</span>
-              <h5 class="card-title">{{ item.title }}</h5>
-              <p class="card-text">
-                {{ item.description }}
-              </p>
-              <div class="btn-group btn-group-sm">
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary"
-                  @click="openModal(item.id)"
-                  :disabled="loadingStatus.loadingItem === item.id"
-                >
-                  <i
-                    v-if="loadingStatus.loadingItem === item.id"
-                    class="fas fa-spinner fa-pulse"
-                  ></i>
-                  快速查看
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger"
-                  @click="addCart(item)"
-                  :disabled="loadingStatus.loadingItem === item.id"
-                >
-                  <i
-                    v-if="loadingStatus.loadingItem === item.id"
-                    class="fas fa-spinner fa-pulse"
-                  ></i>
-                  加到購物車
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
-  <!-- <ProductModal
-    ref="productModal"
-    :temp-content="tempProduct"
-    :add-cart="addCart"
-    :id="productId"
-    :open-modal="openModal"
-  ></ProductModal> -->
 </template>
 <script>
-const { VITE_URL, VITE_PATH } = import.meta.env;
 // import { RouterLink } from "vue-router";
-// import ProductModal from "@/components/front/ProductModal.vue";
+const { VITE_URL, VITE_PATH } = import.meta.env;
 import Pagination from "@/components/Pagination.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ProductItem from "@/components/front/ProductItem.vue";
+import { mapActions, mapState } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
+import { productsStore } from "@/stores/productsStore.js";
 export default {
   data() {
     return {
       loadingStatus: {
         loadingItem: "",
       },
-      products: [],
-      pagination: {},
-      tempProduct: {
-        imagesUrl: [],
-      },
+
+      // products: [],
+      // pagination: {},
+      // tempProduct: {
+      //   imagesUrl: [],
+      // },
+      // currentCategory: "",
       productId: "",
+      // selectCategoryStore: null,
+      // selectCategory: [],
     };
   },
+  watch: {
+    // queryVal(val) {
+    //   console.log("va", val);
+    //   if (!val) return;
+    //   this.$router.push({
+    //     // path: "/products",
+    //     name: "ProductListView",
+    //     query: { category: val.category },
+    //   });
+    // },
+  },
   components: {
-    // RouterLink,
-    // ProductModal,
     Pagination,
     PageHeader,
     ProductItem,
   },
   methods: {
-    openModal(id) {
-      // id為外層帶入 productId
-      // 將 id 帶入 讀取狀態
-      this.loadingStatus.loadingItem = id;
-      this.productId = id;
-    },
-    // 加入購物車
-    addCart(content, qty = 1) {
-      // 賦予讀取狀態id
-      this.loadingStatus.loadingItem = content.id;
-      this.$http
-        .post(`${VITE_URL}/api/${VITE_PATH}/cart`, {
-          data: {
-            product_id: content.id,
-            qty,
-          },
-        })
-        .then((res) => {
-          // 將讀取狀態清空
-          this.loadingStatus.loadingItem = "";
-          //解構賦值
-          const {
-            message,
-            // 取出內層的資料
-            data: { product },
-          } = res.data;
-          alert(`${product.title} ${message}`);
-          this.$refs.productModal.closeModal();
-        })
-        .catch((err) => {
-          alert(`${err.response.data.message}`);
-        });
-    },
-    getProducts(num = 1) {
-      this.$http
-        .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${num}`)
-        .then((res) => {
-          console.log("res", res);
-          this.products = res.data.products;
-          this.pagination = res.data.pagination;
-          useLoadingState().isLoading = false;
-        })
-        .catch((err) => {
-          alert(`${err.response.data.message}`);
-        });
-    },
+    ...mapActions(productsStore, ["getProducts", "searchCategory"]),
+
+    // openModal(id) {
+    //   // id為外層帶入 productId
+    //   // 將 id 帶入 讀取狀態
+    //   this.loadingStatus.loadingItem = id;
+    //   this.productId = id;
+    // },
+    // changeQuery(content) {
+    //   this.$router.push({
+    //     // path: "/products",
+    //     name: "ProductListView",
+    //     query: { category: content },
+    //   });
+    // },
   },
-  mounted() {
+  computed: {
+    ...mapState(productsStore, [
+      "products",
+      "pagination",
+      "categoryData",
+      "filterProducts",
+      "currentCategory",
+    ]),
+    // queryVal() {
+    //   return this.$route.query;
+    // },
+  },
+  async mounted() {
     useLoadingState().isLoading = true;
-    this.getProducts();
+    await this.getProducts();
   },
 };
 </script>

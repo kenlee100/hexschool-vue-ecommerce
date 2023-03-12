@@ -19,7 +19,9 @@ export default defineStore("navListMenu", {
         if (
           navRouteData[i].path === "/" ||
           navRouteData[i].path === "/product/:id" ||
-          navRouteData[i].path === "/cart"
+          navRouteData[i].path === "/article/:id" ||
+          navRouteData[i].path === "/cart" ||
+          navRouteData[i].name === "404"
         ) {
           continue;
         }

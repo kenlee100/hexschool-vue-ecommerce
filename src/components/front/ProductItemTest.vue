@@ -1,6 +1,6 @@
 <template>
   <!-- <div v-if="index % 2 === 0" class="mb-20">
-            <div class="flex w-full img-overlay">
+            <div class="flex w-full color-overlay">
               <div
                 class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
               >
@@ -54,7 +54,7 @@
             </div>
           </div> -->
           <!-- <div v-if="index % 2 === 1" class="mb-20">
-            <div class="flex w-full img-overlay">
+            <div class="flex w-full color-overlay">
               <div
                 class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
               >

@@ -1,15 +1,44 @@
 <template>
   <div class="layout-content">
-    <div>
+    <!-- <img
+      class="w-full h-[400px] object-cover"
+      src="https://placehold.co/640x480?text=No+Photo"
+      alt=""
+    /> -->
+    <div v-if="productContent.hasOwnProperty('imagesUrl')">
+      <swiper
+        :slidesPerView="3"
+        :spaceBetween="24"
+        :pagination="{
+          clickable: true,
+        }"
+        :loop="true"
+        :autoplay="{
+          delay: 3000,
+          disableOnInteraction: false,
+        }"
+        :modules="modules"
+        class="flex common-slider"
+      >
+        <swiper-slide v-for="item in productContent.imagesUrl" :key="item.id">
+          <img
+            class="flex-shrink-0 w-full h-[400px] object-cover"
+            :src="item.imageUrl"
+            alt=""
+          />
+        </swiper-slide>
+      </swiper>
+    </div>
+    <div v-else-if="productContent.hasOwnProperty('imageUrl')">
       <img
-        v-if="productContent.hasOwnProperty('imageUrl')"
-        class="w-full h-[400px] object-cover"
+        class="flex-shrink-0 w-full h-[400px] object-cover"
         :src="productContent.imageUrl"
         alt=""
       />
+    </div>
+    <div v-else>
       <img
-        v-else
-        class="w-full h-[400px] object-cover"
+        class="flex-shrink-0 w-full h-[400px] object-cover"
         src="https://placehold.co/640x480?text=No+Photo"
         alt=""
       />
@@ -38,41 +67,41 @@
           </div>
           <div class="flex flex-col">
             <p>
-              {{
-                productContent.description
-              }}東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。
+              {{ productContent.description }}
+              <!-- 東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。 -->
             </p>
           </div>
           <div class="flex flex-col">
             <ul class="flex border-b border-netural-netural-300">
               <li class="group active">
-                <a
-                  class="flex items-center justify-center py-2 px-4 bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4 group-[.active]:text-netural-netural-100 group-[.active]:bg-secondary-secondary-200"
-                  href="#"
-                  >商品內容</a
+                <div
+                  class="flex items-center justify-center py-2 px-4 bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4 group-[.active]:text-netural-netural-100 group-[.active]:bg-secondary-secondary-200 cursor-pointer"
                 >
+                  商品內容
+                </div>
               </li>
-              <li class="group">
-                <a
-                  class="flex items-center justify-center py-2 px-4 bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4 group-[.active]:text-netural-netural-100 group-[.active]:bg-secondary-secondary-200"
-                  href="#"
-                  >購買須知</a
+              <!-- <li class="group">
+                <div
+                  class="flex items-center justify-center py-2 px-4 bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4 group-[.active]:text-netural-netural-100 group-[.active]:bg-secondary-secondary-200 cursor-pointer"
                 >
-              </li>
+                  購買須知
+                </div>
+              </li> -->
             </ul>
             <div class="flex flex-col">
-              <div class="p-4 active">
+              <div class="pt-5 pb-4 active">
+                <div v-html="productContent.content"></div>
+                <!-- <p>商品內容：{{ productContent.content }}</p>
+                <p>
+                  東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。
+                </p> -->
+              </div>
+              <!-- <div class="pt-5 pb-4 hidden">
                 <p>商品內容：{{ productContent.content }}</p>
                 <p>
                   東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。
                 </p>
-              </div>
-              <div class="p-4 hidden">
-                <p>商品內容：{{ productContent.content }}</p>
-                <p>
-                  東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。
-                </p>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -101,7 +130,7 @@
                     :key="index"
                     :value="index + 1"
                   >
-                    {{ index + 1 }}
+                    {{ index + 1 }} {{ productContent.unit }}
                   </option>
                 </select>
               </div>
@@ -129,7 +158,7 @@
         <h2 class="ch-heading-2 font-bold text-netural-netural-400">
           其他行程推薦
         </h2>
-        <div class="flex flex-row">
+        <div>
           <swiper
             :pagination="{
               clickable: true,
@@ -157,11 +186,16 @@
             }"
             class="flex common-slider"
           >
-            <swiper-slide v-for="(item, index) in 10" :key="index">
+            <swiper-slide
+              v-for="(item, index) in filterOtherItem"
+              :key="item.id"
+            >
               <ProductItem
+                :product-data="item"
                 :item-index="index"
                 image-class="!h-[200px]"
                 text-content-class="!ml-0 !mt-0"
+                @change-content="changeProductContent"
               />
             </swiper-slide>
           </swiper>
@@ -174,7 +208,8 @@
 const { VITE_URL, VITE_PATH } = import.meta.env;
 import { useLoadingState } from "@/stores/common.js";
 import ProductItem from "@/components/front/ProductItem.vue";
-
+import { mapActions, mapState } from "pinia";
+import { productsStore } from "@/stores/productsStore.js";
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Navigation, Pagination } from "swiper";
@@ -201,44 +236,39 @@ export default {
     SwiperSlide,
   },
   methods: {
-    getProductItem(id) {
-      this.$http
-        .get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`)
-        .then((res) => {
-          this.productContent = res.data.product;
-          useLoadingState().isLoading = false;
-        })
-        .catch((err) => {
-          alert(`${err.response.data.message}`);
-          useLoadingState().isLoading = false;
-        });
-    },
-    addCart(content, qty = 1) {
-      this.$http
-        .post(`${VITE_URL}/api/${VITE_PATH}/cart`, {
-          data: {
-            product_id: content.id,
-            qty,
-          },
-        })
-        .then((res) => {
-          //解構賦值
-          const {
-            message,
-            // 取出內層的資料
-            data: { product },
-          } = res.data;
-          alert(`${product.title} ${message}`);
-        })
-        .catch((err) => {
-          alert(`${err.response.data.message}`);
-        });
+    ...mapActions(productsStore, ["getProductItem", "getProducts", "addCart"]),
+    async changeProductContent(id) {
+      useLoadingState().isLoading = true;
+      return await this.getProductItem(id).then((res) => {
+        useLoadingState().isLoading = false;
+        return res.data.product;
+      });
     },
   },
-  mounted() {
+  watch: {
+    // 監聽ID有變動就再透過 this.changeProductContent 取得新資料渲染至頁面上
+    productId: async function (val) {
+      // 換頁時可能會抓不到id而錯誤
+      if (!val) return;
+      this.productContent = await this.changeProductContent(val);
+    },
+  },
+  computed: {
+    ...mapState(productsStore, ["products"]),
+    // 只篩選出當下頁面內容之外的資料
+    filterOtherItem() {
+      return this.products.filter((item) => item.id !== this.$route.params.id);
+    },
+    productId() {
+      return this.$route.params.id;
+    },
+  },
+  async mounted() {
     useLoadingState().isLoading = true;
-    this.getProductItem(this.$route.params.id);
-    // console.log('id',this.$route.params.id);
+    this.productContent = await this.changeProductContent(
+      this.$route.params.id
+    );
+    await this.getProducts();
   },
 };
 </script>

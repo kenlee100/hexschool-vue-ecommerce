@@ -17,7 +17,6 @@ import { mapActions, mapState } from "pinia";
 export default {
   data() {
     return {
-      allPathData: [],
       currentPageData: {},
     };
   },
@@ -32,7 +31,6 @@ export default {
       return this.$router
         .getRoutes()
         .filter((item) => Object.keys(item.meta).length > 0);
-      // console.log("navRouteData", navRouteData);
     },
   },
   watch: {
@@ -47,25 +45,8 @@ export default {
   },
   components: { RouterView, HeaderNav, FooterNav, MobileMenu },
   mounted() {
-    this.allPathData = this.$router.getRoutes();
-    console.log("this.allPathData", this.allPathData);
-    console.log("this.$route", this.$route);
-    console.log("location", location);
-    console.log("this.$route.meta", this.$route.meta);
-    // this.currentPageData = this.allPathData.find((item) => {
-    //   // console.log('item',item.path === this.$route.fullPath);
-    //   return item.path === this.$route.fullPath;
-    //   // return item.path === this.$route.fullPath ||;
-    //   // console.log(item);
-    // });
-    // console.log(this.$route);
-    console.log("currentPageData", this.currentPageData);
-    console.log("title", document.title);
     this.$router.afterEach((to, from) => {
-      // Use next tick to handle router history correctly
-      // see: https://github.com/vuejs/vue-router/issues/914#issuecomment-384477609
       this.$nextTick(() => {
-        // console.log('title',document.title);
         document.title = `${to.meta.title} - ${this.webTitle}`;
       });
     });

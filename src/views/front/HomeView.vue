@@ -15,7 +15,7 @@
       <swiper-slide
         v-for="item in sliderImages"
         :key="item.id"
-        class="img-overlay"
+        class="color-overlay"
       >
         <div class="flex flex-col h-full container">
           <div
@@ -90,8 +90,8 @@
         <p class="font-bold ch-body lg:ch-heading-3">推薦行程</p>
       </div>
       <div class="hidden lg:grid lg:grid-rows-3 lg:grid-flow-col lg:gap-6">
-        <template v-for="(item, index) in 6" :key="index">
-          <ProductItem :item-index="index" />
+        <template v-for="(item, index) in products.slice(0, 6)" :key="item.id">
+          <ProductItem :product-data="item" :item-index="index" />
         </template>
       </div>
       <swiper
@@ -105,8 +105,11 @@
         :modules="modules"
         class="flex lg:!hidden common-slider"
       >
-        <swiper-slide v-for="(item, index) in 6" :key="index">
-          <ProductItem :item-index="index" />
+        <swiper-slide
+          v-for="(item, index) in products.slice(0, 6)"
+          :key="item.id"
+        >
+          <ProductItem :product-data="item" :item-index="index" />
         </swiper-slide>
       </swiper>
       <div class="flex justify-end">
@@ -146,7 +149,7 @@
         class="relative aspect-square bg-netural-netural-400"
       >
         <div
-          class="absolute inset-0 h-full w-full bg-cover bg-no-repeat bg-center img-overlay"
+          class="absolute inset-0 h-full w-full bg-cover bg-no-repeat bg-center color-overlay"
           :style="`background-image: url('${item.imageUrl}')`"
         ></div>
         <div
@@ -179,9 +182,11 @@
         <p class="font-bold ch-body lg:ch-heading-3">最新文章</p>
       </div>
       <div class="hidden lg:grid lg:grid-cols-2 lg:gap-6">
-        <template v-for="(item, index) in 6" :key="index">
-          <ArticleItem />
-        </template>
+        <ArticleItem
+          :article-data="item"
+          v-for="item in articles.slice(0, 6)"
+          :key="item.id"
+        />
       </div>
       <swiper
         :slidesPerView="1"
@@ -194,8 +199,8 @@
         :modules="modules"
         class="flex lg:!hidden common-slider"
       >
-        <swiper-slide v-for="(item, index) in 6" :key="index">
-          <ArticleItem />
+        <swiper-slide v-for="item in articles.slice(0, 6)" :key="item.id">
+          <ArticleItem :article-data="item" />
         </swiper-slide>
       </swiper>
       <div class="flex justify-end">
@@ -355,9 +360,11 @@
   </div>
 </template>
 <script>
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import ProductItem from "@/components/front/ProductItem.vue";
 import ArticleItem from "@/components/front/ArticleItem.vue";
+import { articlesStore } from "@/stores/articlesStore.js";
+import { productsStore } from "@/stores/productsStore.js";
 import { useLoadingState } from "@/stores/common.js";
 
 // Import Swiper Vue.js components
@@ -447,6 +454,8 @@ export default {
     SwiperSlide,
   },
   methods: {
+    ...mapActions(articlesStore, ["getArticles"]),
+    ...mapActions(productsStore, ["getProductItem", "getProducts", "addCart"]),
     // onSwiper(swiper) {
     //   console.log("swiper", swiper);
     // },
@@ -459,12 +468,17 @@ export default {
   },
   computed: {
     ...mapState(useLoadingState, ["isLoading"]),
+    ...mapState(articlesStore, ["articles"]),
+    ...mapState(productsStore, ["products"]),
   },
-  mounted() {
+  async mounted() {
     // 讀取狀態測試
-    useLoadingState().$patch((state) => {
-      state.isLoading = false;
-    });
+    // useLoadingState().$patch((state) => {
+    //   state.isLoading = false;
+    // });
+    useLoadingState().isLoading = true;
+    await this.getArticles();
+    await this.getProducts();
     // const loading = useLoadingState();
 
     // console.log("useLoadingState", useLoadingState().isLoading);
