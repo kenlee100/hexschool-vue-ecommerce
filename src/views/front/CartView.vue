@@ -111,13 +111,23 @@
                 v-for="item in cart.carts"
                 :key="item.id"
               >
-                <!-- <div class="overflow-hidden flex flex-shrink-0 w-[140px]">
-                  <a href="/" class="flex items-center w-full">
+                <div
+                  class="overflow-hidden hidden md:flex flex-shrink-0 w-[140px] [&:not(:last-child)]:mr-4"
+                >
+                  <router-link
+                    :to="`/product/${item.product.id}`"
+                    class="flex items-center w-full"
+                    target="_blank"
+                  >
                     <div class="overflow-hidden">
-                      <img class="w-full h-full objec-cover" src="" alt="" />
+                      <img
+                        class="w-full h-full objec-cover"
+                        :src="item.product.imageUrl"
+                        alt=""
+                      />
                     </div>
-                  </a>
-                </div> -->
+                  </router-link>
+                </div>
                 <div
                   class="flex flex-col md:flex-row md:items-center md:justify-between w-full space-y-4 md:space-y-0"
                 >
@@ -153,18 +163,19 @@
                       class="flex items-center justify-end flex-shrink-0 min-w-[120px] space-x-4"
                     >
                       <div
+                        v-if="cart.final_total !== cart.total"
                         class="hidden lg:flex items-center p-2 rounded en-caption-02 bg-netural-netural-400 text-netural-netural-100 text-center"
                       >
-                        -95%
+                        {{ couponPercent(item) }}
                       </div>
                       <div
                         class="flex flex-col items-end min-w-[50px] space-y-1"
                       >
                         <div
-                          class="en-caption-02 line-through text-right"
                           v-if="cart.final_total !== cart.total"
+                          class="en-caption-02 line-through text-right"
                         >
-                          ${{ cart.final_total }}
+                          ${{ cart.total }}
                         </div>
                         <div class="en-body text-right">
                           ${{ item.final_total }}
@@ -291,19 +302,29 @@
                 class="flex flex-col space-y-2 pb-3 [&:not(:last-child)]:mb-3 [&:not(:last-child)]:border-b border-netural-netural-400"
               >
                 <div class="flex justify-between">
-                  <p class="font-bold ch-body">合計：</p>
+                  <p class="font-bold ch-body">小計：</p>
                   <p class="flex-shrink-0 en-caption-01 line-through">
                     ${{ cart.total }}
                   </p>
                 </div>
-                <div class="flex justify-between">
+                <div
+                  v-if="cart.final_total !== cart.total"
+                  class="flex justify-between"
+                >
                   <p class="font-bold ch-body">折扣後：</p>
-                  <p class="flex-shrink-0 en-caption-01">-$822.63</p>
+                  <p class="flex-shrink-0 en-caption-01">
+                    ${{ Math.round(cart.final_total) }}
+                  </p>
                 </div>
-                <div class="flex items-center space-x-2">
+                <!-- && couponCode) || coupon -->
+                <div
+                  v-if="isCouponCodeShow === false && coupon !== ''"
+                  class="flex items-center space-x-2"
+                >
                   <div
                     class="flex items-center justify-center rounded-full w-6 h-6 bg-netural-netural-300 cursor-pointer"
                     title="移除優惠券"
+                    @click="removeCoupon"
                   >
                     <span
                       class="material-symbols-outlined ch-heading-4 text-netural-netural-100"
@@ -312,14 +333,14 @@
                     </span>
                   </div>
                   <p class="font-bold ch-body text-netural-netural-300">
-                    HELLO2023
+                    {{ coupon }}
                   </p>
                 </div>
               </div>
               <div class="flex justify-between">
                 <p class="font-bold ch-heading-4">總計:</p>
                 <p class="flex-shrink-0 en-body text-secondary-secondary-200">
-                  ${{ cart.final_total }}
+                  ${{ Math.round(cart.final_total) }}
                 </p>
               </div>
               <button
@@ -330,17 +351,19 @@
                 前往結帳
               </button>
             </div>
-            <div class="p-6 bg-netural-netural-200">
+            <div v-if="isCouponCodeShow" class="p-6 bg-netural-netural-200">
               <div class="flex items-center">
                 <div class="input-group">
                   <input
                     type="text"
                     class="form-input"
                     placeholder="輸入優惠券代碼"
+                    v-model="coupon"
                   />
                   <button
                     type="button"
                     class="flex-shrink-0 p-4 whitespace-nowrap bg-netural-netural-400 text-netural-netural-100"
+                    @click="addCoupon(coupon)"
                   >
                     套用
                   </button>
@@ -421,14 +444,16 @@
                 class="flex flex-col space-y-2 pb-3 [&:not(:last-child)]:border-b border-netural-netural-400"
               >
                 <div class="flex justify-between">
-                  <p class="font-bold ch-body">合計：</p>
+                  <p class="font-bold ch-body">小計：</p>
                   <p class="flex-shrink-0 en-caption-01 line-through">
                     ${{ cart.total }}
                   </p>
                 </div>
                 <div class="flex justify-between">
                   <p class="font-bold ch-body">折扣後：</p>
-                  <p class="flex-shrink-0 en-caption-01">-$822.63</p>
+                  <p class="flex-shrink-0 en-caption-01">
+                    ${{ Math.round(cart.final_total) }}
+                  </p>
                 </div>
                 <div class="flex justify-between">
                   <p class="font-bold ch-body">優惠券：</p>
@@ -436,7 +461,7 @@
                     ${{ cart.total }}
                   </p> -->
                   <p class="font-bold ch-body text-netural-netural-300">
-                    HELLO2023
+                    {{ couponCode }}
                   </p>
                 </div>
                 <!-- <div class="flex items-center space-x-2">
@@ -449,7 +474,7 @@
               <div class="flex justify-between">
                 <p class="font-bold ch-heading-4">總計:</p>
                 <p class="flex-shrink-0 en-body text-secondary-secondary-200">
-                  ${{ cart.final_total }}
+                  ${{ Math.round(cart.final_total) }}
                 </p>
               </div>
             </div>
@@ -598,7 +623,7 @@
           >
             <p class="font-bold ch-heading-4">訂單建立時間：</p>
             <p class="flex-shrink-0 pt-1 en-caption-01">
-              {{ orderFinishInfo.create_at }}
+              {{ $filters.date(orderFinishInfo.create_at) }}
             </p>
           </div>
           <div
@@ -606,7 +631,7 @@
           >
             <p class="font-bold ch-heading-4">金額：</p>
             <p class="flex-shrink-0 pt-1 en-body text-secondary-secondary-200">
-              $ {{ orderFinishInfo.total }}
+              $ {{ Math.round(orderFinishInfo.total) }}
             </p>
           </div>
           <div class="py-4">
@@ -628,8 +653,10 @@
 </template>
 <script>
 const { VITE_URL, VITE_PATH } = import.meta.env;
+import { mapActions, mapState } from "pinia";
 import PageHeader from "@/components/PageHeader.vue";
 import { useLoadingState } from "@/stores/common.js";
+import cartStore from "@/stores/cartStore.js";
 export default {
   data() {
     return {
@@ -642,7 +669,7 @@ export default {
         imagesUrl: [],
       },
       productId: "",
-      cart: {},
+      // cart: {},
       form: {
         user: {
           name: "",
@@ -654,99 +681,62 @@ export default {
         },
         message: "",
       },
+      coupon: "",
+      couponResult: "",
+      isCouponCodeShow: true,
       currentStep: 1,
       orderFinishInfo: {
         success: true,
         message: "已建立訂單",
-        total: 668,
-        orderId: "-NPmHjm9vdc_f4fpNpLR",
-        create_at: 1678028504,
-        email: "oooooo@gmail.com",
+        total: 0,
+        orderId: "",
+        create_at: Date.now(),
+        email: "",
       },
+      // orderFinishInfo: {
+      //   success: true,
+      //   message: "已建立訂單",
+      //   total: 668,
+      //   orderId: "-NPmHjm9vdc_f4fpNpLR",
+      //   create_at: 1678028504,
+      //   email: "oooooo@gmail.com",
+      // },
     };
   },
   components: {
     PageHeader,
   },
   methods: {
-    // 取得購物車
-    getCartList() {
-      this.$http
-        .get(`${VITE_URL}/api/${VITE_PATH}/cart`)
-        .then((res) => {
-          console.log(res);
-          this.cart = res.data.data;
-          useLoadingState().isLoading = false;
-        })
-        .catch((err) => {
-          alert(`${err.response.data.message}`);
-          useLoadingState().isLoading = false;
-        });
-    },
-    // 刪除單筆購物車
-    async deleteCartItem(content) {
-      // 賦予讀取狀態id
-      this.loadingStatus.loadingItem = content.id;
+    ...mapActions(cartStore, [
+      "getCartList",
+      "updateCart",
+      "deleteCartItem",
+      "clearCartItem",
+      // "addCoupon",
+      // "storeCouponCode",
+    ]),
+    async addCoupon(code) {
       try {
-        const res = await this.$http.delete(
-          `${VITE_URL}/api/${VITE_PATH}/cart/${content.id}`
-        );
-        // 將讀取狀態清空
-        this.loadingStatus.loadingItem = "";
-        await this.getCartList();
-        const {
-          // 取出內層的資料
-          product: { title },
-        } = content;
-        const { message } = res.data;
-        alert(`${title} ${message}`);
-      } catch (err) {
-        alert(`${err.response.data.message}`);
-      }
-    },
-    // 清除購物車
-    async clearCartItem() {
-      const dialog = confirm("確定清除購物車嗎？");
-      if (dialog) {
-        try {
-          const res = await this.$http.delete(
-            `${VITE_URL}/api/${VITE_PATH}/carts`
-          );
-          await this.getCartList();
-          const { message } = res.data;
-          setTimeout(() => {
-            alert(`${message} 購物車`);
-          }, 500);
-        } catch (err) {
-          alert(`${err.response.data.message}`);
-        }
-      }
-    },
-    // 修改購物車數量
-    async updateCart(content) {
-      // 賦予讀取狀態id
-      this.loadingStatus.loadingItem = content.id;
-      try {
-        await this.$http.put(
-          `${VITE_URL}/api/${VITE_PATH}/cart/${content.id}`,
-          {
+        await this.$http
+          .post(`${VITE_URL}/api/${VITE_PATH}/coupon`, {
             data: {
-              product_id: content.product_id,
-              qty: content.qty,
+              code,
             },
-          }
-        );
-        // 將讀取狀態清空
-        this.loadingStatus.loadingItem = "";
-        await this.getCartList();
-        const {
-          // 取出內層的資料
-          product: { title },
-        } = content;
-        alert(`已更新 品名：${title} 數量`);
+          })
+          .then((res) => {
+            console.log("coupon", res);
+            this.couponCode = code;
+            this.isCouponCodeShow = false;
+            this.storeCouponCode(code);
+            alert(`${res.data.message}`);
+            this.getCartList();
+          });
       } catch (err) {
         alert(`${err.response.data.message}`);
       }
+    },
+    storeCouponCode(code) {
+      localStorage.setItem("coupon", code);
     },
     isPhone(value) {
       const phoneNumber = /^(09)[0-9]{8}$/;
@@ -764,7 +754,7 @@ export default {
         );
         //解構賦值
         const { message, orderId } = res.data;
-        console.log(res);
+        // console.log(res);
         alert(` ${message} ，訂單編號 ${orderId}`);
         this.$refs.form.resetForm(); //VeeValidate 重設表單 resetForm方法
         this.form.message = ""; // 清除textarea欄位
@@ -775,13 +765,33 @@ export default {
         alert(`${err.response.data.message}`);
       }
     },
+    goBackStep(num) {
+      this.currentStep = num -= 1;
+      if (this.currentStep <= 1) this.currentStep = 1;
+    },
     goNextStep(num) {
       this.currentStep = num;
+      if (this.currentStep >= 3) this.currentStep = 3;
     },
+    couponPercent(item) {
+      return `-${100 - (item.final_total / item.total) * 100}%`; // -10% 英文顯示
+      // return `${((item.final_total / item.total) * 100)}%`;
+    },
+    removeCoupon() {
+      localStorage.removeItem("coupon");
+      this.isCouponCodeShow = true;
+      this.getCartList();
+    },
+    // storeCoupon
   },
-  mounted() {
+
+  computed: {
+    ...mapState(cartStore, ["cart"]),
+  },
+  async mounted() {
+    this.coupon = localStorage.getItem("coupon");
     useLoadingState().isLoading = true;
-    this.getCartList();
+    await this.getCartList();
   },
 };
 </script>

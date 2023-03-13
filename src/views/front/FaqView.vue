@@ -5,16 +5,18 @@
       <div class="space-y-6">
         <div
           :id="`accordion-${item.id}`"
-          class="rounded shadow-md group"
+          class="shadow-md group"
           :ref="`accordion-${item.id}`"
           v-for="item in faqData"
           :key="item.id"
           :class="{ active: item.active }"
         >
-          <h2 class="bg-secondary-secondary-100 transition-all group-[.active]:bg-secondary-secondary-200 ">
+          <h2
+            class="bg-netural-netural-100 transition-all group-[.active]:bg-secondary-secondary-100"
+          >
             <button
               @click="toggle(item)"
-              class="relative flex items-center w-full px-4 py-3 text-netural-netural-200 cursor-pointer"
+              class="relative flex items-center w-full px-4 py-3 text-secondary-secondary-100 group-[.active]:text-primary-primary-100 cursor-pointer"
               type="button"
             >
               <p class="flex-1 pr-10 text-left ch-heading-4 font-bold">

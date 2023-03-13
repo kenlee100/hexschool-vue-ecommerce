@@ -62,6 +62,11 @@ const router = createRouter({
           component: () => import("@/views/front/CartView.vue"),
           meta: { title: `購物車`, enTitle: "CART" },
         },
+        {
+          path: "/checkout/:orderId",
+          name: "checkout",
+          component: () => import("@/views/front/CheckoutView.vue"),
+        },
       ],
     },
     // {

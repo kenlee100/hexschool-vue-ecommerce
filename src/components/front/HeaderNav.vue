@@ -25,13 +25,6 @@
                   >
                 </li>
               </router-link>
-              <!-- <li v-for="item in navList" :key="item.path">
-                <router-link
-                  class="block p-3 font-bold ch-body text-netural-netural-400 hover:text-secondary-secondary-200"
-                  :to="item.path"
-                  >{{ item.name }}</router-link
-                >
-              </li> -->
             </ul>
           </nav>
           <div class="flex space-x-2">
@@ -42,12 +35,20 @@
                 class="flex-shrink-0 w-5 h-5 bg-secondary-secondary-200 transition-all ease-in-out duration-300 icon-favorite hover:icon-favorite-solid"
               ></div>
             </div>
-            <router-link to="/cart"
-              class="flex items-center justify-center w-12 h-12 cursor-pointer"
+            <router-link
+              to="/cart"
+              class="relative flex items-center justify-center w-12 h-12 cursor-pointer"
             >
               <div
                 class="flex-shrink-0 w-5 h-5 bg-secondary-secondary-200 icon-cart"
               ></div>
+              <span
+                v-if="
+                  this.cart.carts !== undefined && this.cart.carts.length > 0
+                "
+                class="absolute right-0 top-2 min-w-[20px] h4 py-0.5 scale-90 rounded-full bg-secondary-secondary-200 text-netural-netural-100 en-caption-02 text-center"
+                >{{ this.cart.carts.length }}</span
+              >
             </router-link>
             <div
               class="flex flex-col justify-between w-[48px] h-[48px] py-4 px-[14px] md:hidden group"
@@ -73,17 +74,21 @@
 <script>
 import useNavListMenu from "@/stores/navList.js";
 import { useMenuStore } from "@/stores/common.js";
+import cartStore from "@/stores/cartStore.js";
 import { mapActions, mapState } from "pinia";
 
 export default {
   computed: {
     ...mapState(useNavListMenu, ["navList"]),
     ...mapState(useMenuStore, ["toggle", "menuState"]),
+    ...mapState(cartStore, ["cart"]),
   },
   methods: {
     ...mapActions(useMenuStore, ["menuToggle"]),
+    ...mapActions(cartStore, ["getCartList"]),
   },
   mounted() {
+    this.getCartList();
     // this.navListFilter = this.$router.getRoutes().map((item) => {
     //   // console.log("item", item);
     //   return {

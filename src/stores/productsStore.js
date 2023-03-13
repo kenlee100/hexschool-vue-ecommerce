@@ -2,6 +2,7 @@ const { VITE_URL, VITE_PATH } = import.meta.env;
 import axios from "axios";
 import { defineStore } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
+import cartStore from "@/stores/cartStore.js";
 export const productsStore = defineStore("productData", {
   state: () => {
     return {
@@ -66,6 +67,8 @@ export const productsStore = defineStore("productData", {
             data: { product },
           } = res.data;
           alert(`${product.title} ${message}`);
+          const { getCartList } = cartStore();
+          getCartList();
           // this.$refs.productModal.closeModal();
         })
         .catch((err) => {
@@ -112,6 +115,5 @@ export const productsStore = defineStore("productData", {
           : product.category === state.currentCategory
       );
     },
-    
   },
 });
