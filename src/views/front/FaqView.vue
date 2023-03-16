@@ -108,8 +108,11 @@ export default {
       el.style.height = "";
     },
   },
-  created() {
-    useLoadingState().isLoading = false;
+  mounted() {
+    useLoadingState().isLoading = true;
+    setTimeout(() => {
+      useLoadingState().isLoading = false;
+    }, 300);
   },
 };
 </script>

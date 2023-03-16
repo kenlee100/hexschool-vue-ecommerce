@@ -15,6 +15,8 @@
               placeholder="搜尋地區 / 景點"
               name=""
               id=""
+              v-model.trim="searchKeyword"
+              @keydown.enter="goCategory(searchKeyword)"
             />
             <button type="button" class="flex items-center justify-center px-4">
               <div
@@ -27,9 +29,13 @@
             <ul
               class="grid grid-cols-4 lg:grid-cols-3 gap-3 lg:flex lg:flex-col lg:gap-0"
             >
-              <li @click="searchCategory('全部地區')" class="group">
+              <li
+                @click="searchCategory(queryCategory)"
+                class="group"
+                :class="{ active: currentCategory === queryCategory }"
+              >
                 <div
-                  class="flex items-center after:content-['chevron\_right'] after:ml-auto after:ch-heading-3 after:font-['Material_Symbols_Outlined'] pb-2 px-3 border-b border-gray-200 cursor-pointer group-[.active]:bg-netural-netural-400 group-[.active]:text-netural-netural-100"
+                  class="flex items-center after:content-['chevron\_right'] after:ml-auto after:ch-heading-3 after:font-['Material_Symbols_Outlined'] py-2 px-3 border-b border-gray-200 cursor-pointer transition-all group-[.active]:bg-netural-netural-400 group-[.active]:text-netural-netural-100"
                 >
                   <p class="flex-1 pr-2 whitespace-nowrap">全部地區</p>
                 </div>
@@ -38,10 +44,11 @@
                 v-for="(item, index) in categoryData"
                 :key="item"
                 class="group"
+                :class="{ active: currentCategory === item }"
                 @click="searchCategory(item)"
               >
                 <div
-                  class="flex items-center after:content-['chevron\_right'] after:ml-auto after:ch-heading-3 after:font-['Material_Symbols_Outlined'] pb-2 px-3 border-b border-gray-200 cursor-pointer group-[.active]:bg-netural-netural-400 group-[.active]:text-netural-netural-100"
+                  class="flex items-center after:content-['chevron\_right'] after:ml-auto after:ch-heading-3 after:font-['Material_Symbols_Outlined'] py-2 px-3 border-b border-gray-200 cursor-pointer transition-all group-[.active]:bg-netural-netural-400 group-[.active]:text-netural-netural-100"
                 >
                   <p class="flex-1 pr-2 whitespace-nowrap">{{ item }}</p>
                 </div>
@@ -84,31 +91,34 @@
           </div>
         </div>
         <div class="lg:flex-auto w-full lg:w-[75%]">
-          <!-- <div class="grid grid-cols-3 grid-flow-row gap-6">
-            <template v-for="(item, index) in products" :key="index">
-              <ProductItem
-                :item-data="item"
-                :item-index="index"
-              />
-            </template>
-          </div> -->
+          <template v-if="filterProducts.length >= 1">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
+            >
+              <template v-for="(item, index) in filterProducts" :key="item.id">
+                <ProductItem
+                  :product-data="item"
+                  :item-index="index"
+                  image-class="!h-[200px]"
+                  text-content-class="!ml-0 !mt-0"
+                />
+              </template>
+            </div>
+            <Pagination
+              :pages="pagination"
+              :category="currentCategory"
+              @change-page="getProducts"
+              :get-list="getProducts"
+            ></Pagination>
+          </template>
           <div
-            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
+            v-else
+            class="flex flex-col justify-center space-y-4 max-w-[800px] mx-auto"
           >
-            <template v-for="(item, index) in filterProducts" :key="item.id">
-              <ProductItem
-                :product-data="item"
-                :item-index="index"
-                image-class="!h-[200px]"
-                text-content-class="!ml-0 !mt-0"
-              />
-            </template>
+            <p class="ch-heading-3 text-center">
+              找不到符合的關鍵字，請重新搜尋
+            </p>
           </div>
-          <Pagination
-            :pages="pagination"
-            @change-page="getProducts"
-            :get-list="getProducts"
-          ></Pagination>
         </div>
       </div>
     </div>
@@ -116,41 +126,18 @@
 </template>
 <script>
 // import { RouterLink } from "vue-router";
-const { VITE_URL, VITE_PATH } = import.meta.env;
+// const { VITE_URL, VITE_PATH } = import.meta.env;
 import Pagination from "@/components/Pagination.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ProductItem from "@/components/front/ProductItem.vue";
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
 import { productsStore } from "@/stores/productsStore.js";
 export default {
   data() {
     return {
-      loadingStatus: {
-        loadingItem: "",
-      },
-
-      // products: [],
-      // pagination: {},
-      // tempProduct: {
-      //   imagesUrl: [],
-      // },
-      // currentCategory: "",
-      productId: "",
-      // selectCategoryStore: null,
-      // selectCategory: [],
+      queryCategory: "",
     };
-  },
-  watch: {
-    // queryVal(val) {
-    //   console.log("va", val);
-    //   if (!val) return;
-    //   this.$router.push({
-    //     // path: "/products",
-    //     name: "ProductListView",
-    //     query: { category: val.category },
-    //   });
-    // },
   },
   components: {
     Pagination,
@@ -158,21 +145,16 @@ export default {
     ProductItem,
   },
   methods: {
-    ...mapActions(productsStore, ["getProducts", "searchCategory"]),
-
-    // openModal(id) {
-    //   // id為外層帶入 productId
-    //   // 將 id 帶入 讀取狀態
-    //   this.loadingStatus.loadingItem = id;
-    //   this.productId = id;
-    // },
-    // changeQuery(content) {
-    //   this.$router.push({
-    //     // path: "/products",
-    //     name: "ProductListView",
-    //     query: { category: content },
-    //   });
-    // },
+    ...mapActions(productsStore, [
+      "getProducts",
+      "searchCategory",
+      "goCategory",
+    ]),
+  },
+  watch: {
+    // searchKeyword(){
+    //   console.log('update');
+    // }
   },
   computed: {
     ...mapState(productsStore, [
@@ -182,13 +164,14 @@ export default {
       "filterProducts",
       "currentCategory",
     ]),
-    // queryVal() {
-    //   return this.$route.query;
-    // },
+    ...mapWritableState(productsStore, ["searchKeyword"]),
   },
   async mounted() {
+    this.queryCategory = "全部地區";
+    // console.log("this.$router.query", this.$route.query);
     useLoadingState().isLoading = true;
-    await this.getProducts();
+    // await this.getProducts();
+    this.searchCategory(this.$route.query.category || this.queryCategory);
   },
 };
 </script>

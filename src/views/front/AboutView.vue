@@ -50,7 +50,10 @@ export default {
     AboutItem,
   },
   mounted() {
-    useLoadingState().isLoading = false;
+    useLoadingState().isLoading = true;
+    setTimeout(() => {
+      useLoadingState().isLoading = false;
+    }, 300);
   },
 };
 </script>

@@ -5,9 +5,7 @@
     @click="$emit('change-content', productData.id)"
     class="flex flex-col flex-shrink-0 w-full mb-10 lg:mb-20 group"
   >
-    <div
-      class="relative overflow-hidden flex flex-shrink-0 w-full color-overlay"
-    >
+    <div class="relative overflow-hidden flex flex-shrink-0 w-full">
       <div
         class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
       >
@@ -70,9 +68,7 @@
     @click="$emit('change-content', productData.id)"
     class="flex flex-col flex-shrink-0 w-full mb-10 lg:mb-20 group"
   >
-    <div
-      class="relative overflow-hidden flex flex-shrink-0 w-full color-overlay"
-    >
+    <div class="relative overflow-hidden flex flex-shrink-0 w-full">
       <div
         class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
       >

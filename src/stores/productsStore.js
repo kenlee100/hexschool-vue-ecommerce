@@ -3,9 +3,12 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
+import toast from "@/utils/toast";
+import router from "../router";
 export const productsStore = defineStore("productData", {
   state: () => {
     return {
+      searchKeyword: "",
       products: [],
       productsItem: {},
       pagination: {},
@@ -24,30 +27,22 @@ export const productsStore = defineStore("productData", {
           .then((res) => {
             this.products = res.data.products;
             this.pagination = res.data.pagination;
+
+            const setItem = new Set();
+            this.products.forEach((item) => {
+              this.categoryData = [...setItem.add(item.category)];
+            });
             useLoadingState().isLoading = false;
           });
       } catch (err) {
-        alert(`${err.response.data.message}`);
+        toast.fire({
+          icon: "error",
+          title: `${err.response.data.message}`,
+        });
       }
     },
-    // async getProductsCategory(category = "", num = 1) {
-    //   try {
-    //     await axios
-    //       .get(
-    //         `${VITE_URL}/api/${VITE_PATH}/products?page=${num}&category=${category}`
-    //       )
-    //       .then((res) => {
-    //         this.categoryData = res.data.products;
-    //         this.pagination = res.data.pagination;
-    //         useLoadingState().isLoading = false;
-    //       });
-    //   } catch (err) {
-    //     alert(`${err.response.data.message}`);
-    //   }
-    // },
     // 加入購物車
     async addCart(content, qty = 1) {
-      console.log("addcart");
       // 賦予讀取狀態id
       // this.loadingStatus.loadingItem = content.id;
       await axios
@@ -66,35 +61,48 @@ export const productsStore = defineStore("productData", {
             // 取出內層的資料
             data: { product },
           } = res.data;
-          alert(`${product.title} ${message}`);
+          // alert(`${product.title} ${message}`);
           const { getCartList } = cartStore();
           getCartList();
+          toast.fire({
+            icon: "success",
+            title: `${product.title} ${message}`,
+          });
           // this.$refs.productModal.closeModal();
         })
         .catch((err) => {
-          alert(`${err.response.data.message}`);
+          toast.fire({
+            icon: "error",
+            title: `${err.response.data.message}`,
+          });
         });
     },
     async getProductItem(id) {
       try {
         return await axios.get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`);
       } catch (err) {
-        alert(`${err.response.data.message}`);
+        toast.fire({
+          icon: "error",
+          title: `${err.response.data.message}`,
+        });
       }
     },
     searchCategory(category) {
       this.currentCategory = category;
+      if (category === "全部地區") {
+        this.getProducts();
+      } else {
+        this.getProducts(category);
+      }
+    },
+    goCategory(category) {
+      if (this.categoryData.includes(category) || category) {
+        // this.searchKeyword = "";
+        router.push(`/products?category=${category}`);
+      }
     },
   },
   getters: {
-    // 處理分類項目文字
-    categoryList({ products }) {
-      const setItem = new Set();
-      products.forEach((item) => {
-        this.categoryData = setItem.add(item.category);
-      });
-      return this.categoryData;
-    },
     // 篩選符合分類的品項 多選
     // filterProducts: (state) => {
     //   const filterProduct =

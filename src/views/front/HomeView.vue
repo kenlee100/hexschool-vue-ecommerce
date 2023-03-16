@@ -65,6 +65,8 @@
           placeholder="搜尋地區 / 景點"
           name=""
           id=""
+          v-model.trim="searchKeyword"
+          @keydown.enter="goCategory(searchKeyword)"
         />
         <button
           type="button"
@@ -146,7 +148,8 @@
       <div
         v-for="item in spotImages"
         :key="item.chTitle"
-        class="relative aspect-square bg-netural-netural-400"
+        @click="goCategory(item.category)"
+        class="relative aspect-square bg-netural-netural-400 cursor-pointer"
       >
         <div
           class="absolute inset-0 h-full w-full bg-cover bg-no-repeat bg-center color-overlay"
@@ -161,7 +164,7 @@
             {{ item.chTitle }}
           </h3>
           <p
-            class="font-bold ch-caption-1 lg:ch-heading-3 text-netural-netural-100"
+            class="font-bold ch-caption-1 lg:ch-heading-3 text-center text-netural-netural-100"
           >
             {{ item.jpTitle }}
           </p>
@@ -360,7 +363,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import ProductItem from "@/components/front/ProductItem.vue";
 import ArticleItem from "@/components/front/ArticleItem.vue";
 import { articlesStore } from "@/stores/articlesStore.js";
@@ -377,6 +380,22 @@ import "swiper/scss/navigation";
 import "swiper/scss/pagination";
 import "swiper/scss/autoplay";
 import "swiper/scss/effect-fade";
+// 另一種引路圖片方式
+// const BannerImg = new URL(
+//   "/src/assets/images/img/image/banner_01.jpg",
+//   import.meta.url
+// );
+import bannerImg from "/src/assets/images/img/image/banner_01.jpg";
+import spotImg01 from "/src/assets/images/img/image/spot_01.jpg";
+import spotImg02 from "/src/assets/images/img/image/spot_02.jpg";
+import spotImg03 from "/src/assets/images/img/image/spot_03.jpg";
+import spotImg04 from "/src/assets/images/img/image/spot_04.jpg";
+import spotImg05 from "/src/assets/images/img/image/spot_05.jpg";
+import spotImg06 from "/src/assets/images/img/image/spot_06.jpg";
+import spotImg07 from "/src/assets/images/img/image/spot_07.jpg";
+import spotImg08 from "/src/assets/images/img/image/spot_08.jpg";
+import spotImg09 from "/src/assets/images/img/image/spot_09.jpg";
+import spotImg10 from "/src/assets/images/img/image/spot_10.jpg";
 
 export default {
   data() {
@@ -386,63 +405,73 @@ export default {
       sliderImages: [
         {
           id: 1,
-          imageUrl: "/src/assets/images/img/image/banner_01.jpg",
+          imageUrl: bannerImg,
         },
         {
           id: 2,
-          imageUrl: "/src/assets/images/img/image/banner_01.jpg",
+          imageUrl: bannerImg,
         },
       ],
       spotImages: [
         {
           chTitle: "金閣寺",
           jpTitle: "ろくおんじ",
-          imageUrl: "/src/assets/images/img/image/spot_01.jpg",
+          imageUrl: spotImg01,
+          category: "京都",
         },
         {
           chTitle: "淺草",
           jpTitle: "せんそうじ",
-          imageUrl: "/src/assets/images/img/image/spot_02.jpg",
+          imageUrl: spotImg02,
+          category: "東京",
         },
         {
           chTitle: "富士山",
           jpTitle: "ふじさん",
-          imageUrl: "/src/assets/images/img/image/spot_03.jpg",
+          imageUrl: spotImg03,
+          category: "富士山",
         },
         {
           chTitle: "伏見稻荷大社",
           jpTitle: "ふしみいなりたいしゃ",
-          imageUrl: "/src/assets/images/img/image/spot_04.jpg",
+          imageUrl: spotImg04,
+          category: "京都",
         },
         {
           chTitle: "道頓堀",
           jpTitle: "どうとんぼり",
-          imageUrl: "/src/assets/images/img/image/spot_05.jpg",
+          imageUrl: spotImg05,
+          category: "大阪",
         },
         {
           chTitle: "大阪城",
           jpTitle: "おおさかじょう",
-          imageUrl: "/src/assets/images/img/image/spot_06.jpg",
+          imageUrl: spotImg06,
+          category: "大阪",
         },
         {
           chTitle: "淺草",
           jpTitle: "んそうじ",
-          imageUrl: "/src/assets/images/img/image/spot_07.jpg",
+          imageUrl: spotImg07,
+          category: "東京",
         },
         {
           chTitle: "迪士尼樂園",
           jpTitle: "ディズニーランド",
-          imageUrl: "/src/assets/images/img/image/spot_08.jpg",
+          imageUrl: spotImg08,
+          category: "東京",
         },
         {
           chTitle: "新宿",
           jpTitle: "しんじゅく",
-          imageUrl: "/src/assets/images/img/image/spot_09.jpg",
+          imageUrl: spotImg09,
+          category: "東京",
         },
         {
           chTitle: "東京鐵塔",
           jpTitle: "とうきょうタワー",
-          imageUrl: "/src/assets/images/img/image/spot_10.jpg",
+          imageUrl: spotImg10,
+          category: "東京",
         },
       ],
     };
@@ -455,21 +484,18 @@ export default {
   },
   methods: {
     ...mapActions(articlesStore, ["getArticles"]),
-    ...mapActions(productsStore, ["getProductItem", "getProducts", "addCart"]),
-    // onSwiper(swiper) {
-    //   console.log("swiper", swiper);
-    // },
-    // onSlideChange() {
-    //   console.log("slide change");
-    // },
-    // setControlledSwiper(swiper) {
-    //   this.controlledSwiper = swiper;
-    // },
+    ...mapActions(productsStore, [
+      "getProductItem",
+      "getProducts",
+      "addCart",
+      "goCategory",
+    ]),
   },
   computed: {
     ...mapState(useLoadingState, ["isLoading"]),
     ...mapState(articlesStore, ["articles"]),
-    ...mapState(productsStore, ["products"]),
+    ...mapState(productsStore, ["products", "currentCategory"]),
+    ...mapWritableState(productsStore, ["searchKeyword"]),
   },
   async mounted() {
     // 讀取狀態測試

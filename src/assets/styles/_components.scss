@@ -4,10 +4,13 @@
     @apply py-2 px-4 text-center font-normal ch-caption-1 lg:ch-heading-4 cursor-pointer;
   }
   .btn-base {
-    @apply py-2 px-4 lg:py-4 lg:px-6 rounded-full font-normal lg:font-bold ch-caption-1 lg:ch-body text-center cursor-pointer;
+    @apply py-2 px-4 lg:py-4 lg:px-6 rounded-full font-normal lg:font-bold ch-caption-1 lg:ch-body text-center cursor-pointer transition-all duration-300;
   }
   .btn-large {
-    @apply py-2 px-4 md:py-4 md:px-8 rounded-full font-bold ch-body md:ch-heading-3 text-center cursor-pointer;
+    @apply py-2 px-4 md:py-4 md:px-8 rounded-full font-bold ch-body md:ch-heading-3 text-center cursor-pointer transition-all duration-300;
+  }
+  .btn-outline {
+    @apply btn py-2 px-4 lg:py-4 lg:px-6 border rounded-full font-normal text-center lg:font-bold ch-caption-1 lg:ch-body border-netural-netural-300 text-netural-netural-300 hover:bg-netural-netural-300 hover:text-netural-netural-100 transition-all duration-300;
   }
   // icon
   .icon-pin {
@@ -61,10 +64,10 @@
     @apply flex flex-col min-h-[calc(100vh-72px-230px)] pb-16;
   }
   .color-overlay {
-    @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-netural-netural-500 before:opacity-40 before:bg-netural-netural-400;
+    @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:opacity-40 before:bg-netural-netural-400;
   }
   .pattern-overlay {
-    @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-[url('../src/assets/images/img/image/pattern.png')];
+    @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-[url('@/assets/images/img/image/pattern.png')];
   }
   // text
   // .text-antonio {
@@ -170,12 +173,12 @@
   .form-select {
     @apply relative flex items-center after:content-['\e5cf'] after:absolute after:right-2 after:text-netural-netural-400 after:font-['Material_Symbols_Outlined'] after:ch-heading-2 after:pointer-events-none;
     select {
-      @apply relative w-full py-3 pl-4 pr-10 text-netural-netural-400 ch-heading-4 appearance-none;
+      @apply relative w-full py-3 pl-4 pr-10 border-2 focus:border-2 text-netural-netural-400 ch-heading-4 appearance-none;
     }
   }
 
   .form-input {
-    @apply relative w-full py-3 px-4 text-netural-netural-400 ch-heading-4 appearance-none;
+    @apply relative w-full py-3 px-4 border-2 focus:border-2  text-netural-netural-400 ch-heading-4 transition-all appearance-none;
   }
 
   // material icon 的 偽元素用法
@@ -241,12 +244,13 @@
     }
   }
   .editor-content {
-    ul,ol {
+    ul,
+    ol {
       list-style: inherit;
       @apply pl-5;
     }
     p {
-      @apply mb-5;
+      @apply mb-5 pt-3;
     }
   }
 }

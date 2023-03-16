@@ -21,6 +21,8 @@ export default defineStore("navListMenu", {
           navRouteData[i].path === "/product/:id" ||
           navRouteData[i].path === "/article/:id" ||
           navRouteData[i].path === "/cart" ||
+          navRouteData[i].path === "/order" ||
+          navRouteData[i].path === "/checkout/:orderId" ||
           navRouteData[i].name === "404"
         ) {
           continue;

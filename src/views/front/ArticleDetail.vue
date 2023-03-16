@@ -56,34 +56,34 @@
             class="font-normal ch-caption-2 lg:ch-heading-4 text-netural-netural-300 editor-content"
           ></div>
         </div>
-        <div class="flex flex-row justify-between mt-auto">
+        <div class="flex flex-col lg:flex-row justify-between mt-auto space-y-10 lg:space-y-0">
           <template v-for="(item, index) in filterOtherItem" :key="item.id">
             <router-link
               :to="`/article/${item.id}`"
               v-if="index % 2 === 0"
-              class="flex flex-row-reverse items-center max-w-[160px] w-full lg:max-w-none lg:w-[40%] py-3 px-5 lg:py-4 lg:px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
+              class="flex flex-row-reverse items-center lg:max-w-[40%] w-full lg:max-w-none lg:w-[40%] py-3 px-5 lg:py-4 lg:px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
             >
               <p
-                class="pl-3 ch-heading-3 font-bold text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100 line-clamp-2"
+                class="flex-1 pl-3 ch-heading-3 font-bold text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100 line-clamp-2"
               >
                 {{ item.title }}
               </p>
               <div
-                class="flex-shrink-0 w-4 h-4 lg:w-8 lg:h-8 mr-auto opacity-0 transition-all ease-in-out duration-500 group-hover:opacity-100 group-hover:bg-netural-netural-100 rotate-180 icon-arrow"
+                class="flex-shrink-0 w-4 h-4 lg:w-8 lg:h-8 mr-auto opacity-100 transition-all ease-in-out duration-500 group-hover:opacity-100 group-hover:bg-netural-netural-100 bg-netural-netural-400 rotate-180 icon-arrow"
               ></div>
             </router-link>
             <router-link
               :to="`/article/${item.id}`"
               v-if="index % 2 === 1"
-              class="flex items-center max-w-[160px] w-full lg:max-w-none lg:w-[40%] py-3 px-5 lg:py-4 lg:px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
+              class="flex items-center lg:max-w-[40%] w-full lg:max-w-none lg:w-[40%] py-3 px-5 lg:py-4 lg:px-8 border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 text-right cursor-pointer"
             >
               <p
-                class="pr-3 ch-heading-3 font-bold text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100 line-clamp-2"
+                class="flex-1 pr-3 ch-heading-3 font-bold text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100 line-clamp-2"
               >
                 {{ item.title }}
               </p>
               <div
-                class="flex-shrink-0 w-4 h-4 lg:w-8 lg:h-8 ml-auto opacity-0 transition-all ease-in-out duration-500 group-hover:opacity-100 group-hover:bg-netural-netural-100 icon-arrow"
+                class="flex-shrink-0 w-4 h-4 lg:w-8 lg:h-8 ml-auto opacity-100 transition-all ease-in-out duration-500 group-hover:opacity-100 group-hover:bg-netural-netural-100 bg-netural-netural-400 icon-arrow"
               ></div>
             </router-link>
           </template>
@@ -113,7 +113,6 @@ export default {
       useLoadingState().isLoading = true;
       return await this.getArticleItem(id).then((res) => {
         useLoadingState().isLoading = false;
-        console.log("res", res.data.article);
         return res.data.article;
       });
     },

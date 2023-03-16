@@ -7,8 +7,32 @@
     /> -->
     <div v-if="productContent.hasOwnProperty('imagesUrl')">
       <swiper
+        v-if="productContent.imagesUrl >= 3"
         :slidesPerView="3"
         :spaceBetween="24"
+        :pagination="{
+          clickable: true,
+        }"
+        :loop="true"
+        :autoplay="{
+          delay: 3000,
+          disableOnInteraction: false,
+        }"
+        :modules="modules"
+        class="flex common-slider"
+      >
+        <swiper-slide v-for="item in productContent.imagesUrl" :key="item.id">
+          <img
+            class="flex-shrink-0 w-full h-[400px] object-cover"
+            :src="item.imageUrl"
+            alt=""
+          />
+        </swiper-slide>
+      </swiper>
+      <swiper
+        v-else
+        :slidesPerView="1"
+        :spaceBetween="0"
         :pagination="{
           clickable: true,
         }"
@@ -59,17 +83,15 @@
             <div
               class="flex-shrink-0 w-4 h-4 mt-1 [&:not(:last-child)]:mr-3 bg-netural-netural-300 icon-pin"
             ></div>
-            <p
+            <div
               class="lg:font-bold ch-caption-2 lg:ch-body text-netural-netural-300"
             >
               {{ productContent.category }}
-            </p>
+            </div>
           </div>
           <div class="flex flex-col">
-            <p>
-              {{ productContent.description }}
-              <!-- 東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。 -->
-            </p>
+            <div v-html="productContent.description"></div>
+            <!-- 東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。 -->
           </div>
           <div class="flex flex-col">
             <ul class="flex border-b border-netural-netural-300">
@@ -89,12 +111,8 @@
               </li> -->
             </ul>
             <div class="flex flex-col">
-              <div class="pt-5 pb-4 active">
+              <div class="pt-5 pb-4 editor-content active">
                 <div v-html="productContent.content"></div>
-                <!-- <p>商品內容：{{ productContent.content }}</p>
-                <p>
-                  東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。
-                </p> -->
               </div>
               <!-- <div class="pt-5 pb-4 hidden">
                 <p>商品內容：{{ productContent.content }}</p>
@@ -115,7 +133,7 @@
               </div>
               <div class="h6">
                 原價
-                <span class="en-caption-01">{{
+                <span class="en-caption-01 line-through">{{
                   productContent.origin_price
                 }}</span>
                 元
@@ -124,7 +142,7 @@
             <div class="space-y-4">
               <div class="form-select">
                 <select name="" id="" v-model.number="qty">
-                  <option selected disabled>商品規格</option>
+                  <option selected disabled>商品數量</option>
                   <option
                     v-for="(item, index) in 10"
                     :key="index"
@@ -134,12 +152,12 @@
                   </option>
                 </select>
               </div>
-              <input
+              <!-- <input
                 class="form-input"
                 type="number"
                 min="1"
                 v-model.number="qty"
-              />
+              /> -->
             </div>
 
             <div class="w-full">

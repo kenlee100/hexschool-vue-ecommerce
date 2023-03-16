@@ -29,7 +29,7 @@
             v-else
             class="flex items-center justify-center w-12 h-12 rounded bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4"
             href="#"
-            @click.prevent="$emit('change-page', item)"
+            @click.prevent="$emit('change-page', categoryData, item)"
             >{{ index + 1 }}</a
           >
         </li>
@@ -58,8 +58,17 @@ export default {
       type: Function,
       default: () => {},
     },
+    category: {
+      type: String,
+      default: "",
+    },
   },
   emits: ["change-page"],
+  computed: {
+    categoryData() {
+      return this.category === "全部地區" ? "" : this.category;
+    },
+  },
 };
 </script>
 <style>

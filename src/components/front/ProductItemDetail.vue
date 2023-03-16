@@ -195,7 +195,7 @@
   </div>
 </template>
 <script>
-const { VITE_URL, VITE_PATH } = import.meta.env;
+// const { VITE_URL, VITE_PATH } = import.meta.env;
 import { useLoadingState } from "@/stores/common.js";
 import ProductItem from "@/components/front/ProductItem.vue";
 import { mapActions, mapState } from "pinia";
@@ -235,39 +235,6 @@ export default {
         useLoadingState().isLoading = false;
       });
     },
-    // getProductItem(id) {
-    //   this.$http
-    //     .get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`)
-    //     .then((res) => {
-    //       this.productContent = res.data.product;
-    //       useLoadingState().isLoading = false;
-    //     })
-    //     .catch((err) => {
-    //       alert(`${err.response.data.message}`);
-    //       useLoadingState().isLoading = false;
-    //     });
-    // },
-    // addCart(content, qty = 1) {
-    //   this.$http
-    //     .post(`${VITE_URL}/api/${VITE_PATH}/cart`, {
-    //       data: {
-    //         product_id: content.id,
-    //         qty,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       //解構賦值
-    //       const {
-    //         message,
-    //         // 取出內層的資料
-    //         data: { product },
-    //       } = res.data;
-    //       alert(`${product.title} ${message}`);
-    //     })
-    //     .catch((err) => {
-    //       alert(`${err.response.data.message}`);
-    //     });
-    // },
   },
   computed: {
     ...mapState(productsStore, ["products"]),
