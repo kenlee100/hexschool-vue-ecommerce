@@ -10,7 +10,11 @@ import AllRules from "@vee-validate/rules";
 import { localize, setLocale } from "@vee-validate/i18n";
 import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json";
 
+import { date, ddmmyyyy, currency } from "@/utils/filters.js";
 import Loading from "vue-loading-overlay";
+
+import "sweetalert2/src/sweetalert2.scss";
+
 import "vue-loading-overlay/dist/css/index.css";
 
 import "@/assets/styles/main.scss";
@@ -27,9 +31,17 @@ configure({
 setLocale("zh_TW");
 const app = createApp(App);
 
+// 全域註冊
+app.config.globalProperties.$filters = {
+  date,
+  currency,
+  ddmmyyyy,
+};
+
 const pinia = createPinia();
 app.use(pinia);
 app.use(router);
+
 app.use(VueAxios, axios);
 app.component("VueLoading", Loading); // 全域元件
 
