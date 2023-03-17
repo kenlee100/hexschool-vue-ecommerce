@@ -13,7 +13,7 @@ export const productsStore = defineStore("productData", {
       productsItem: {},
       pagination: {},
       categoryData: [],
-      currentCategory: "全部地區",
+      currentCategory: "",
       selectCategory: [],
     };
   },
@@ -89,17 +89,17 @@ export const productsStore = defineStore("productData", {
     },
     searchCategory(category) {
       this.currentCategory = category;
-      if (category === "全部地區") {
-        this.getProducts();
-      } else {
-        this.getProducts(category);
-      }
+      router.push(`/products?category=${category}`);
     },
     goCategory(category) {
-      if (this.categoryData.includes(category) || category) {
-        // this.searchKeyword = "";
+      console.log("goCategory", category);
+      if (this.categoryData.includes(category)) {
         router.push(`/products?category=${category}`);
       }
+
+      // else if (category === "") {
+      //   router.push(`/products`);
+      // }
     },
   },
   getters: {

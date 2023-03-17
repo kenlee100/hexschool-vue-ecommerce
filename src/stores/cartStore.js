@@ -128,6 +128,7 @@ export default defineStore("cartStore", {
               .delete(`${VITE_URL}/api/${VITE_PATH}/carts`)
               .then((res) => {
                 const { message } = res.data;
+                this.getCartList();
                 toast.fire({
                   icon: "success",
                   title: `${message} 購物車`,

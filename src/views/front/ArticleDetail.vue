@@ -9,7 +9,7 @@
     </div>
     <div class="flex flex-col flex-1 container">
       <div
-        class="relative z-10 flex flex-col flex-1 w-full lg:max-w-[900px] -mt-8 lg:-mt-[84px] ml-4 lg:mx-auto p-4 lg:py-6 lg:px-[32px] bg-netural-netural-100"
+        class="relative z-10 flex flex-col flex-1 w-full lg:max-w-[900px] -mt-8 lg:-mt-[84px] lg:mx-auto p-4 lg:py-6 lg:px-[32px] bg-netural-netural-100"
       >
         <div class="[&:not(:last-child)]:mb-5">
           <h3 class="flex items-start [&:not(:last-child)]:mb-2">
@@ -50,13 +50,15 @@
             </div>
           </div>
         </div>
-        <div class="pt-9 pb-20 mb-10 border-b-2 border-netural-netural-300">
+        <div class="pt-9 pb-10 mb-20 border-b-2 border-netural-netural-300">
           <div
             v-html="articleContent.content"
             class="font-normal ch-caption-2 lg:ch-heading-4 text-netural-netural-300 editor-content"
           ></div>
         </div>
-        <div class="flex flex-col lg:flex-row justify-between mt-auto space-y-10 lg:space-y-0">
+        <div
+          class="flex flex-col lg:flex-row justify-between mt-auto space-y-10 lg:space-y-0"
+        >
           <template v-for="(item, index) in filterOtherItem" :key="item.id">
             <router-link
               :to="`/article/${item.id}`"
@@ -102,9 +104,9 @@ export default {
       articleContent: {},
     };
   },
-  components: {
-    // PageHeader,
-  },
+  // components: {
+  //   // PageHeader,
+  // },
 
   methods: {
     ...mapActions(articlesStore, ["getArticleItem", "getArticles"]),

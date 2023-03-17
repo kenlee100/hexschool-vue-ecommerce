@@ -18,7 +18,11 @@
               v-model.trim="searchKeyword"
               @keydown.enter="goCategory(searchKeyword)"
             />
-            <button type="button" class="flex items-center justify-center px-4">
+            <button
+              type="button"
+              class="flex items-center justify-center px-4"
+              @click="goCategory(searchKeyword)"
+            >
               <div
                 class="flex-shrink-0 w-6 h-6 bg-netural-netural-300 icon-search"
               ></div>
@@ -30,9 +34,9 @@
               class="grid grid-cols-4 lg:grid-cols-3 gap-3 lg:flex lg:flex-col lg:gap-0"
             >
               <li
-                @click="searchCategory(queryCategory)"
+                @click="searchCategory('全部地區')"
                 class="group"
-                :class="{ active: currentCategory === queryCategory }"
+                :class="{ active: currentCategory === '全部地區' }"
               >
                 <div
                   class="flex items-center after:content-['chevron\_right'] after:ml-auto after:ch-heading-3 after:font-['Material_Symbols_Outlined'] py-2 px-3 border-b border-gray-200 cursor-pointer transition-all group-[.active]:bg-netural-netural-400 group-[.active]:text-netural-netural-100"
@@ -136,7 +140,7 @@ import { productsStore } from "@/stores/productsStore.js";
 export default {
   data() {
     return {
-      queryCategory: "",
+      // currentCategory: "",
     };
   },
   components: {
@@ -152,9 +156,19 @@ export default {
     ]),
   },
   watch: {
-    // searchKeyword(){
-    //   console.log('update');
-    // }
+    "$route.query.category": {
+      handler: function (category) {
+        console.log("$route.query", category);
+        if (!category) {
+          console.log(typeof category === "undefined");
+          this.currentCategory = "全部地區";
+        } else {
+          this.currentCategory = category;
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   computed: {
     ...mapState(productsStore, [
@@ -163,15 +177,13 @@ export default {
       "categoryData",
       "filterProducts",
       "currentCategory",
+      "",
     ]),
-    ...mapWritableState(productsStore, ["searchKeyword"]),
+    ...mapWritableState(productsStore, ["searchKeyword", "currentCategory"]),
   },
   async mounted() {
-    this.queryCategory = "全部地區";
-    // console.log("this.$router.query", this.$route.query);
     useLoadingState().isLoading = true;
-    // await this.getProducts();
-    this.searchCategory(this.$route.query.category || this.queryCategory);
+    await this.getProducts();
   },
 };
 </script>

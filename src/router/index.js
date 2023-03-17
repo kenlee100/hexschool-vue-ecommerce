@@ -103,6 +103,9 @@ const router = createRouter({
     //   },
     // },
   ],
+  scrollBehavior() {
+    return { x: 0, y: 0, behavior: "smooth" };
+  },
   linkActiveClass: "nav-active",
 });
 

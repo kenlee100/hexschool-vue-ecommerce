@@ -36,12 +36,12 @@
                     class="flex flex-col md:flex-row md:items-center md:justify-between w-full space-y-4 md:space-y-0"
                   >
                     <div class="w-full md:w-auto md:flex-1 md:pr-4">
-                      <h3 class="font-bold ch-heading-3">
+                      <h3 class="font-bold ch-heading-3 line-clamp-2">
                         <a href="">{{ item.product.title }}</a>
                       </h3>
                     </div>
                     <div
-                      class="flex flex-1 justify-between items-center md:justify-end md:flex-shrink-0 space-x-6"
+                      class="flex flex-1 items-center md:justify-end md:flex-shrink-0"
                     >
                       <div class="ch-body">
                         <label for="" class="hidden">Qty:</label>
@@ -64,7 +64,7 @@
                         </div>
                       </div>
                       <div
-                        class="flex items-center justify-end flex-shrink-0 min-w-[120px] space-x-4"
+                        class="flex items-center justify-end flex-shrink-0 min-w-[120px] ml-auto"
                       >
                         <!-- <div
                           v-if="cart.final_total !== cart.total"
@@ -89,7 +89,7 @@
                         </div>
                       </div>
                       <div
-                        class="flex items-center justify-center w-10 h-10 cursor-pointer"
+                        class="flex items-center justify-center w-10 h-10 ml-4 cursor-pointer"
                         @click="deleteCartItem(item)"
                       >
                         <span class="material-symbols-outlined ch-heading-2">
@@ -105,7 +105,7 @@
               <div class="flex items-center justify-between">
                 <div v-if="cart.carts && cart.carts.length > 0">
                   <button
-                    class="btn border border-netural-netural-300 text-netural-netural-300 hover:bg-netural-netural-300 hover:text-netural-netural-100"
+                    class="btn-outline"
                     type="button"
                     @click="clearCartItem"
                   >

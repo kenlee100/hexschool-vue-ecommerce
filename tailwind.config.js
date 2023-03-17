@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require("./tailwindcss/colors.js");
 const screens = require("./tailwindcss/screens.js");
+const { animation, keyframes } = require("./tailwindcss/animation.js");
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
@@ -13,6 +14,8 @@ module.exports = {
     screens,
     extend: {
       colors,
+      animation,
+      keyframes,
       fontSize: {
         // 中文
         "caption-2": "0.75rem", // font-size: 12px;

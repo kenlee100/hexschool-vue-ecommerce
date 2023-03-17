@@ -37,7 +37,7 @@
             </div>
 
             <router-link
-              to="/"
+              to="/products"
               class="flex items-center bg-netural-netural-100 text-netural-netural-400 btn-large group"
             >
               <p>立即前往</p>
