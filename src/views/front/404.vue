@@ -1,7 +1,5 @@
 <template>
-  <PageHeader
-    image-url="/src/assets/images/img/image/page_404.jpg"
-  />
+  <PageHeader :image-url="pageImage" />
   <div class="container">
     <div class="flex flex-col justify-center space-y-4 max-w-[800px] mx-auto">
       <p class="ch-heading-3 text-center">
@@ -21,7 +19,13 @@
 <script>
 import PageHeader from "@/components/PageHeader.vue";
 import { useLoadingState } from "@/stores/common.js";
+import pageImage from "@/assets/images/img/image/page_404.jpg";
 export default {
+  data() {
+    return {
+      pageImage,
+    };
+  },
   components: {
     PageHeader,
   },

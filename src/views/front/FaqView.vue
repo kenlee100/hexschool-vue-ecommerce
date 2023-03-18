@@ -1,5 +1,5 @@
 <template>
-  <PageHeader image-url="/src/assets/images/img/image/page_faq.jpg"/>
+  <PageHeader :image-url="pageImage" />
   <div class="container">
     <div class="space-y-6">
       <div
@@ -55,6 +55,7 @@
 <script>
 import PageHeader from "@/components/PageHeader.vue";
 import { useLoadingState } from "@/stores/common.js";
+import pageImage from "@/assets/images/img/image/page_faq.jpg";
 export default {
   data() {
     return {
@@ -87,6 +88,7 @@ export default {
           active: false,
         },
       ],
+      pageImage,
     };
   },
   components: {

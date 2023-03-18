@@ -1,5 +1,5 @@
 <template>
-  <PageHeader image-url="/src/assets/images/img/image/page_article.jpg"/>
+  <PageHeader :image-url="pageImage" />
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
       <template v-for="item in articles" :key="item.id">
@@ -20,9 +20,12 @@ import ArticleItem from "@/components/front/ArticleItem.vue";
 import { mapActions, mapState } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
 import { articlesStore } from "@/stores/articlesStore.js";
+import pageImage from "@/assets/images/img/image/page_article.jpg";
 export default {
   data() {
-    return {};
+    return {
+      pageImage,
+    };
   },
   components: {
     PageHeader,

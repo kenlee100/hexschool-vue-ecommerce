@@ -1,7 +1,5 @@
 <template>
-  <PageHeader
-    image-url="/src/assets/images/img/image/page_about.jpg"
-  />
+  <PageHeader :image-url="pageImage" />
   <div class="container">
     <div class="grid grid-flow-row gap-10 md:gap-0">
       <AboutItem
@@ -23,6 +21,7 @@ import aboutImg01 from "/src/assets/images/img/image/about_01.jpg";
 import aboutImg02 from "/src/assets/images/img/image/about_02.jpg";
 import aboutImg03 from "/src/assets/images/img/image/about_03.jpg";
 import aboutImg04 from "/src/assets/images/img/image/about_04.jpg";
+import pageImage from "@/assets/images/img/image/page_about.jpg";
 export default {
   data() {
     return {
@@ -54,6 +53,7 @@ export default {
           imageUrl: aboutImg04,
         },
       ],
+      pageImage,
     };
   },
   components: {
