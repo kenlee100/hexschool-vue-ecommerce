@@ -7,7 +7,7 @@
   >
     <div class="relative overflow-hidden flex flex-shrink-0 w-full">
       <div
-        class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
+        class="absolute right-0 top-0 md:right-9 md:top-9 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
       >
         <div
           class="flex-shrink-0 w-6 h-6 lg:w-9 lg:h-9 bg-netural-netural-100 transition-all ease-in-out duration-300 icon-favorite hover:icon-favorite-solid"
@@ -32,7 +32,6 @@
           <p
             class="lg:font-bold ch-caption-2 lg:ch-body text-netural-netural-100"
           >
-            <!-- 東京迪士尼陸地 -->
             {{ productData.category }}
           </p>
         </div>
@@ -40,7 +39,6 @@
           <p
             class="font-bold ch-body lg:ch-heading-3 text-netural-netural-100 line-clamp-2"
           >
-            <!-- 東京迪士尼海洋3日遊 -->
             {{ productData.title }}
           </p>
         </h3>
@@ -49,7 +47,6 @@
         <p
           class="[&:not(:last-child)]:mr-4 en-caption-01 lg:en-body text-netural-netural-100"
         >
-          <!-- NT$.9000 -->
           ${{ productData.price }}
         </p>
         <button
@@ -70,7 +67,7 @@
   >
     <div class="relative overflow-hidden flex flex-shrink-0 w-full">
       <div
-        class="absolute right-0 top-0 lg:right-10 lg:top-10 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
+        class="absolute right-0 top-0 md:right-9 md:top-9 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
       >
         <div
           class="flex-shrink-0 w-6 h-6 lg:w-9 lg:h-9 bg-netural-netural-100 transition-all ease-in-out duration-300 icon-favorite hover:icon-favorite-solid"
@@ -124,7 +121,7 @@
   </router-link>
 </template>
 <script>
-import { mapActions, mapState } from "pinia";
+import { mapActions } from "pinia";
 import { productsStore } from "@/stores/productsStore.js";
 export default {
   emits: ["change-content"],

@@ -15,7 +15,6 @@
       <swiper-slide
         v-for="item in sliderImages"
         :key="item.id"
-        class="color-overlay"
       >
         <div class="flex flex-col h-full container">
           <div
@@ -358,7 +357,7 @@
       </div>
     </div>
   </section>
-  <div class="container">
+  <div class="container -mb-16">
     <div class="relative -mt-[1px] border-b border-netural-netural-500"></div>
   </div>
 </template>
@@ -385,7 +384,8 @@ import "swiper/scss/effect-fade";
 //   "/src/assets/images/img/image/banner_01.jpg",
 //   import.meta.url
 // );
-import bannerImg from "/src/assets/images/img/image/banner_01.jpg";
+import bannerImg01 from "/src/assets/images/img/image/banner_01.jpg";
+import bannerImg02 from "/src/assets/images/img/image/banner_02.jpg";
 import spotImg01 from "/src/assets/images/img/image/spot_01.jpg";
 import spotImg02 from "/src/assets/images/img/image/spot_02.jpg";
 import spotImg03 from "/src/assets/images/img/image/spot_03.jpg";
@@ -405,11 +405,11 @@ export default {
       sliderImages: [
         {
           id: 1,
-          imageUrl: bannerImg,
+          imageUrl: bannerImg01,
         },
         {
           id: 2,
-          imageUrl: bannerImg,
+          imageUrl: bannerImg02,
         },
       ],
       spotImages: [
@@ -498,19 +498,9 @@ export default {
     ...mapWritableState(productsStore, ["searchKeyword"]),
   },
   async mounted() {
-    // 讀取狀態測試
-    // useLoadingState().$patch((state) => {
-    //   state.isLoading = false;
-    // });
     useLoadingState().isLoading = true;
     await this.getArticles();
     await this.getProducts();
-    // const loading = useLoadingState();
-
-    // console.log("useLoadingState", useLoadingState().isLoading);
-    // setTimeout(() => {
-    //   // loading.$patch({isLoading: false})
-    // }, 3000);
   },
 };
 </script>

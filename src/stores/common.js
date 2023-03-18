@@ -16,7 +16,8 @@ export const useMenuStore = defineStore("mobileMenu", {
 export const useLoadingState = defineStore("loading", {
   state: () => {
     return {
-      isLoading: true,
+      isLoading: false,
+      isProcessing: false,
     };
   },
 });

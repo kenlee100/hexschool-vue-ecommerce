@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col mb-[60px]">
+  <div class="flex flex-col mb-8 lg:mb-[60px]">
     <div class="overflow-hidden relative pattern-overlay">
       <img
-        :src="pageImage"
+        :src="imageUrl"
         class="w-full h-[200px] lg:h-[400px] object-cover"
         alt=""
       />
@@ -23,7 +23,7 @@
 <script>
 export default {
   props: {
-    pageImage: {
+    imageUrl: {
       type: String,
       default:
         "https://images.pexels.com/photos/2341830/pexels-photo-2341830.jpeg?auto=compress&cs=tinysrgb&w=1920&h=400&dpr=2",

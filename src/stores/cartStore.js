@@ -9,35 +9,12 @@ export default defineStore("cartStore", {
   state: () => ({
     cart: {},
     currentStep: 1,
-    // couponCode: "",
     couponState: {
       codeName: "",
       couponText: "",
     },
   }),
   actions: {
-    // addToCart(productId, qty = 1) {
-    //   // 取得已經有加入購物車的項目
-    //   const currentCartItem = this.cart.find(
-    //     (item) => item.productId === productId
-    //   );
-    //   //進行判斷，如果購物車有該項目則 +1，如果沒已則是新增一個購物車項目
-    //   if (currentCartItem) {
-    //     currentCartItem.qty += 1;
-    //   } else {
-    //     this.cart.push({
-    //       // 加入購物車時的id
-    //       id: new Date().getTime(),
-    //       productId,
-    //       qty,
-    //     });
-    //   }
-    // },
-    // setCartQty(id, e) {
-    //   const currentCartItem = this.cart.find((item) => item.id === id);
-    //   // console.log(id, );
-    //   currentCartItem.qty = e.target.value * 1; // 轉數值
-    // },
     async getCartList() {
       try {
         await axios.get(`${VITE_URL}/api/${VITE_PATH}/cart`).then((res) => {
@@ -54,8 +31,7 @@ export default defineStore("cartStore", {
     },
     // 修改購物車數量
     async updateCart(content) {
-      // 賦予讀取狀態id
-      // this.loadingStatus.loadingItem = content.id;
+      useLoadingState().isProcessing = true;
       try {
         await axios.put(`${VITE_URL}/api/${VITE_PATH}/cart/${content.id}`, {
           data: {
@@ -64,6 +40,7 @@ export default defineStore("cartStore", {
           },
         });
         await this.getCartList();
+        useLoadingState().isProcessing = false;
         const {
           // 取出內層的資料
           product: { title },
@@ -81,11 +58,13 @@ export default defineStore("cartStore", {
     },
     // 刪除單筆購物車
     async deleteCartItem(content) {
+      useLoadingState().isProcessing = true;
       try {
         const res = await axios.delete(
           `${VITE_URL}/api/${VITE_PATH}/cart/${content.id}`
         );
         await this.getCartList();
+        useLoadingState().isProcessing = false;
         const {
           // 取出內層的資料
           product: { title },
@@ -115,20 +94,19 @@ export default defineStore("cartStore", {
       swalCustomClass
         .fire({
           title: "確定清除購物車嗎？",
-          // showDenyButton: true,
           showCancelButton: true,
           cancelButtonText: "取消",
           confirmButtonText: "確定",
-          // denyButtonText: `Don't save`,
         })
         .then((result) => {
-          /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
+            useLoadingState().isProcessing = true;
             axios
               .delete(`${VITE_URL}/api/${VITE_PATH}/carts`)
               .then((res) => {
                 const { message } = res.data;
                 this.getCartList();
+                useLoadingState().isProcessing = false;
                 toast.fire({
                   icon: "success",
                   title: `${message} 購物車`,
@@ -167,7 +145,13 @@ export default defineStore("cartStore", {
       // return `${((item.final_total / item.total) * 100)}%`;
     },
     loadCouponCode() {
-      if (this.cart.carts && this.cart.carts.length < 0) {
+      // if(this.cart.total===this.cart.final_total){
+      //   console.log('equal');
+      // }
+      if (
+        (this.cart.carts !== undefined && this.cart.carts.length < 0) ||
+        this.cart.total === this.cart.final_total
+      ) {
         localStorage.setItem(
           "coupon",
           JSON.stringify({
@@ -175,11 +159,12 @@ export default defineStore("cartStore", {
             couponText: "",
           })
         );
+      } else {
+        this.couponState = JSON.parse(localStorage.getItem("coupon")) || {
+          codeName: "",
+          couponText: "",
+        };
       }
-      this.couponState = JSON.parse(localStorage.getItem("coupon")) || {
-        codeName: "",
-        couponText: "",
-      };
     },
   },
   getters: {},

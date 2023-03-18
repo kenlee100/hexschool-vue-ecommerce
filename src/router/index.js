@@ -79,11 +79,6 @@ const router = createRouter({
         },
       ],
     },
-    // {
-    //   path: "/login",
-    //   name: "login",
-    //   component: () => import("@/views/front/LoginView.vue"),
-    // },
     {
       path: "/:pathMatch(.*)",
       component: () => import("@/views/FrontLayout.vue"),
@@ -96,15 +91,13 @@ const router = createRouter({
         },
       ],
     },
-    // {
-    //   path: "/:pathMatch(.*)",
-    //   redirect: {
-    //     name: "home",
-    //   },
-    // },
   ],
-  scrollBehavior() {
-    return { x: 0, y: 0, behavior: "smooth" };
+  scrollBehavior(to, from, savedPosition) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({ top: 0, behavior: "smooth" });
+      }, 300);
+    });
   },
   linkActiveClass: "nav-active",
 });

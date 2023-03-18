@@ -5,7 +5,7 @@
   >
     <div class="flex w-full md:w-[60%]">
       <img
-        src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
+        :src="imageUrl"
         class="w-full h-[300px] lg:h-[400px] object-cover"
         alt=""
       />
@@ -37,7 +37,7 @@
   >
     <div class="flex w-full md:w-[60%] ml-auto">
       <img
-        src="https://images.pexels.com/photos/1829980/pexels-photo-1829980.jpeg?auto=compress&cs=tinysrgb&w=800"
+        :src="imageUrl"
         class="w-full h-[250px] lg:h-[400px] object-cover"
         alt=""
       />
@@ -75,6 +75,9 @@ export default {
     },
     itemIndex: {
       type: Number,
+    },
+    imageUrl: {
+      type: String,
     },
   },
 };

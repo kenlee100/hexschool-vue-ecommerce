@@ -30,7 +30,7 @@ export default {
   computed: {
     ...mapState(useNavListMenu, ["navList"]),
 
-    // mapWritableState 可修改的 state
+    // mapWritableState 可修改 state
     ...mapWritableState(useMenuStore, ["toggle"]),
   },
   mounted() {

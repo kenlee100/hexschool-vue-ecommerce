@@ -62,33 +62,28 @@
         <div class="flex flex-col">
           <p>
             {{ productContent.description }}
-            <!-- 東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。 -->
           </p>
         </div>
         <div class="flex flex-col">
           <ul class="flex border-b border-netural-netural-300">
             <li class="group active">
               <div
-                class="flex items-center justify-center py-2 px-4 bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4 group-[.active]:text-netural-netural-100 group-[.active]:bg-secondary-secondary-200 cursor-pointer"
+                class="flex items-center justify-center py-2 px-4 bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4 cursor-pointer"
               >
                 商品內容
               </div>
             </li>
-            <li class="group">
+            <!-- <li class="group">
               <div
                 class="flex items-center justify-center py-2 px-4 bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4 group-[.active]:text-netural-netural-100 group-[.active]:bg-secondary-secondary-200 cursor-pointer"
               >
                 購買須知
               </div>
-            </li>
+            </li> -->
           </ul>
           <div class="flex flex-col">
             <div class="pt-5 pb-4 active">
               <div v-html="productContent.content"></div>
-              <!-- <p>商品內容：{{ productContent.content }}</p>
-                <p>
-                  東京迪士尼海洋是一座以“海洋”為主題的遊樂園，位於東京迪士尼度假區內，十分有特色。整個海洋樂園比東京迪士尼樂園更加刺激，更適合大孩子和成年人一同遊玩。除了遊樂項目，東京迪士尼海洋的娛樂表演也極其精彩。夜間的水上大秀也十分精彩，巨大的水幕、激光、火焰、光線等特殊效果和迪士尼明星們一起構成了這場氣勢磅礴的大秀。
-                </p> -->
             </div>
             <div class="pt-5 pb-4 hidden">
               <p>商品內容：{{ productContent.content }}</p>
@@ -195,16 +190,14 @@
   </div>
 </template>
 <script>
-// const { VITE_URL, VITE_PATH } = import.meta.env;
 import { useLoadingState } from "@/stores/common.js";
 import ProductItem from "@/components/front/ProductItem.vue";
 import { mapActions, mapState } from "pinia";
 import { productsStore } from "@/stores/productsStore.js";
-// Import Swiper Vue.js components
+
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Navigation, Pagination } from "swiper";
 
-// Import Swiper styles
 import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";

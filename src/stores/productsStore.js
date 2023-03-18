@@ -18,12 +18,10 @@ export const productsStore = defineStore("productData", {
     };
   },
   actions: {
-    async getProducts(category = "", num = 1) {
+    async getProducts(num = 1) {
       try {
         await axios
-          .get(
-            `${VITE_URL}/api/${VITE_PATH}/products?page=${num}&category=${category}`
-          )
+          .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${num}`)
           .then((res) => {
             this.products = res.data.products;
             this.pagination = res.data.pagination;
@@ -43,8 +41,7 @@ export const productsStore = defineStore("productData", {
     },
     // 加入購物車
     async addCart(content, qty = 1) {
-      // 賦予讀取狀態id
-      // this.loadingStatus.loadingItem = content.id;
+      useLoadingState().isProcessing = true;
       await axios
         .post(`${VITE_URL}/api/${VITE_PATH}/cart`, {
           data: {
@@ -53,22 +50,19 @@ export const productsStore = defineStore("productData", {
           },
         })
         .then((res) => {
-          // 將讀取狀態清空
-          // this.loadingStatus.loadingItem = "";
+          useLoadingState().isProcessing = false;
           //解構賦值
           const {
             message,
             // 取出內層的資料
             data: { product },
           } = res.data;
-          // alert(`${product.title} ${message}`);
           const { getCartList } = cartStore();
           getCartList();
           toast.fire({
             icon: "success",
             title: `${product.title} ${message}`,
           });
-          // this.$refs.productModal.closeModal();
         })
         .catch((err) => {
           toast.fire({
@@ -92,29 +86,12 @@ export const productsStore = defineStore("productData", {
       router.push(`/products?category=${category}`);
     },
     goCategory(category) {
-      console.log("goCategory", category);
       if (this.categoryData.includes(category)) {
         router.push(`/products?category=${category}`);
       }
-
-      // else if (category === "") {
-      //   router.push(`/products`);
-      // }
     },
   },
   getters: {
-    // 篩選符合分類的品項 多選
-    // filterProducts: (state) => {
-    //   const filterProduct =
-    //     state.selectCategory === undefined && state.selectCategory.length === 0
-    //       ? state.products
-    //       : state.products.filter((product) =>
-    //           state.currentCategory === "全部地區"
-    //             ? state.products
-    //             : state.selectCategory.includes(product.category)
-    //         );
-    //   return filterProduct;
-    // },
     // 篩選符合分類的品項 單選
     filterProducts: (state) => {
       return state.products.filter((product) =>
