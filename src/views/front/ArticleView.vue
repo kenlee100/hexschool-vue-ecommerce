@@ -1,18 +1,16 @@
 <template>
-  <div class="layout-content">
-    <PageHeader />
-    <div class="container">
-      <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
-        <template v-for="item in articles" :key="item.id">
-          <ArticleItem :article-data="item" text-content-class="!ml-4" />
-        </template>
-      </div>
-      <Pagination
-        :pages="pagination"
-        @change-page="getArticles"
-        :get-list="getArticles"
-      />
+  <PageHeader image-url="/src/assets/images/img/image/page_article.jpg"/>
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
+      <template v-for="item in articles" :key="item.id">
+        <ArticleItem :article-data="item" text-content-class="!ml-4" />
+      </template>
     </div>
+    <Pagination
+      :pages="pagination"
+      @change-page="getArticles"
+      :get-list="getArticles"
+    />
   </div>
 </template>
 <script>

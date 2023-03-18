@@ -61,7 +61,7 @@
     @apply px-3 lg:px-6;
   }
   .layout-content {
-    @apply flex flex-col min-h-[calc(100vh-72px-230px)] pb-16;
+    @apply relative flex flex-col min-h-[calc(100vh-72px-230px)] pb-16;
   }
   .color-overlay {
     @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:opacity-40 before:bg-netural-netural-400;
@@ -69,10 +69,7 @@
   .pattern-overlay {
     @apply relative before:content-[''] before:absolute before:inset-0 before:z-10 before:w-full before:h-full before:bg-[url('@/assets/images/img/image/pattern.png')];
   }
-  // text
-  // .text-antonio {
-  //   @apply font-antonio font-bold;
-  // }
+  
   .ch-display {
     @apply text-display leading-15;
   }
@@ -243,7 +240,11 @@
       }
     }
   }
+  .animate__faster {
+    --animate-duration: 0.3s;
+  }
   .editor-content {
+    @apply ch-body en-caption-02 leading-7.5 font-bold;
     ul,
     ol {
       list-style: inherit;

@@ -39,12 +39,4 @@ export const articlesStore = defineStore("articleData", {
       }
     },
   },
-  // getters: {
-  //   filterArticles: (state) => {
-  //     // return state.articles.filter(
-  //     //   (article) =>
-  //     //     (state.currentCategory === article.category) === state.currentCategory
-  //     // );
-  //   },
-  // },
 });

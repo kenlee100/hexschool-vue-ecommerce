@@ -13,6 +13,7 @@ import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json";
 import { date, ddmmyyyy, currency } from "@/utils/filters.js";
 import Loading from "vue-loading-overlay";
 
+import "animate.css";
 import "sweetalert2/src/sweetalert2.scss";
 
 import "vue-loading-overlay/dist/css/index.css";

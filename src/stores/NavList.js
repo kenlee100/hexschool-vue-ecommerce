@@ -35,27 +35,5 @@ export default defineStore("navListMenu", {
       }
       return list;
     },
-    // pageHeaderData({ navRouteData }) {
-    //   const list = [];
-    //   for (let i = 0; i < navRouteData.length; i++) {
-    //     if (
-    //       navRouteData[i].path === "/" ||
-    //       navRouteData[i].path === "/product/:id"
-    //     ) {
-    //       continue;
-    //     }
-    //     // else if (navRouteData[i].path === "/product/:id") {
-    //     //   list.push({
-    //     //     path: navRouteData[i].path,
-    //     //   });
-    //     // }
-    //     list.push({
-    //       path: navRouteData[i].path,
-    //       title: navRouteData[i].meta.title,
-    //       enTitle: navRouteData[i].meta.enTitle,
-    //     });
-    //   }
-    //   return list;
-    // },
   },
 });

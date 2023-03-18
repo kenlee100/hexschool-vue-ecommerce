@@ -8,4 +8,7 @@ export default Swal.mixin({
   showClass: {
     popup: "animate__animated animate__slideInRight",
   },
+  hideClass: {
+    popup: "animate__animated animate__fadeOutRightBig",
+  },
 });

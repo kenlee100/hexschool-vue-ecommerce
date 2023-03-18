@@ -1,57 +1,53 @@
 <template>
-  <div class="layout-content">
-    <PageHeader />
-    <div class="container">
-      <div class="space-y-6">
-        <div
-          :id="`accordion-${item.id}`"
-          class="shadow-md group"
-          :ref="`accordion-${item.id}`"
-          v-for="item in faqData"
-          :key="item.id"
-          :class="{ active: item.active }"
+  <PageHeader image-url="/src/assets/images/img/image/page_faq.jpg"/>
+  <div class="container">
+    <div class="space-y-6">
+      <div
+        :id="`accordion-${item.id}`"
+        class="shadow-md group"
+        :ref="`accordion-${item.id}`"
+        v-for="item in faqData"
+        :key="item.id"
+        :class="{ active: item.active }"
+      >
+        <h2
+          class="bg-netural-netural-100 transition-all group-[.active]:bg-secondary-secondary-100"
         >
-          <h2
-            class="bg-netural-netural-100 transition-all group-[.active]:bg-secondary-secondary-100"
+          <button
+            @click="toggle(item)"
+            class="relative flex items-center w-full px-4 py-3 text-secondary-secondary-100 group-[.active]:text-primary-primary-100 cursor-pointer"
+            type="button"
           >
-            <button
-              @click="toggle(item)"
-              class="relative flex items-center w-full px-4 py-3 text-secondary-secondary-100 group-[.active]:text-primary-primary-100 cursor-pointer"
-              type="button"
+            <p class="flex-1 pr-10 text-left ch-heading-4 font-bold">
+              {{ item.title }}
+            </p>
+            <div
+              class="absolute right-4 top-3 flex justify-center items-center w-10 h-10 group-[.active]:opacity-0 group-[.active]:rotate-180 transition-all duration-300"
             >
-              <p class="flex-1 pr-10 text-left ch-heading-4 font-bold">
-                {{ item.title }}
-              </p>
-              <div
-                class="absolute right-4 top-3 flex justify-center items-center w-10 h-10 group-[.active]:opacity-0 group-[.active]:rotate-180 transition-all duration-300"
-              >
-                <span class="material-symbols-outlined ch-heading-2">
-                  add
-                </span>
-              </div>
-              <div
-                class="absolute right-4 top-3 flex justify-center items-center w-10 h-10 -rotate-180 group-[.active]:opacity-1 transition-all duration-300"
-              >
-                <span class="material-symbols-outlined ch-heading-2">
-                  remove
-                </span>
-              </div>
-            </button>
-          </h2>
-          <transition
-            name="accordion-item"
-            @enter="startTransition"
-            @after-enter="endTransition"
-            @before-leave="startTransition"
-            @after-leave="endTransition"
-          >
-            <div v-if="item.active" class="overflow-hidden">
-              <div class="px-4 py-3 text-body">
-                {{ item.description }}
-              </div>
+              <span class="material-symbols-outlined ch-heading-2"> add </span>
             </div>
-          </transition>
-        </div>
+            <div
+              class="absolute right-4 top-3 flex justify-center items-center w-10 h-10 -rotate-180 group-[.active]:opacity-1 transition-all duration-300"
+            >
+              <span class="material-symbols-outlined ch-heading-2">
+                remove
+              </span>
+            </div>
+          </button>
+        </h2>
+        <transition
+          name="accordion-item"
+          @enter="startTransition"
+          @after-enter="endTransition"
+          @before-leave="startTransition"
+          @after-leave="endTransition"
+        >
+          <div v-if="item.active" class="overflow-hidden">
+            <div class="px-4 py-3 text-body">
+              {{ item.description }}
+            </div>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -124,6 +120,6 @@ export default {
 }
 .accordion-item-enter-from,
 .accordion-item-leave-to {
-  height: 0 !important;
+  @apply h-0 #{!important};
 }
 </style>

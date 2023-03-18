@@ -29,7 +29,7 @@
             v-else
             class="flex items-center justify-center w-12 h-12 rounded bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4"
             href="#"
-            @click.prevent="$emit('change-page', categoryData, item)"
+            @click.prevent="$emit('change-page', item)"
             >{{ index + 1 }}</a
           >
         </li>

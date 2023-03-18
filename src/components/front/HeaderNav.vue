@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 inset-x-0 z-20 lg:h-auto bg-netural-netural-100 shadow-md"
+    class="sticky top-0 inset-x-0 z-50 lg:h-auto bg-netural-netural-100 shadow-md"
   >
     <div class="container">
       <div class="flex items-center justify-between h-[72px] py-4 lg:py-5">
@@ -42,13 +42,18 @@
               <div
                 class="flex-shrink-0 w-5 h-5 bg-secondary-secondary-200 icon-cart"
               ></div>
-              <span
+              <p
                 v-if="
                   this.cart.carts !== undefined && this.cart.carts.length > 0
                 "
-                class="absolute right-0 top-2 min-w-[20px] h4 py-0.5 scale-90 rounded-full bg-secondary-secondary-200 text-netural-netural-100 en-caption-02 text-center"
-                >{{ this.cart.carts.length }}</span
+                :class="{
+                  'animate__animated animate__pulse animate__infinite':
+                    this.cart.carts.length > 0,
+                }"
+                class="absolute right-0 top-2 min-w-[22px] h-[22px] py-0.5 px-1 scale-90 rounded-full bg-secondary-secondary-100 text-primary-primary-100 en-caption-02 text-center"
               >
+                {{ this.cart.carts.length }}
+              </p>
             </router-link>
             <div
               class="flex flex-col justify-between w-[48px] h-[48px] py-4 px-[14px] md:hidden group"
@@ -89,13 +94,11 @@ export default {
   },
   mounted() {
     this.getCartList();
-    // this.navListFilter = this.$router.getRoutes().map((item) => {
-    //   // console.log("item", item);
-    //   return {
-    //     path: item.path,
-    //     name: item.name,
-    //   };
-    // });
   },
 };
 </script>
+<style>
+.animate__animated.animate__pulse {
+  --animate-duration: 0.5s;
+}
+</style>

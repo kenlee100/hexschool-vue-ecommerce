@@ -12,7 +12,6 @@ export function currency(num) {
 export function date(time) {
   if (!time) return;
   const localDate = new Date(time * 1000);
-  console.log("localDate", localDate);
   return localDate.toLocaleDateString();
 }
 
