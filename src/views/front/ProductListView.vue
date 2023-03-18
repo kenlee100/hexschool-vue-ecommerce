@@ -1,5 +1,5 @@
 <template>
-  <PageHeader image-url="/src/assets/images/img/image/page_products.jpg" />
+  <PageHeader :image-url="pageImage" />
   <div class="container">
     <div class="flex flex-col lg:flex-row justify-between lg:space-x-8">
       <div
@@ -131,9 +131,12 @@ import ProductItem from "@/components/front/ProductItem.vue";
 import { mapActions, mapState, mapWritableState } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
 import { productsStore } from "@/stores/productsStore.js";
+import pageImage from "@/assets/images/img/image/page_products.jpg";
 export default {
   data() {
-    return {};
+    return {
+      pageImage,
+    };
   },
   components: {
     Pagination,

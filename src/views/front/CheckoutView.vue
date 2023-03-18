@@ -1,5 +1,5 @@
 <template>
-  <PageHeader image-url="/src/assets/images/img/image/page_checkout.jpg"/>
+  <PageHeader :image-url="pageImage" />
   <div class="container">
     <CartStep v-if="!order.is_paid" :current-step="currentStep" />
     <div class="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
@@ -196,7 +196,10 @@
               class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">付款狀態：</p>
-              <p class="flex-1 ch-heading-4 break-all lg:text-right" :class="order.is_paid">
+              <p
+                class="flex-1 ch-heading-4 break-all lg:text-right"
+                :class="order.is_paid"
+              >
                 <span v-if="order.is_paid" class="text-green-700"
                   >付款完成</span
                 >
@@ -233,6 +236,7 @@ import CartStep from "@/components/front/CartStep.vue";
 import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";
+import pageImage from "@/assets/images/img/image/page_checkout.jpg";
 export default {
   data() {
     return {
@@ -241,6 +245,7 @@ export default {
         user: {},
       },
       finalTotal: {},
+      pageImage,
     };
   },
   components: { PageHeader, CartStep },

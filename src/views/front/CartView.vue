@@ -1,5 +1,5 @@
 <template>
-  <PageHeader image-url="/src/assets/images/img/image/page_cart.jpg"/>
+  <PageHeader :image-url="pageImage" />
   <div class="container">
     <template v-if="cart.carts && cart.carts.length >= 1">
       <CartStep :current-step="currentStep" />
@@ -226,6 +226,7 @@ import CartStep from "@/components/front/CartStep.vue";
 import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";
+import pageImage from "@/assets/images/img/image/page_cart.jpg";
 export default {
   data() {
     return {
@@ -238,6 +239,7 @@ export default {
         create_at: Date.now(),
         email: "",
       },
+      pageImage,
     };
   },
   components: {

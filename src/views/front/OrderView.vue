@@ -1,5 +1,5 @@
 <template>
-  <PageHeader image-url="/src/assets/images/img/image/page_order.jpg"/>
+  <PageHeader :image-url="pageImage" />
   <div class="container">
     <CartStep :current-step="currentStep" />
     <div
@@ -267,6 +267,7 @@ import CartStep from "@/components/front/CartStep.vue";
 import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";
+import pageImage from "@/assets/images/img/image/page_order.jpg";
 export default {
   data() {
     return {
@@ -282,6 +283,7 @@ export default {
         message: "",
       },
       coupon: "",
+      pageImage,
     };
   },
   components: {
