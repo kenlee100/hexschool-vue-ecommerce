@@ -62,7 +62,7 @@
           <router-link
             :to="`/article/${item.id}`"
             v-if="index % 2 === 0"
-            class="flex flex-row-reverse items-center lg:max-w-[40%] w-full lg:max-w-none lg:w-[40%] py-3 px-5 lg:py-4 lg:px-8 border-2 lg:border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
+            class="flex flex-row-reverse items-center lg:max-w-[40%] w-full lg:max-w-none lg:w-[40%] py-3 px-5 lg:py-4 lg:px-8 border-2 lg:border-t-0 lg:border-l-0 lg:border-r-0 lg:border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 cursor-pointer"
           >
             <p
               class="flex-1 pl-3 ch-heading-3 font-bold text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100 line-clamp-2"
@@ -76,7 +76,7 @@
           <router-link
             :to="`/article/${item.id}`"
             v-if="index % 2 === 1"
-            class="flex items-center lg:max-w-[40%] w-full lg:max-w-none lg:w-[40%] py-3 px-5 lg:py-4 lg:px-8 border-2 lg:border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 text-right cursor-pointer"
+            class="flex items-center lg:max-w-[40%] w-full lg:max-w-none lg:w-[40%] py-3 px-5 lg:py-4 lg:px-8 border-2 lg:border-t-0 lg:border-l-0 lg:border-r-0 lg:border-b-4 border-netural-netural-400 group transition-all ease-in-out duration-500 hover:bg-netural-netural-400 text-right cursor-pointer"
           >
             <p
               class="flex-1 pr-3 ch-heading-3 font-bold text-netural-netural-400 transition-all ease-in-out duration-500 group-hover:text-netural-netural-100 line-clamp-2"
