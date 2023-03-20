@@ -137,6 +137,11 @@ export default {
       this.$route.params.id
     );
     await this.getArticles();
+    this.$router.afterEach(() => {
+      this.$nextTick(() => {
+        useLoadingState().isLoading = true;
+      });
+    });
   },
 };
 </script>
