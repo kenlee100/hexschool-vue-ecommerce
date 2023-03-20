@@ -16,12 +16,12 @@
           slidesPerView: 1,
           spaceBetween: 0,
         },
-        480: {
+        768: {
           slidesPerView: 3,
           spaceBetween: 24,
         },
       }"
-      class="flex common-slider"
+      class="flex product-slider"
     >
       <swiper-slide v-for="item in productContent.imagesUrl" :key="item.id">
         <img
@@ -268,7 +268,8 @@ export default {
 };
 </script>
 <style lang="scss" scope>
-.common-slider {
+.common-slider,
+.product-slider {
   .swiper-slide {
     @apply flex h-auto;
   }
@@ -280,6 +281,11 @@ export default {
     &.swiper-pagination-bullet-active {
       @apply w-4 rounded bg-secondary-secondary-100;
     }
+  }
+}
+.product-slider {
+  .swiper-pagination {
+    @apply static lg:mt-0;
   }
 }
 </style>
