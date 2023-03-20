@@ -1,3 +1,4 @@
+/* eslint-env node */
 module.exports = {
   "netural-netural-100": "var(--color-netural-100)",
   "netural-netural-200": "var(--color-netural-200)",

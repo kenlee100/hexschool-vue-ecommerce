@@ -1,3 +1,4 @@
+/* eslint-env node */
 module.exports = {
   sm: "576px",
   md: "768px",

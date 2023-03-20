@@ -86,14 +86,14 @@ const router = createRouter({
         {
           path: "",
           name: "404",
-          component: () => import("@/views/front/404.vue"),
+          component: () => import("@/views/front/404View.vue"),
           meta: { title: `404`, enTitle: "" },
         },
       ],
     },
   ],
-  scrollBehavior(to, from, savedPosition) {
-    return new Promise((resolve, reject) => {
+  scrollBehavior() {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve({ top: 0, behavior: "smooth" });
       }, 300);

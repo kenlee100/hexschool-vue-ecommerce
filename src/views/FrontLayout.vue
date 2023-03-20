@@ -51,7 +51,7 @@ export default {
   },
   components: { RouterView, HeaderNav, FooterNav, MobileMenu, ProcessLoader },
   mounted() {
-    this.$router.afterEach((to, from) => {
+    this.$router.afterEach((to) => {
       this.$nextTick(() => {
         document.title = `${to.meta.title} - ${this.webTitle}`;
       });
