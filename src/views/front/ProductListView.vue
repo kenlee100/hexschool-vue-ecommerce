@@ -44,7 +44,7 @@
               </div>
             </li>
             <li
-              v-for="(item, index) in categoryData"
+              v-for="item in categoryData"
               :key="item"
               class="group lg:w-full"
               :class="{ active: currentCategory === item }"
@@ -107,12 +107,12 @@
               />
             </template>
           </div>
-          <Pagination
+          <PaginationComponent
             :pages="pagination"
             :category="currentCategory"
             @change-page="getProducts"
             :get-list="getProducts"
-          ></Pagination>
+          ></PaginationComponent>
         </template>
         <div
           v-else
@@ -125,7 +125,7 @@
   </div>
 </template>
 <script>
-import Pagination from "@/components/Pagination.vue";
+import PaginationComponent from "@/components/PaginationComponent.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ProductItem from "@/components/front/ProductItem.vue";
 import { mapActions, mapState, mapWritableState } from "pinia";
@@ -139,7 +139,7 @@ export default {
     };
   },
   components: {
-    Pagination,
+    PaginationComponent,
     PageHeader,
     ProductItem,
   },

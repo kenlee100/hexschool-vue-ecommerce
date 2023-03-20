@@ -6,7 +6,7 @@
         <ArticleItem :article-data="item" text-content-class="!ml-4" />
       </template>
     </div>
-    <Pagination
+    <PaginationComponent
       :pages="pagination"
       @change-page="getArticles"
       :get-list="getArticles"
@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import Pagination from "@/components/Pagination.vue";
+import PaginationComponent from "@/components/PaginationComponent.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ArticleItem from "@/components/front/ArticleItem.vue";
 import { mapActions, mapState } from "pinia";
@@ -29,7 +29,7 @@ export default {
   },
   components: {
     PageHeader,
-    Pagination,
+    PaginationComponent,
     ArticleItem,
   },
   methods: {

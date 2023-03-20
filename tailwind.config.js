@@ -1,3 +1,4 @@
+/* eslint-env node */
 /** @type {import('tailwindcss').Config} */
 const colors = require("./tailwindcss/colors.js");
 const screens = require("./tailwindcss/screens.js");

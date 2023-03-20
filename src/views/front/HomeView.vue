@@ -12,10 +12,7 @@
       navigation
       :pagination="{ clickable: true }"
     >
-      <swiper-slide
-        v-for="item in sliderImages"
-        :key="item.id"
-      >
+      <swiper-slide v-for="item in sliderImages" :key="item.id">
         <div class="flex flex-col h-full container">
           <div
             class="relative z-10 flex flex-col items-center justify-center h-full"

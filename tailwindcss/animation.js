@@ -1,3 +1,4 @@
+/* eslint-env node */
 const animation = {
   // animation_name: "BounceIn 1s linear 1",
   "animation-compass": "compass-rotate 2s linear infinite",

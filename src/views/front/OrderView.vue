@@ -121,7 +121,7 @@
         </div>
       </div>
       <div class="flex flex-col lg:w-1/2">
-        <Form
+        <VForm
           ref="form"
           class="flex flex-col p-4 md:p-6 bg-netural-netural-200 space-y-6"
           v-slot="{ errors }"
@@ -129,7 +129,7 @@
         >
           <div class="space-y-2">
             <label for="email" class="text-heading-4 font-bold">Email</label>
-            <Field
+            <VField
               id="email"
               name="Email"
               type="email"
@@ -138,7 +138,7 @@
               v-model="form.user.email"
               placeholder="請輸入 Email"
               rules="required|email"
-            ></Field>
+            ></VField>
             <error-message
               name="Email"
               class="block ch-body font-bold text-red-700"
@@ -149,7 +149,7 @@
             <label for="name" class="text-heading-4 font-bold"
               >收件人姓名</label
             >
-            <Field
+            <VField
               id="name"
               name="姓名"
               type="text"
@@ -158,7 +158,7 @@
               placeholder="請輸入姓名"
               rules="required"
               v-model="form.user.name"
-            ></Field>
+            ></VField>
             <error-message
               name="姓名"
               class="block ch-body font-bold text-red-700"
@@ -169,7 +169,7 @@
             <label for="phone" class="text-heading-4 font-bold"
               >收件人手機</label
             >
-            <Field
+            <VField
               id="tel"
               name="手機"
               type="tel"
@@ -178,7 +178,7 @@
               placeholder="請輸入手機"
               :rules="isPhone"
               v-model="form.user.tel"
-            ></Field>
+            ></VField>
             <error-message
               name="手機"
               class="block ch-body font-bold text-red-700"
@@ -187,7 +187,7 @@
           <div class="space-y-2">
             <label for="city" class="text-heading-4 font-bold">地區</label>
             <div class="form-select">
-              <Field
+              <VField
                 id="city"
                 name="地區"
                 :class="{ 'border-2 border-red-700': errors['地區'] }"
@@ -198,7 +198,7 @@
                 <option value="" selected disabled>請選擇地區</option>
                 <option value="台北市">台北市</option>
                 <option value="高雄市">高雄市</option>
-              </Field>
+              </VField>
             </div>
             <error-message
               name="地區"
@@ -209,7 +209,7 @@
             <label for="address" class="text-heading-4 font-bold"
               >收件人地址</label
             >
-            <Field
+            <VField
               id="address"
               name="地址"
               type="text"
@@ -218,7 +218,7 @@
               placeholder="請輸入地址"
               rules="required"
               v-model="form.user.address"
-            ></Field>
+            ></VField>
             <error-message
               name="地址"
               class="block ch-body font-bold text-red-700"
@@ -227,7 +227,7 @@
           <div class="space-y-2">
             <label for="paid" class="text-heading-4 font-bold">付款方式</label>
             <div class="form-select">
-              <Field
+              <VField
                 id="paid"
                 name="付款"
                 as="select"
@@ -235,7 +235,7 @@
               >
                 <option value="線上刷卡">線上刷卡</option>
                 <option value="ATM轉帳">ATM轉帳</option>
-              </Field>
+              </VField>
             </div>
           </div>
           <div class="space-y-2">
@@ -254,7 +254,7 @@
           >
             確認付款
           </button>
-        </Form>
+        </VForm>
       </div>
     </div>
   </div>
@@ -317,7 +317,7 @@ export default {
           }
         );
         //解構賦值
-        const { message, orderId } = res.data;
+        const { orderId } = res.data;
         this.$refs.form.resetForm(); //VeeValidate 重設表單 resetForm方法
         this.form.message = ""; // 清除textarea欄位
         useLoadingState().isProcessing = false;

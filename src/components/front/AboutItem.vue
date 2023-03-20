@@ -43,7 +43,7 @@
       />
     </div>
     <div
-      class="relative md:absolute -mt-8 mr-4 md:mt-0 md:-top-[60px] md:right-[55%] z-10 md:w-[35%] p-4  md:py-6 md:px-[32px] bg-netural-netural-200 shadow-md"
+      class="relative md:absolute -mt-8 mr-4 md:mt-0 md:-top-[60px] md:right-[55%] z-10 md:w-[35%] p-4 md:py-6 md:px-[32px] bg-netural-netural-200 shadow-md"
     >
       <div class="[&:not(:last-child)]:mb-5">
         <h3 class="flex items-start [&:not(:last-child)]:mb-2">
