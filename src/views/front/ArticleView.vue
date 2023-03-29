@@ -1,5 +1,6 @@
 <template>
   <PageHeader :image-url="pageImage" />
+
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
       <template v-for="item in articles" :key="item.id">
@@ -11,6 +12,7 @@
       @change-page="getArticles"
       :get-list="getArticles"
     />
+    categoryData {{ categoryData }}
   </div>
 </template>
 <script>
@@ -36,7 +38,7 @@ export default {
     ...mapActions(articlesStore, ["getArticles", "getArticleItem"]),
   },
   computed: {
-    ...mapState(articlesStore, ["articles", "pagination"]),
+    ...mapState(articlesStore, ["articles", "pagination", "categoryData"]),
   },
   async mounted() {
     useLoadingState().isLoading = true;

@@ -263,6 +263,7 @@ export default {
     this.productContent = await this.changeProductContent(
       this.$route.params.id
     );
+    document.title = this.productContent.title;
     await this.getProducts();
   },
 };

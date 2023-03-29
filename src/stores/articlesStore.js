@@ -9,6 +9,7 @@ export const articlesStore = defineStore("articleData", {
       articles: [],
       articlesItem: {},
       pagination: {},
+      categoryData: [],
     };
   },
   actions: {
@@ -19,6 +20,7 @@ export const articlesStore = defineStore("articleData", {
           .then((res) => {
             this.articles = res.data.articles;
             this.pagination = res.data.pagination;
+            this.filterArticles();
             useLoadingState().isLoading = false;
           });
       } catch (err) {
@@ -37,6 +39,14 @@ export const articlesStore = defineStore("articleData", {
           title: `${err.response.data.message}`,
         });
       }
+    },
+    filterArticles() {
+      const setItem = new Set();
+      this.articles.forEach((item) => {
+        item.tag.forEach((tagItem) => {
+          this.categoryData = [...setItem.add(tagItem)];
+        });
+      });
     },
   },
 });
