@@ -1,5 +1,5 @@
 # hexschool-vue-ecommerce
-
+## [Demo](https://kenlee100.github.io/hexschool-vue-ecommerce)
 
 ```sh
 npm install
