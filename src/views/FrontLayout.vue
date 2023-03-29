@@ -3,7 +3,8 @@
   <HeaderNav />
   <div class="layout-content">
     <ProcessLoader :active="isProcessing" />
-    <router-view></router-view>
+    <RouterView />
+    <ScrollTop />
   </div>
   <FooterNav />
   <VueLoading v-model:active="isLoading">
@@ -12,16 +13,17 @@
     ></div>
   </VueLoading>
 </template>
+
 <script>
 import { RouterView } from "vue-router";
 import HeaderNav from "@/components/front/HeaderNav.vue";
 import FooterNav from "@/components/front/FooterNav.vue";
 import MobileMenu from "@/components/front/MobileMenu.vue";
 import ProcessLoader from "@/components/ProcessLoader.vue";
+import ScrollTop from "@/components/ScrollTop.vue";
 import useNavListMenu from "@/stores/navList.js";
 import { useMenuStore, useLoadingState } from "@/stores/common.js";
 import { mapActions, mapState } from "pinia";
-
 export default {
   data() {
     return {};
@@ -49,7 +51,14 @@ export default {
       }
     },
   },
-  components: { RouterView, HeaderNav, FooterNav, MobileMenu, ProcessLoader },
+  components: {
+    RouterView,
+    HeaderNav,
+    FooterNav,
+    MobileMenu,
+    ProcessLoader,
+    ScrollTop,
+  },
   mounted() {
     this.$router.afterEach((to) => {
       this.$nextTick(() => {
@@ -60,6 +69,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
 .vl-overlay .vl-background {
   @apply bg-primary-primary-200 opacity-100;

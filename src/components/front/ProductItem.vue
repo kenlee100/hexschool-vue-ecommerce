@@ -6,18 +6,11 @@
     class="flex flex-col flex-shrink-0 w-full mb-10 lg:mb-20 group"
   >
     <div class="relative overflow-hidden flex flex-shrink-0 w-full">
-      <div
-        class="absolute right-0 top-0 md:right-9 md:top-9 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
-      >
-        <div
-          class="flex-shrink-0 w-6 h-6 lg:w-9 lg:h-9 bg-netural-netural-100 transition-all ease-in-out duration-300 icon-favorite hover:icon-favorite-solid"
-        ></div>
-      </div>
       <img
         :src="productData.imageUrl"
         class="w-full h-[200px] lg:h-[480px] object-cover transition-all ease-in-out group-hover:scale-[1.1]"
         :class="imageClass"
-        alt=""
+        :alt="productData.title"
       />
     </div>
     <div
@@ -66,18 +59,11 @@
     class="flex flex-col flex-shrink-0 w-full mb-10 lg:mb-20 group"
   >
     <div class="relative overflow-hidden flex flex-shrink-0 w-full">
-      <div
-        class="absolute right-0 top-0 md:right-9 md:top-9 z-10 flex items-center justify-center w-14 h-14 lg:w-12 lg:h-12 cursor-pointer"
-      >
-        <div
-          class="flex-shrink-0 w-6 h-6 lg:w-9 lg:h-9 bg-netural-netural-100 transition-all ease-in-out duration-300 icon-favorite hover:icon-favorite-solid"
-        ></div>
-      </div>
       <img
         :src="productData.imageUrl"
         class="w-full h-[200px] lg:h-[480px] object-cover transition-all ease-in-out group-hover:scale-[1.1]"
         :class="imageClass"
-        alt=""
+        :alt="productData.title"
       />
     </div>
     <div

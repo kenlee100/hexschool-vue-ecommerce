@@ -33,6 +33,7 @@ export const productsStore = defineStore("productData", {
             useLoadingState().isLoading = false;
           });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
@@ -65,6 +66,7 @@ export const productsStore = defineStore("productData", {
           });
         })
         .catch((err) => {
+          useLoadingState().isLoading = false;
           toast.fire({
             icon: "error",
             title: `${err.response.data.message}`,
@@ -75,6 +77,7 @@ export const productsStore = defineStore("productData", {
       try {
         return await axios.get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`);
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,

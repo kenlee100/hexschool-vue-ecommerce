@@ -26,7 +26,7 @@
                       <img
                         class="w-[140px] h-[90px] object-cover"
                         :src="item.product.imageUrl"
-                        alt=""
+                        :alt="item.product.title"
                       />
                     </div>
                   </router-link>
@@ -65,12 +65,6 @@
                     <div
                       class="flex items-center justify-end flex-shrink-0 min-w-[120px] ml-auto"
                     >
-                      <!-- <div
-                        v-if="cart.final_total !== cart.total"
-                        class="hidden lg:flex items-center p-2 rounded en-caption-02 bg-netural-netural-400 text-netural-netural-100 text-center"
-                      >
-                        {{ couponPercent(item) }}
-                      </div> -->
                       <div
                         class="flex flex-col items-end min-w-[50px] space-y-1"
                       >
@@ -147,19 +141,7 @@
                   </p>
                 </div>
                 <div class="flex items-center space-x-2">
-                  <!-- <div
-                    class="flex items-center justify-center rounded-full w-6 h-6 bg-netural-netural-300 cursor-pointer"
-                    title="移除優惠券"
-                    @click="removeCoupon"
-                  >
-                    <span
-                      class="material-symbols-outlined ch-heading-4 text-netural-netural-100"
-                    >
-                      close
-                    </span>
-                  </div> -->
                   <p class="font-bold ch-body text-netural-netural-300">
-                    <!-- {{ coupon }}  -->
                     {{ couponState.couponText }}
                   </p>
                 </div>
@@ -218,6 +200,7 @@
     </div>
   </div>
 </template>
+
 <script>
 const { VITE_URL, VITE_PATH } = import.meta.env;
 import { mapActions, mapState } from "pinia";
@@ -279,6 +262,7 @@ export default {
             this.getCartList();
           });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,

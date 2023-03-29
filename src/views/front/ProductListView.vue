@@ -57,40 +57,6 @@
               </div>
             </li>
           </ul>
-          <!-- 多選checkbox -->
-          <!-- <ul
-            class="grid grid-cols-4 lg:grid-cols-3 gap-3 lg:flex lg:flex-col lg:space-y-2 lg:gap-0"
-          >
-            <li>
-              <div class="el-checkbox el-checkbox-primary">
-                <input id="`all`" class="el-checkbox-input" type="checkbox" />
-                <label class="el-checkbox-style" for="`all`">
-                  <span class="material-symbols-outlined"> done </span>
-                </label>
-                <label class="el-checkbox-label" for="`all`">
-                  <span class="el-checkbox-label__text">全部地區</span>
-                </label>
-              </div>
-            </li>
-            <li v-for="(item, index) in categoryData" :key="item">
-              <div class="el-checkbox el-checkbox-primary">
-                <input
-                  :id="`${item}-${index}`"
-                  class="el-checkbox-input"
-                  type="checkbox"
-                  v-model="selectCategoryStore"
-                  :value="item"
-                  @change="searchCategory(item)"
-                />
-                <label class="el-checkbox-style" :for="`${item}-${index}`">
-                  <span class="material-symbols-outlined"> done </span>
-                </label>
-                <label class="el-checkbox-label" :for="`${item}-${index}`">
-                  <span class="el-checkbox-label__text">{{ item }}</span>
-                </label>
-              </div>
-            </li>
-          </ul> -->
         </div>
       </div>
       <div class="lg:flex-auto w-full lg:w-[75%]">
@@ -124,6 +90,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import PaginationComponent from "@/components/PaginationComponent.vue";
 import PageHeader from "@/components/PageHeader.vue";

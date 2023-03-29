@@ -7,8 +7,8 @@
       <img
         :src="articleData.imageUrl"
         class="w-full h-[180px] lg:h-[280px] object-cover"
-        alt=""
         :class="imageClass"
+        :alt="articleData.title"
       />
     </div>
     <div
@@ -35,7 +35,7 @@
         <img
           class="flex-shrink-0 w-8 h-8 [&:not(:last-child)]:mt-2 [&:not(:last-child)]:mr-4 object-cover rounded-full"
           src="https://images.pexels.com/photos/9833110/pexels-photo-9833110.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load"
-          alt=""
+          :alt="articleData.author"
         />
         <div class="flex flex-col">
           <p
@@ -53,6 +53,7 @@
     </div>
   </router-link>
 </template>
+
 <script>
 export default {
   props: {

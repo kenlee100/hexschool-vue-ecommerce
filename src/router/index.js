@@ -6,7 +6,6 @@ const router = createRouter({
       path: "/",
       name: "FrontLayout",
       component: () => import("@/views/FrontLayout.vue"),
-      // 巢狀路由
       children: [
         {
           path: "",
@@ -27,7 +26,7 @@ const router = createRouter({
           meta: { title: `推薦行程`, enTitle: "RECOMMEND" },
         },
         {
-          path: "product/:id", // 動態路由
+          path: "product/:id",
           name: "ProductDetail",
           component: () => import("@/views/front/ProductDetail.vue"),
           meta: { title: `推薦行程`, enTitle: "RECOMMEND" },

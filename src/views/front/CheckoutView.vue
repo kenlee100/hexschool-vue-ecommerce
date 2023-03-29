@@ -23,7 +23,7 @@
                     <img
                       class="w-[140px] h-[90px] object-cover"
                       :src="item.product.imageUrl"
-                      alt=""
+                      :alt="item.product.title"
                     />
                   </div>
                 </router-link>
@@ -45,12 +45,6 @@
                   <div
                     class="flex items-center justify-end flex-shrink-0 min-w-[120px]"
                   >
-                    <!-- <div
-                      v-if="item.final_total !== item.total"
-                      class="hidden lg:flex items-center p-2 rounded en-caption-02 bg-netural-netural-400 text-netural-netural-100 text-center"
-                    >
-                      {{ couponPercent(item) }}
-                    </div> -->
                     <div class="flex flex-col items-end min-w-[50px] space-y-1">
                       <div
                         v-if="item.final_total !== item.total"
@@ -66,9 +60,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div
-                  class="flex flex-1 justify-between items-center md:justify-end md:flex-shrink-0 space-x-6"
-                ></div> -->
               </div>
             </div>
           </template>
@@ -228,6 +219,7 @@
     </div>
   </div>
 </template>
+
 <script>
 const { VITE_URL, VITE_PATH } = import.meta.env;
 import { mapActions, mapState } from "pinia";
@@ -252,7 +244,6 @@ export default {
   methods: {
     ...mapActions(cartStore, ["checkStep", "couponPercent", "loadCouponCode"]),
     async getOrder() {
-      // useLoadingState().isLoading = true;
       try {
         await this.$http
           .get(`${VITE_URL}/api/${VITE_PATH}/order/${this.orderId}`)
@@ -266,11 +257,11 @@ export default {
             );
           });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
         });
-        useLoadingState().isLoading = false;
       }
     },
     async payOrder() {
@@ -285,6 +276,9 @@ export default {
               icon: "success",
               title: `付款完成`,
             });
+            setTimeout(() => {
+              this.$router.push("/");
+            }, 3000);
           });
       } catch (err) {
         useLoadingState().isLoading = false;

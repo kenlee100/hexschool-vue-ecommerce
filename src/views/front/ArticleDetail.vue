@@ -3,7 +3,7 @@
     <img
       :src="articleContent.imageUrl"
       class="w-full h-[400px] object-cover"
-      alt=""
+      :alt="articleContent.title"
     />
   </div>
   <div class="flex flex-col flex-1 container">
@@ -24,7 +24,7 @@
           <img
             class="flex-shrink-0 w-8 h-8 [&:not(:last-child)]:mt-2 [&:not(:last-child)]:mr-4 object-cover rounded-full"
             src="https://images.pexels.com/photos/9833110/pexels-photo-9833110.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load"
-            alt=""
+            :alt="articleContent.author"
           />
           <div class="flex flex-col">
             <p
@@ -92,6 +92,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { mapActions, mapState } from "pinia";
 import { useLoadingState } from "@/stores/common.js";

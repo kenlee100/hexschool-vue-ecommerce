@@ -14,13 +14,6 @@
               v-for="item in cart.carts"
               :key="item.id"
             >
-              <!-- <div class="overflow-hidden flex flex-shrink-0 w-[140px]">
-                          <a href="/" class="flex items-center w-full">
-                            <div class="overflow-hidden">
-                              <img class="w-full h-full objec-cover" src="" alt="" />
-                            </div>
-                          </a>
-                        </div> -->
               <div
                 class="flex flex-col md:flex-row md:items-center md:justify-between w-full space-y-4 md:space-y-0"
               >
@@ -92,9 +85,6 @@
               </div>
               <div class="flex justify-between">
                 <p class="font-bold ch-body">優惠券：</p>
-                <!-- <p class="flex-shrink-0 en-caption-01 line-through">
-                            ${{ cart.total }}
-                          </p> -->
                 <p class="font-bold ch-body text-netural-netural-300">
                   {{ couponState.codeName }}
                 </p>
@@ -144,7 +134,6 @@
               class="block ch-body font-bold text-red-700"
             ></error-message>
           </div>
-
           <div class="space-y-2">
             <label for="name" class="text-heading-4 font-bold"
               >收件人姓名</label
@@ -259,6 +248,7 @@
     </div>
   </div>
 </template>
+
 <script>
 const { VITE_URL, VITE_PATH } = import.meta.env;
 import { mapActions, mapState } from "pinia";
@@ -325,6 +315,7 @@ export default {
         this.orderFinishInfo = res.data;
         this.goNextStep(3, `/checkout/${orderId}`);
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,

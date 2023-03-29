@@ -23,11 +23,14 @@
       }"
       class="flex product-slider"
     >
-      <swiper-slide v-for="item in productContent.imagesUrl" :key="item.id">
+      <swiper-slide
+        v-for="(item, index) in productContent.imagesUrl"
+        :key="item.id"
+      >
         <img
           class="flex-shrink-0 w-full h-[400px] object-cover"
           :src="item.imageUrl"
-          alt=""
+          :alt="`${productContent.title}${index + 1}`"
         />
       </swiper-slide>
     </swiper>
@@ -46,11 +49,14 @@
       :modules="modules"
       class="flex common-slider"
     >
-      <swiper-slide v-for="item in productContent.imagesUrl" :key="item.id">
+      <swiper-slide
+        v-for="(item, index) in productContent.imagesUrl"
+        :key="item.id"
+      >
         <img
           class="flex-shrink-0 w-full h-[400px] object-cover"
           :src="item.imageUrl"
-          alt=""
+          :alt="`${productContent.title}${index + 1}`"
         />
       </swiper-slide>
     </swiper>
@@ -59,14 +65,14 @@
     <img
       class="flex-shrink-0 w-full h-[400px] object-cover"
       :src="productContent.imageUrl"
-      alt=""
+      :alt="productContent.title"
     />
   </div>
   <div v-else>
     <img
       class="flex-shrink-0 w-full h-[400px] object-cover"
       src="https://placehold.co/640x480?text=No+Photo"
-      alt=""
+      alt="預設圖"
     />
   </div>
   <div class="container">
@@ -200,11 +206,13 @@
     </div>
   </div>
 </template>
+
 <script>
 import { useLoadingState } from "@/stores/common.js";
 import ProductItem from "@/components/front/ProductItem.vue";
 import { mapActions, mapState } from "pinia";
 import { productsStore } from "@/stores/productsStore.js";
+
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Navigation, Pagination } from "swiper";
@@ -267,6 +275,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scope>
 .common-slider,
 .product-slider {
@@ -274,7 +283,7 @@ export default {
     @apply flex h-auto;
   }
   .swiper-pagination {
-    @apply relative lg:-mt-4;
+    @apply relative mt-4;
   }
   .swiper-pagination-bullet {
     @apply bg-netural-netural-300 transition-all duration-500;
