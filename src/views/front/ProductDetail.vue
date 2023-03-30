@@ -151,7 +151,7 @@
           <div class="w-full">
             <button
               type="button"
-              @click="addCart(productContent)"
+              @click="addCart(productContent, qty)"
               class="btn-base w-full text-netural-netural-100 bg-secondary-secondary-200"
             >
               加入購物車

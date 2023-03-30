@@ -8,16 +8,35 @@ import router from "../router";
 export const productsStore = defineStore("productData", {
   state: () => {
     return {
-      searchKeyword: "",
+      searchPlaces: "",
+      searchArea: "",
       products: [],
+      productsAll: [],
       productsItem: {},
       pagination: {},
       categoryData: [],
-      currentCategory: "",
+      currentCategory: "全部地區",
       selectCategory: [],
+      perPageNum: 10,
     };
   },
   actions: {
+    async getProductsAll() {
+      try {
+        await axios
+          .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
+          .then((res) => {
+            this.productsAll = res.data.products;
+            useLoadingState().isLoading = false;
+          });
+      } catch (err) {
+        useLoadingState().isLoading = false;
+        toast.fire({
+          icon: "error",
+          title: `${err.response.data.message}`,
+        });
+      }
+    },
     async getProducts(num = 1) {
       try {
         await axios
@@ -26,10 +45,10 @@ export const productsStore = defineStore("productData", {
             this.products = res.data.products;
             this.pagination = res.data.pagination;
 
-            const setItem = new Set();
-            this.products.forEach((item) => {
-              this.categoryData = [...setItem.add(item.category)];
-            });
+            // const setItem = new Set();
+            // this.products.forEach((item) => {
+            //   this.categoryData = [...setItem.add(item.category)];
+            // });
             useLoadingState().isLoading = false;
           });
       } catch (err) {
@@ -93,15 +112,42 @@ export const productsStore = defineStore("productData", {
         router.push(`/products?category=${category}`);
       }
     },
+    setCategory(product) {
+      const setItem = new Set();
+      product.forEach((item) => {
+        this.categoryData = [...setItem.add(item.category)];
+      });
+    },
   },
   getters: {
+    // TODO: 地區分類與分頁一起切換
     // 篩選符合分類的品項 單選
     filterProducts: (state) => {
-      return state.products.filter((product) =>
-        state.currentCategory === "全部地區"
-          ? state.products
-          : product.category === state.currentCategory
-      );
+      console.log("change");
+
+      // return state.products.filter((product) =>
+      //   state.currentCategory === "全部地區"
+      //     ? state.products
+      //     : product.category === state.currentCategory
+      // );
+      // if (state.perPageNum>10) {
+      //   return state.products;
+      // }
+
+      return state.currentCategory === "全部地區"
+        ? // 全部地區時回傳全部
+          state.products
+        : // 地區時回傳地區(取得全部商品的資料後做篩選)
+          state.productsAll.filter(
+            (product) => state.currentCategory === product.category
+          );
     },
+    // searchProducts: (state) => {
+    //   const searchAreaData = state.products.filter(
+    //     (product) => state.searchArea === product.title
+    //   );
+    //   console.log("searchAreaData", searchAreaData);
+    //   return searchAreaData;
+    // },
   },
 });

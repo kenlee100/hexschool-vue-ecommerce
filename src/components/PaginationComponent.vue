@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { mapState } from "pinia";
+import { productsStore } from "@/stores/productsStore.js";
 export default {
   props: {
     pages: {
@@ -65,9 +67,7 @@ export default {
   },
   emits: ["change-page"],
   computed: {
-    categoryData() {
-      return this.category === "全部地區" ? "" : this.category;
-    },
+    ...mapState(productsStore, ["currentCategory"]),
   },
 };
 </script>

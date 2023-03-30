@@ -61,8 +61,8 @@
           placeholder="搜尋地區 / 景點"
           name=""
           id=""
-          v-model.trim="searchKeyword"
-          @keydown.enter="goCategory(searchKeyword)"
+          v-model.trim="searchPlaces"
+          @keydown.enter="goCategory(searchPlaces)"
         />
         <button
           type="button"
@@ -489,7 +489,7 @@ export default {
     ...mapState(useLoadingState, ["isLoading"]),
     ...mapState(articlesStore, ["articles"]),
     ...mapState(productsStore, ["products", "currentCategory"]),
-    ...mapWritableState(productsStore, ["searchKeyword"]),
+    ...mapWritableState(productsStore, ["searchPlaces"]),
   },
   async mounted() {
     useLoadingState().isLoading = true;

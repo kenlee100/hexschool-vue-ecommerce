@@ -14,13 +14,13 @@
             placeholder="搜尋地區 / 景點"
             name=""
             id=""
-            v-model.trim="searchKeyword"
-            @keydown.enter="goCategory(searchKeyword)"
+            v-model.trim="searchPlaces"
+            @keydown.enter="goCategory(searchPlaces)"
           />
           <button
             type="button"
             class="flex items-center justify-center px-4"
-            @click="goCategory(searchKeyword)"
+            @click="goCategory(searchPlaces)"
           >
             <div
               class="flex-shrink-0 w-6 h-6 bg-netural-netural-300 icon-search"
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="lg:flex-auto w-full lg:w-[75%]">
-        <template v-if="filterProducts.length >= 1">
+        <template v-if="filterProducts.length > 0">
           <div
             class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
           >
@@ -115,6 +115,8 @@ export default {
       "getProducts",
       "searchCategory",
       "goCategory",
+      "setCategory",
+      "getProductsAll",
     ]),
   },
   watch: {
@@ -137,13 +139,18 @@ export default {
       "categoryData",
       "filterProducts",
       "currentCategory",
-      "",
+      "productsAll",
     ]),
-    ...mapWritableState(productsStore, ["searchKeyword", "currentCategory"]),
+    ...mapWritableState(productsStore, ["searchPlaces", "currentCategory"]),
   },
   async mounted() {
     useLoadingState().isLoading = true;
+    await this.getProductsAll();
+    this.setCategory(this.productsAll);
+    this.searchCategory(this.$route.query.category);
     await this.getProducts();
+
+    console.log("this.$route.query.category", this.$route.query.category);
   },
 };
 </script>
