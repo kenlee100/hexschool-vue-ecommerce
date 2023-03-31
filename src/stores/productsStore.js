@@ -13,7 +13,7 @@ export const productsStore = defineStore("productData", {
       products: [],
       productsAll: [],
       productsItem: {},
-      pagination: {},
+      // pagination: {},
       categoryData: [],
       currentCategory: "全部地區",
       selectCategory: [],
@@ -22,13 +22,9 @@ export const productsStore = defineStore("productData", {
   },
   actions: {
     async getProductsAll() {
+      console.log("getProductsAll");
       try {
-        await axios
-          .get(`${VITE_URL}/api/${VITE_PATH}/products/all`)
-          .then((res) => {
-            this.productsAll = res.data.products;
-            useLoadingState().isLoading = false;
-          });
+        return await axios.get(`${VITE_URL}/api/${VITE_PATH}/products/all`);
       } catch (err) {
         useLoadingState().isLoading = false;
         toast.fire({
@@ -38,19 +34,11 @@ export const productsStore = defineStore("productData", {
       }
     },
     async getProducts(num = 1) {
+      console.log("getProducts");
       try {
-        await axios
-          .get(`${VITE_URL}/api/${VITE_PATH}/products?page=${num}`)
-          .then((res) => {
-            this.products = res.data.products;
-            this.pagination = res.data.pagination;
-
-            // const setItem = new Set();
-            // this.products.forEach((item) => {
-            //   this.categoryData = [...setItem.add(item.category)];
-            // });
-            useLoadingState().isLoading = false;
-          });
+        return await axios.get(
+          `${VITE_URL}/api/${VITE_PATH}/products?page=${num}`
+        );
       } catch (err) {
         useLoadingState().isLoading = false;
         toast.fire({
@@ -103,10 +91,11 @@ export const productsStore = defineStore("productData", {
         });
       }
     },
-    searchCategory(category) {
-      this.currentCategory = category;
-      router.push(`/products?category=${category}`);
-    },
+    // searchCategory(category) {
+    //   console.log("searchCategory");
+    //   this.currentCategory = category;
+    //   router.push(`/products?category=${category}`);
+    // },
     goCategory(category) {
       if (this.categoryData.includes(category)) {
         router.push(`/products?category=${category}`);
@@ -118,30 +107,33 @@ export const productsStore = defineStore("productData", {
         this.categoryData = [...setItem.add(item.category)];
       });
     },
+    PromiseFunction() {
+      return new Promise((resolve, reject) => {
+        resolve();
+      });
+    },
   },
   getters: {
     // TODO: 地區分類與分頁一起切換
     // 篩選符合分類的品項 單選
-    filterProducts: (state) => {
-      console.log("change");
-
-      // return state.products.filter((product) =>
-      //   state.currentCategory === "全部地區"
-      //     ? state.products
-      //     : product.category === state.currentCategory
-      // );
-      // if (state.perPageNum>10) {
-      //   return state.products;
-      // }
-
-      return state.currentCategory === "全部地區"
-        ? // 全部地區時回傳全部
-          state.products
-        : // 地區時回傳地區(取得全部商品的資料後做篩選)
-          state.productsAll.filter(
-            (product) => state.currentCategory === product.category
-          );
-    },
+    // filterProducts: (state) => {
+    //   // console.log("change");
+    //   // return state.products.filter((product) =>
+    //   //   state.currentCategory === "全部地區"
+    //   //     ? state.products
+    //   //     : product.category === state.currentCategory
+    //   // );
+    //   // if (state.perPageNum>10) {
+    //   //   return state.products;
+    //   // }
+    //   return state.currentCategory === "全部地區"
+    //     ? // 全部地區時回傳全部
+    //       state.products
+    //     : // 地區時回傳地區(取得全部商品的資料後做篩選)
+    //       state.productsAll.filter(
+    //         (product) => state.currentCategory === product.category
+    //       );
+    // },
     // searchProducts: (state) => {
     //   const searchAreaData = state.products.filter(
     //     (product) => state.searchArea === product.title
@@ -149,5 +141,6 @@ export const productsStore = defineStore("productData", {
     //   console.log("searchAreaData", searchAreaData);
     //   return searchAreaData;
     // },
+    
   },
 });
