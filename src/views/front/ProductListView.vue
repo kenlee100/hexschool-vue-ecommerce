@@ -15,7 +15,7 @@
             name=""
             id=""
             v-model.trim="searchPlaces"
-            @keydown.enter="searchCategory(searchPlaces)"
+            @keyup.enter="searchCategory(searchPlaces)"
           />
           <button
             type="button"
@@ -60,33 +60,33 @@
         </div>
       </div>
       <div class="lg:flex-auto w-full lg:w-[75%]">
-        <div
-          class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
-        >
-          <template v-for="(item, index) in paginationData.data" :key="item.id">
-            <ProductItem
-              :product-data="item"
-              :item-index="index"
-              image-class="!h-[200px]"
-              text-content-class="!ml-0 !mt-0"
-            />
-          </template>
-        </div>
-        <!-- <PaginationComponent
+        <template v-if="paginationData.data.length > 0">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
+          >
+            <template
+              v-for="(item, index) in paginationData.data"
+              :key="item.id"
+            >
+              <ProductItem
+                :product-data="item"
+                :item-index="index"
+                image-class="!h-[200px]"
+                text-content-class="!ml-0 !mt-0"
+              />
+            </template>
+          </div>
+          <PaginationCustomComponent
             :pages="paginationData"
-            :category="currentCategory"
-            @change-page="getProducts"
-            :get-list="getProducts"
-          ></PaginationComponent> -->
-        <PaginationCustomComponent
-          :pages="paginationData"
-          @change-page="changePage"
-        ></PaginationCustomComponent>
-        <!-- <div
+            @change-page="changePage"
+          ></PaginationCustomComponent>
+        </template>
+        <div
+          v-else
           class="flex flex-col justify-center space-y-4 max-w-[800px] mx-auto"
         >
           <p class="ch-heading-3 text-center">找不到符合的關鍵字，請重新搜尋</p>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
@@ -118,7 +118,7 @@ export default {
         current_page: 1,
         data: [],
       },
-      currentCategory: "全部地區",
+      currentCategory: this.$route.query.category || "全部地區",
     };
   },
   components: {
@@ -152,50 +152,46 @@ export default {
       }
     },
     filterText(content, searchTarget) {
-      console.log(content.toLowerCase().includes(searchTarget.toLowerCase()));
       if (content)
         return content.toLowerCase().includes(searchTarget.toLowerCase());
     },
     searchCategory(category) {
       let filterCategoryData = [];
       let filterSearch = [];
+      // 條件1 地區/景點
       filterSearch =
         this.searchPlaces.toLowerCase() === ""
-          ? this.productsAll
-          : this.productsAll.filter((item) => {
+          ? this.products
+          : this.products.filter((item) => {
               return (
                 this.filterText(item.title, this.searchPlaces) ||
                 this.filterText(item.category, this.searchPlaces)
               );
             });
+      // 條件2 分類篩選
       filterCategoryData =
         category === "全部地區"
-          ? this.productsAll
-          : this.productsAll.filter((item) => item.category === category);
-      console.log("filterSearch", filterSearch);
-
+          ? this.products
+          : this.products.filter((item) => item.category === category);
       if (this.searchPlaces.toLowerCase() !== "") {
         this.modifyData = filterSearch;
-      } else {
+      } else if (category !== "") {
         this.modifyData = filterCategoryData;
+      } else {
+        this.modifyData = this.products;
+        this.currentCategory = "全部地區";
+        if (category === "") category = this.currentCategory;
       }
       this.$router.push(`/products?category=${category}`);
-
       this.pagination.current_page = 1;
     },
   },
   watch: {
     "$route.query.category": {
       handler(category) {
-        console.log("category", category);
-        if (!category) {
-          this.currentCategory = "全部地區";
-        } else {
-          this.currentCategory = category;
-        }
+        this.currentCategory = category;
       },
       deep: true,
-      // immediate: true,
     },
   },
   computed: {
@@ -223,30 +219,14 @@ export default {
   },
   async mounted() {
     useLoadingState().isLoading = true;
-    console.log(1);
-    await this.getProducts()
-      .then((res) => {
-        this.products = res.data.products;
-        // this.pagination = res.data.pagination;
-
-        console.log(2, res);
-        return this.getProductsAll();
-      })
-      .then((res) => {
-        this.productsAll = res.data.products;
-        this.modifyData = res.data.products;
-        // this.searchCategory(this.$route.query.category);
-        this.setCategory(this.productsAll);
-        console.log(4);
-        return this.PromiseFunction();
-      })
-      .then(() => {
-        console.log(5);
-        useLoadingState().isLoading = false;
-      });
-
-    // console.log("this.$route.query.category", this.$route.query.category);
-    // console.log(7);
+    await this.getProducts().then((res) => {
+      this.products = res.data.products;
+      this.products = res.data.products;
+      this.modifyData = res.data.products;
+      this.searchCategory(this.currentCategory);
+      this.setCategory(this.products);
+      useLoadingState().isLoading = false;
+    });
   },
 };
 </script>

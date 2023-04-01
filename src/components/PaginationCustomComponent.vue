@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center">
+  <div v-if="pages.total_pages > 1" class="flex items-center justify-center">
     <nav class="py-8">
       <ul class="flex items-center justify-center space-x-2">
         <li class="group" :class="{ disabled: pages.current_page <= 1 }">
