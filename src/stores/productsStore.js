@@ -5,26 +5,38 @@ import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";
 import router from "../router";
+
 export const productsStore = defineStore("productData", {
   state: () => {
     return {
-      searchPlaces: "",
       searchArea: "",
       products: [],
       productsAll: [],
       productsItem: {},
-      // pagination: {},
+      modifyData: [],
       categoryData: [],
-      currentCategory: "全部地區",
-      selectCategory: [],
+      currentCategory: "",
       perPageNum: 10,
+      // 自訂分頁資料數量
+      pagination: {
+        per_page: 10,
+        totalResult: 0,
+        total_pages: 0,
+        current_page: 1,
+        data: [],
+      },
     };
   },
   actions: {
     async getProductsAll() {
-      console.log("getProductsAll");
       try {
-        return await axios.get(`${VITE_URL}/api/${VITE_PATH}/products/all`);
+        const res = await axios.get(
+          `${VITE_URL}/api/${VITE_PATH}/products/all`
+        );
+        this.productsAll = res.data.products;
+        this.modifyData = [...this.productsAll];
+        this.setCategory(this.modifyData);
+        useLoadingState().isLoading = false;
       } catch (err) {
         useLoadingState().isLoading = false;
         toast.fire({
@@ -34,11 +46,12 @@ export const productsStore = defineStore("productData", {
       }
     },
     async getProducts(num = 1) {
-      console.log("getProducts");
       try {
-        return await axios.get(
+        const res = await axios.get(
           `${VITE_URL}/api/${VITE_PATH}/products?page=${num}`
         );
+        this.products = res.data.products;
+        useLoadingState().isLoading = false;
       } catch (err) {
         useLoadingState().isLoading = false;
         toast.fire({
@@ -91,11 +104,6 @@ export const productsStore = defineStore("productData", {
         });
       }
     },
-    // searchCategory(category) {
-    //   console.log("searchCategory");
-    //   this.currentCategory = category;
-    //   router.push(`/products?category=${category}`);
-    // },
     goCategory(category) {
       if (this.categoryData.includes(category)) {
         router.push(`/products?category=${category}`);
@@ -107,40 +115,72 @@ export const productsStore = defineStore("productData", {
         this.categoryData = [...setItem.add(item.category)];
       });
     },
-    PromiseFunction() {
-      return new Promise((resolve, reject) => {
-        resolve();
-      });
+    searchCategory(category) {
+      let filterCategoryData = [];
+      let filterSearch = [];
+      // 條件1 地區/景點
+      filterSearch =
+        this.searchArea.toLowerCase() === ""
+          ? this.productsAll
+          : this.productsAll.filter((item) => {
+              return (
+                this.filterText(item.title, this.searchArea) ||
+                this.filterText(item.category, this.searchArea)
+              );
+            });
+      // 條件2 分類篩選
+      filterCategoryData =
+        category === "全部地區"
+          ? this.productsAll
+          : this.productsAll.filter((item) => item.category === category);
+      if (this.searchArea.toLowerCase() !== "") {
+        this.modifyData = filterSearch;
+      } else if (category !== "") {
+        this.modifyData = filterCategoryData;
+      } else {
+        this.modifyData = this.productsAll;
+        this.currentCategory = "全部地區";
+        if (category === "") category = this.currentCategory;
+      }
+      router.push(`/products?category=${category}`);
+      this.pagination.current_page = 1;
+    },
+    pageNum() {
+      this.pagination.totalResult = this.modifyData.length;
+      this.pagination.total_pages = Math.ceil(
+        this.pagination.totalResult / this.pagination.per_page
+      );
+      if (this.pagination.current_page > this.pagination.total_pages) {
+        this.pagination.current_page = this.pagination.total_pages;
+      }
+      if (this.pagination.current_page <= 1) {
+        this.pagination.current_page = 1;
+      }
+    },
+    filterText(content, searchTarget) {
+      if (content)
+        return content.toLowerCase().includes(searchTarget.toLowerCase());
     },
   },
   getters: {
-    // TODO: 地區分類與分頁一起切換
-    // 篩選符合分類的品項 單選
-    // filterProducts: (state) => {
-    //   // console.log("change");
-    //   // return state.products.filter((product) =>
-    //   //   state.currentCategory === "全部地區"
-    //   //     ? state.products
-    //   //     : product.category === state.currentCategory
-    //   // );
-    //   // if (state.perPageNum>10) {
-    //   //   return state.products;
-    //   // }
-    //   return state.currentCategory === "全部地區"
-    //     ? // 全部地區時回傳全部
-    //       state.products
-    //     : // 地區時回傳地區(取得全部商品的資料後做篩選)
-    //       state.productsAll.filter(
-    //         (product) => state.currentCategory === product.category
-    //       );
-    // },
-    // searchProducts: (state) => {
-    //   const searchAreaData = state.products.filter(
-    //     (product) => state.searchArea === product.title
-    //   );
-    //   console.log("searchAreaData", searchAreaData);
-    //   return searchAreaData;
-    // },
-    
+    paginationData() {
+      this.pageNum();
+      const minItem =
+        this.pagination.current_page * this.pagination.per_page -
+        this.pagination.per_page +
+        1;
+      const maxItem = this.pagination.current_page * this.pagination.per_page;
+      let data = [];
+      this.modifyData.forEach((item, i) => {
+        let itemNum = i + 1;
+        if (itemNum >= minItem && itemNum <= maxItem) {
+          data.push(item);
+        }
+      });
+      return {
+        ...this.pagination,
+        data,
+      };
+    },
   },
 });

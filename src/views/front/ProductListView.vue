@@ -14,13 +14,13 @@
             placeholder="搜尋地區 / 景點"
             name=""
             id=""
-            v-model.trim="searchPlaces"
-            @keyup.enter="searchCategory(searchPlaces)"
+            v-model.trim="searchArea"
+            @keyup.enter="searchCategory(searchArea)"
           />
           <button
             type="button"
             class="flex items-center justify-center px-4"
-            @click="searchCategory(searchPlaces)"
+            @click="searchCategory(searchArea)"
           >
             <div
               class="flex-shrink-0 w-6 h-6 bg-netural-netural-300 icon-search"
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="lg:flex-auto w-full lg:w-[75%]">
-        <template v-if="paginationData.data.length > 0">
+        <template v-if="paginationData.data">
           <div
             class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
           >
@@ -79,7 +79,7 @@
           <PaginationCustomComponent
             :pages="paginationData"
             @change-page="changePage"
-          ></PaginationCustomComponent>
+          />
         </template>
         <div
           v-else
@@ -93,7 +93,6 @@
 </template>
 
 <script>
-// import PaginationComponent from "@/components/PaginationComponent.vue";
 import PaginationCustomComponent from "@/components/PaginationCustomComponent.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ProductItem from "@/components/front/ProductItem.vue";
@@ -105,85 +104,17 @@ export default {
   data() {
     return {
       pageImage,
-      products: [],
-      productsAll: [],
-      modifyData: [],
-      searchPlaces: "",
-      searchArea: "",
-      // pagination: {},
-      pagination: {
-        per_page: 2,
-        totalResult: 0,
-        total_pages: 0,
-        current_page: 1,
-        data: [],
-      },
-      currentCategory: this.$route.query.category || "全部地區",
     };
   },
   components: {
-    // PaginationComponent,
     PaginationCustomComponent,
     PageHeader,
     ProductItem,
   },
   methods: {
-    ...mapActions(productsStore, [
-      "getProducts",
-      // "searchCategory",
-      "goCategory",
-      "setCategory",
-      "getProductsAll",
-      "PromiseFunction",
-    ]),
+    ...mapActions(productsStore, ["getProductsAll", "searchCategory"]),
     changePage(num) {
       this.pagination.current_page = num;
-    },
-    pageNum() {
-      this.pagination.totalResult = this.modifyData.length;
-      this.pagination.total_pages = Math.ceil(
-        this.pagination.totalResult / this.pagination.per_page
-      );
-      if (this.pagination.current_page > this.pagination.total_pages) {
-        this.pagination.current_page = this.pagination.total_pages;
-      }
-      if (this.pagination.current_page <= 1) {
-        this.pagination.current_page = 1;
-      }
-    },
-    filterText(content, searchTarget) {
-      if (content)
-        return content.toLowerCase().includes(searchTarget.toLowerCase());
-    },
-    searchCategory(category) {
-      let filterCategoryData = [];
-      let filterSearch = [];
-      // 條件1 地區/景點
-      filterSearch =
-        this.searchPlaces.toLowerCase() === ""
-          ? this.products
-          : this.products.filter((item) => {
-              return (
-                this.filterText(item.title, this.searchPlaces) ||
-                this.filterText(item.category, this.searchPlaces)
-              );
-            });
-      // 條件2 分類篩選
-      filterCategoryData =
-        category === "全部地區"
-          ? this.products
-          : this.products.filter((item) => item.category === category);
-      if (this.searchPlaces.toLowerCase() !== "") {
-        this.modifyData = filterSearch;
-      } else if (category !== "") {
-        this.modifyData = filterCategoryData;
-      } else {
-        this.modifyData = this.products;
-        this.currentCategory = "全部地區";
-        if (category === "") category = this.currentCategory;
-      }
-      this.$router.push(`/products?category=${category}`);
-      this.pagination.current_page = 1;
     },
   },
   watch: {
@@ -195,38 +126,14 @@ export default {
     },
   },
   computed: {
-    ...mapState(productsStore, ["categoryData"]),
-    // ...mapWritableState(productsStore, ["searchPlaces"]),
-    paginationData() {
-      this.pageNum();
-      const minItem =
-        this.pagination.current_page * this.pagination.per_page -
-        this.pagination.per_page +
-        1;
-      const maxItem = this.pagination.current_page * this.pagination.per_page;
-      let data = [];
-      this.modifyData.forEach((item, i) => {
-        let itemNum = i + 1;
-        if (itemNum >= minItem && itemNum <= maxItem) {
-          data.push(item);
-        }
-      });
-      return {
-        ...this.pagination,
-        data,
-      };
-    },
+    ...mapState(productsStore, ["categoryData", "paginationData"]),
+    ...mapWritableState(productsStore, ["currentCategory", "searchArea"]),
   },
   async mounted() {
     useLoadingState().isLoading = true;
-    await this.getProducts().then((res) => {
-      this.products = res.data.products;
-      this.products = res.data.products;
-      this.modifyData = res.data.products;
-      this.searchCategory(this.currentCategory);
-      this.setCategory(this.products);
-      useLoadingState().isLoading = false;
-    });
+    await this.getProductsAll();
+    this.currentCategory = this.$route.query.category || "全部地區";
+    this.searchCategory(this.currentCategory);
   },
 };
 </script>

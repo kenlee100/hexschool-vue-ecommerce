@@ -61,12 +61,13 @@
           placeholder="搜尋地區 / 景點"
           name=""
           id=""
-          v-model.trim="searchPlaces"
-          @keydown.enter="goCategory(searchPlaces)"
+          v-model.trim="searchArea"
+          @keyup.enter="searchCategory(searchArea)"
         />
         <button
           type="button"
           class="flex items-center justify-center px-8 lg:px-12"
+          @click="searchCategory(searchArea)"
         >
           <div
             class="flex-shrink-0 w-6 h-6 lg:w-14 lg:h-14 mt-1 [&:not(:last-child)]:mr-3 bg-netural-netural-100 icon-search"
@@ -144,7 +145,7 @@
       <div
         v-for="item in spotImages"
         :key="item.chTitle"
-        @click="goCategory(item.category)"
+        @click="searchCategory(item.category)"
         class="relative aspect-square bg-netural-netural-400 cursor-pointer"
       >
         <div
@@ -482,14 +483,13 @@ export default {
       "getProductItem",
       "getProducts",
       "addCart",
-      "goCategory",
+      "searchCategory",
     ]),
   },
   computed: {
-    ...mapState(useLoadingState, ["isLoading"]),
     ...mapState(articlesStore, ["articles"]),
     ...mapState(productsStore, ["products", "currentCategory"]),
-    ...mapWritableState(productsStore, ["searchPlaces"]),
+    ...mapWritableState(productsStore, ["searchArea"]),
   },
   async mounted() {
     useLoadingState().isLoading = true;

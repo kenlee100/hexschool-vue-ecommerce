@@ -91,13 +91,13 @@ const router = createRouter({
       ],
     },
   ],
-  scrollBehavior() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ top: 0, behavior: "smooth" });
-      }, 300);
-    });
-  },
+  // scrollBehavior() {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve({ top: 0, behavior: "smooth" });
+  //     }, 300);
+  //   });
+  // },
   linkActiveClass: "nav-active",
 });
 
