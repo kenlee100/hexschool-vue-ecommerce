@@ -61,12 +61,13 @@
           placeholder="搜尋地區 / 景點"
           name=""
           id=""
-          v-model.trim="searchKeyword"
-          @keydown.enter="goCategory(searchKeyword)"
+          v-model.trim="searchArea"
+          @keyup.enter="searchCategory(searchArea)"
         />
         <button
           type="button"
           class="flex items-center justify-center px-8 lg:px-12"
+          @click="searchCategory(searchArea)"
         >
           <div
             class="flex-shrink-0 w-6 h-6 lg:w-14 lg:h-14 mt-1 [&:not(:last-child)]:mr-3 bg-netural-netural-100 icon-search"
@@ -144,7 +145,7 @@
       <div
         v-for="item in spotImages"
         :key="item.chTitle"
-        @click="goCategory(item.category)"
+        @click="searchCategory(item.category)"
         class="relative aspect-square bg-netural-netural-400 cursor-pointer"
       >
         <div
@@ -242,7 +243,7 @@
           <img
             class="w-full h-full object-cover"
             src="@/assets/images/img/image/thing_hotel.jpg"
-            alt=""
+            alt="住宿"
           />
           <div
             class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-200 hover:bg-secondary-secondary-100 transition-all ease-in-out"
@@ -265,7 +266,7 @@
           <img
             class="w-full h-full object-cover"
             src="@/assets/images/img/image/thing_food.jpg"
-            alt=""
+            alt="美食"
           />
           <div
             class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-100 hover:bg-secondary-secondary-100 transition-all ease-in-out"
@@ -288,7 +289,7 @@
           <img
             class="w-full h-full object-cover"
             src="@/assets/images/img/image/thing_experience.jpg"
-            alt=""
+            alt="玩 / 體驗"
           />
           <div
             class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-200 hover:bg-secondary-secondary-100 transition-all ease-in-out"
@@ -313,7 +314,7 @@
           <img
             class="w-full h-full lg:ml-[110px] object-cover object-top"
             src="@/assets/images/img/image/thing_mall.jpg"
-            alt=""
+            alt="購物"
           />
           <div
             class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-secondary-secondary-200 hover:bg-secondary-secondary-100 transition-all ease-in-out"
@@ -336,7 +337,7 @@
           <img
             class="w-full h-full object-cover"
             src="@/assets/images/img/image/thing_temple.jpg"
-            alt=""
+            alt="自然 / 古蹟"
           />
           <div
             class="absolute left-0 bottom-0 flex flex-col items-center justify-center w-[80px] h-[80px] md:w-[196px] md:h-[196px] bg-primary-primary-100 hover:bg-secondary-secondary-100 transition-all ease-in-out"
@@ -358,6 +359,7 @@
     <div class="relative -mt-[1px] border-b border-netural-netural-500"></div>
   </div>
 </template>
+
 <script>
 import { mapActions, mapState, mapWritableState } from "pinia";
 import ProductItem from "@/components/front/ProductItem.vue";
@@ -376,11 +378,7 @@ import "swiper/scss/navigation";
 import "swiper/scss/pagination";
 import "swiper/scss/autoplay";
 import "swiper/scss/effect-fade";
-// 另一種引路圖片方式
-// const BannerImg = new URL(
-//   "/src/assets/images/img/image/banner_01.jpg",
-//   import.meta.url
-// );
+
 import bannerImg01 from "/src/assets/images/img/image/banner_01.jpg";
 import bannerImg02 from "/src/assets/images/img/image/banner_02.jpg";
 import spotImg01 from "/src/assets/images/img/image/spot_01.jpg";
@@ -485,14 +483,13 @@ export default {
       "getProductItem",
       "getProducts",
       "addCart",
-      "goCategory",
+      "searchCategory",
     ]),
   },
   computed: {
-    ...mapState(useLoadingState, ["isLoading"]),
     ...mapState(articlesStore, ["articles"]),
     ...mapState(productsStore, ["products", "currentCategory"]),
-    ...mapWritableState(productsStore, ["searchKeyword"]),
+    ...mapWritableState(productsStore, ["searchArea"]),
   },
   async mounted() {
     useLoadingState().isLoading = true;
@@ -501,6 +498,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scope>
 .main-slider {
   .swiper-pagination-bullets.swiper-pagination-horizontal {

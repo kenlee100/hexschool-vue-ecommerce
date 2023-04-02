@@ -6,7 +6,6 @@ const router = createRouter({
       path: "/",
       name: "FrontLayout",
       component: () => import("@/views/FrontLayout.vue"),
-      // 巢狀路由
       children: [
         {
           path: "",
@@ -27,7 +26,7 @@ const router = createRouter({
           meta: { title: `推薦行程`, enTitle: "RECOMMEND" },
         },
         {
-          path: "product/:id", // 動態路由
+          path: "product/:id",
           name: "ProductDetail",
           component: () => import("@/views/front/ProductDetail.vue"),
           meta: { title: `推薦行程`, enTitle: "RECOMMEND" },
@@ -92,13 +91,13 @@ const router = createRouter({
       ],
     },
   ],
-  scrollBehavior() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ top: 0, behavior: "smooth" });
-      }, 300);
-    });
-  },
+  // scrollBehavior() {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve({ top: 0, behavior: "smooth" });
+  //     }, 300);
+  //   });
+  // },
   linkActiveClass: "nav-active",
 });
 

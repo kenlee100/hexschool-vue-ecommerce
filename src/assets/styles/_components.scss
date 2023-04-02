@@ -58,7 +58,7 @@
     @apply mask-no-repeat mask-center mask-contain;
   }
   .container {
-    @apply px-3 lg:px-6;
+    @apply px-3;
   }
   .layout-content {
     @apply relative flex flex-col min-h-[calc(100vh-72px-230px)] pb-16;
@@ -138,11 +138,6 @@
             @apply before:border-netural-netural-200 before:bg-netural-netural-200 after:border-secondary-secondary-200 after:bg-secondary-secondary-200;
           }
         }
-        // & ~ .el-checkbox-label {
-        //   .el-checkbox-label__text {
-        //     @apply text-netural-netural-400;
-        //   }
-        // }
       }
       &[disabled] {
         @apply cursor-not-allowed;

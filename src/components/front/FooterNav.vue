@@ -32,6 +32,7 @@
     </div>
   </footer>
 </template>
+
 <script>
 import useNavListMenu from "../../stores/navList.js";
 import { mapState } from "pinia";

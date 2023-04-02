@@ -22,6 +22,7 @@
     </nav>
   </div>
 </template>
+
 <script>
 import { mapState, mapWritableState } from "pinia";
 import useNavListMenu from "@/stores/navList.js";

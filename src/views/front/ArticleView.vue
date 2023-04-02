@@ -13,6 +13,7 @@
     />
   </div>
 </template>
+
 <script>
 import PaginationComponent from "@/components/PaginationComponent.vue";
 import PageHeader from "@/components/PageHeader.vue";

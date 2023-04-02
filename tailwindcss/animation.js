@@ -1,6 +1,5 @@
 /* eslint-env node */
 const animation = {
-  // animation_name: "BounceIn 1s linear 1",
   "animation-compass": "compass-rotate 2s linear infinite",
   "animation-rotate": "rotate 1s linear infinite",
   "animation-prixClipFix": "prixClipFix 2s linear infinite",

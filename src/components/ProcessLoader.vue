@@ -9,6 +9,7 @@
     <div class="absolute w-full h-full bg-netural-netural-100 opacity-80"></div>
   </div>
 </template>
+
 <script>
 import { mapState } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
