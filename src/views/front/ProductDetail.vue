@@ -123,12 +123,15 @@
         >
           <div class="space-y-2">
             <div>
-              <span class="en-title">{{ productContent.price }}</span> 元
+              <span class="en-title">{{
+                $filters.currency(productContent.price)
+              }}</span>
+              元
             </div>
             <div class="h6">
               原價
               <span class="en-caption-01 line-through">{{
-                productContent.origin_price
+                $filters.currency(productContent.origin_price)
               }}</span>
               元
             </div>

@@ -50,12 +50,12 @@
                         v-if="item.final_total !== item.total"
                         class="en-caption-02 line-through text-right"
                       >
-                        ${{ Math.round(item.total) }}
+                        ${{ $filters.currency(Math.round(item.total)) }}
                       </div>
                       <div
                         class="en-body text-right text-secondary-secondary-200"
                       >
-                        ${{ Math.round(item.final_total) }}
+                        ${{ $filters.currency(Math.round(item.final_total)) }}
                       </div>
                     </div>
                   </div>
@@ -79,19 +79,17 @@
             <div
               class="flex flex-col p-4 md:p-6 space-y-4 bg-netural-netural-200"
             >
-              <div
-                class="flex flex-col space-y-2 pb-3 [&:not(:last-child)]:border-b border-netural-netural-400"
-              >
+              <div class="flex flex-col space-y-2 pb-3">
                 <div class="flex justify-between">
                   <p class="font-bold ch-body">小計：</p>
                   <p class="flex-shrink-0 en-caption-01 line-through">
-                    ${{ Math.round(finalTotal) }}
+                    ${{ $filters.currency(Math.round(finalTotal)) }}
                   </p>
                 </div>
                 <div class="flex justify-between">
                   <p class="font-bold ch-body">折扣後：</p>
                   <p class="flex-shrink-0 en-caption-01">
-                    ${{ Math.round(order.total) }}
+                    ${{ $filters.currency(Math.round(order.total)) }}
                   </p>
                 </div>
                 <div class="flex justify-between">
@@ -104,7 +102,7 @@
               <div class="flex justify-between">
                 <p class="font-bold ch-heading-4">總計:</p>
                 <p class="flex-shrink-0 en-body text-secondary-secondary-200">
-                  ${{ Math.round(order.total) }}
+                  ${{ $filters.currency(Math.round(order.total)) }}
                 </p>
               </div>
             </div>
@@ -118,7 +116,7 @@
           <div class="flex flex-col w-full space-y-4">
             <h3 class="ch-heading-2 font-bold">訂單明細</h3>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">訂單編號：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -126,7 +124,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300"
             >
               <p class="font-bold ch-heading-4">訂單建立時間：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -134,7 +132,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">信箱：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -142,7 +140,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">姓名：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -150,15 +148,16 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">收件地址：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
-                {{ order.user.city }} {{ order.user.address }}
+                {{ order.user.county }}{{ order.user.district
+                }}{{ order.user.address }}
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">電話：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -166,7 +165,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">付款方式：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -174,17 +173,17 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4 break-all">金額：</p>
               <p
                 class="flex-shrink-0 pt-1 en-body text-secondary-secondary-200"
               >
-                $ {{ Math.round(order.total) }}
+                $ {{ $filters.currency(Math.round(order.total)) }}
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">付款狀態：</p>
               <p
@@ -198,7 +197,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">留言：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">

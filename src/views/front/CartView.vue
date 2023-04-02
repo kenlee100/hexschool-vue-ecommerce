@@ -53,7 +53,7 @@
                         >
                           <option selected disabled>選擇數量</option>
                           <option
-                            v-for="(item, index) in 10"
+                            v-for="(item, index) in 30"
                             :key="index"
                             :value="index + 1"
                           >
@@ -72,12 +72,12 @@
                           v-if="item.final_total !== item.total"
                           class="en-caption-02 line-through text-right"
                         >
-                          ${{ Math.round(item.total) }}
+                          ${{ $filters.currency(Math.round(item.total)) }}
                         </div>
                         <div
                           class="en-body text-right text-secondary-secondary-200"
                         >
-                          ${{ Math.round(item.final_total) }}
+                          ${{ $filters.currency(Math.round(item.final_total)) }}
                         </div>
                       </div>
                     </div>
@@ -122,13 +122,11 @@
               class="flex flex-col p-4 md:p-6 space-y-4 bg-netural-netural-200"
             >
               <h2 class="font-bold ch-heading-2">購物車</h2>
-              <div
-                class="flex flex-col space-y-2 pb-3 [&:not(:last-child)]:mb-3 [&:not(:last-child)]:border-b border-netural-netural-400"
-              >
+              <div class="flex flex-col space-y-2 pb-3">
                 <div class="flex justify-between">
                   <p class="font-bold ch-body">小計：</p>
                   <p class="flex-shrink-0 en-caption-01 line-through">
-                    ${{ cart.total }}
+                    ${{ $filters.currency(cart.total) }}
                   </p>
                 </div>
                 <div
@@ -137,7 +135,7 @@
                 >
                   <p class="font-bold ch-body">折扣後：</p>
                   <p class="flex-shrink-0 en-caption-01">
-                    ${{ Math.round(cart.final_total) }}
+                    ${{ $filters.currency(Math.round(cart.final_total)) }}
                   </p>
                 </div>
                 <div class="flex items-center space-x-2">
@@ -149,7 +147,7 @@
               <div class="flex justify-between">
                 <p class="font-bold ch-heading-4">總計:</p>
                 <p class="flex-shrink-0 en-body text-secondary-secondary-200">
-                  ${{ Math.round(cart.final_total) }}
+                  ${{ $filters.currency(Math.round(cart.final_total)) }}
                 </p>
               </div>
               <button
