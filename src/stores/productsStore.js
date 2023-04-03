@@ -12,11 +12,9 @@ export const productsStore = defineStore("productData", {
       searchArea: "",
       products: [],
       productsAll: [],
-      productsItem: {},
       modifyData: [],
       categoryData: [],
       currentCategory: "",
-      perPageNum: 10,
       // 自訂分頁資料數量
       pagination: {
         per_page: 10,
@@ -102,11 +100,6 @@ export const productsStore = defineStore("productData", {
           icon: "error",
           title: `${err.response.data.message}`,
         });
-      }
-    },
-    goCategory(category) {
-      if (this.categoryData.includes(category)) {
-        router.push(`/products?category=${category}`);
       }
     },
     setCategory(product) {

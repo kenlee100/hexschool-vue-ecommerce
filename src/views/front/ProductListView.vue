@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="lg:flex-auto w-full lg:w-[75%]">
-        <template v-if="paginationData.data">
+        <template v-if="paginationData.data.length > 0">
           <div
             class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
           >
@@ -77,7 +77,7 @@
             </template>
           </div>
           <PaginationCustomComponent
-            :pages="paginationData"
+            :pages="pagination"
             @change-page="changePage"
           />
         </template>
@@ -111,23 +111,30 @@ export default {
     PageHeader,
     ProductItem,
   },
+
   methods: {
     ...mapActions(productsStore, ["getProductsAll", "searchCategory"]),
     changePage(num) {
       this.pagination.current_page = num;
+      this.paginationData.current_page = num;
     },
   },
   watch: {
     "$route.query.category": {
       handler(category) {
+        console.log("watch");
         this.currentCategory = category;
       },
       deep: true,
     },
   },
   computed: {
-    ...mapState(productsStore, ["categoryData", "paginationData"]),
-    ...mapWritableState(productsStore, ["currentCategory", "searchArea"]),
+    ...mapState(productsStore, ["categoryData", "pagination", "modifyData"]),
+    ...mapWritableState(productsStore, [
+      "currentCategory",
+      "searchArea",
+      "paginationData",
+    ]),
   },
   async mounted() {
     useLoadingState().isLoading = true;
