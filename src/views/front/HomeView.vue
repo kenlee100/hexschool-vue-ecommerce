@@ -516,6 +516,9 @@ export default {
   }
 }
 .common-slider {
+  .swiper-slide {
+    @apply flex h-auto;
+  }
   .swiper-pagination-bullets.swiper-pagination-horizontal {
     @apply static mb-10;
   }

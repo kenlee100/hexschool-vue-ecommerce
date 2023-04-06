@@ -122,7 +122,6 @@ export default {
   watch: {
     "$route.query.category": {
       handler(category) {
-        console.log("watch");
         this.currentCategory = category;
       },
       deep: true,

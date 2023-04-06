@@ -20,7 +20,7 @@
       <div class="[&:not(:last-child)]:mb-3 lg:[&:not(:last-child)]:mb-8">
         <div class="flex items-start [&:not(:last-child)]:mb-2">
           <div
-            class="flex-shrink-0 w-4 h-4 mt-0.5 [&:not(:last-child)]:mr-2 bg-netural-netural-100 icon-pin"
+            class="flex-shrink-0 w-4 h-4 mt-0.5 lg:mt-1 [&:not(:last-child)]:mr-2 bg-netural-netural-100 icon-pin"
           ></div>
           <p
             class="lg:font-bold ch-caption-2 lg:ch-body text-netural-netural-100"
@@ -73,7 +73,7 @@
       <div class="[&:not(:last-child)]:mb-3 lg:[&:not(:last-child)]:mb-8">
         <div class="flex items-start [&:not(:last-child)]:mb-2">
           <div
-            class="flex-shrink-0 w-4 h-4 mt-0.5 [&:not(:last-child)]:mr-2 bg-netural-netural-400 icon-pin"
+            class="flex-shrink-0 w-4 h-4 mt-0.5 lg:mt-1 [&:not(:last-child)]:mr-2 bg-netural-netural-400 icon-pin"
           ></div>
           <p
             class="lg:font-bold ch-caption-2 lg:ch-body text-netural-netural-400"
