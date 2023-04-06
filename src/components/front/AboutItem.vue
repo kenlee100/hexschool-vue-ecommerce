@@ -7,7 +7,7 @@
       <img
         :src="imageUrl"
         class="w-full h-[300px] lg:h-[400px] object-cover"
-        alt=""
+        :alt="title"
       />
     </div>
     <div
@@ -39,7 +39,7 @@
       <img
         :src="imageUrl"
         class="w-full h-[250px] lg:h-[400px] object-cover"
-        alt=""
+        :alt="title"
       />
     </div>
     <div
@@ -64,6 +64,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   props: {

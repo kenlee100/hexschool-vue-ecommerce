@@ -22,11 +22,11 @@ export default defineStore("cartStore", {
           useLoadingState().isLoading = false;
         });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
         });
-        useLoadingState().isLoading = false;
       }
     },
     // 修改購物車數量
@@ -50,6 +50,7 @@ export default defineStore("cartStore", {
           title: `已更新 品名：${title} 數量`,
         });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
@@ -75,6 +76,7 @@ export default defineStore("cartStore", {
           title: `${title} ${message}`,
         });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
@@ -113,6 +115,7 @@ export default defineStore("cartStore", {
                 });
               })
               .catch((err) => {
+                useLoadingState().isLoading = false;
                 toast.fire({
                   icon: "error",
                   title: `${err.response.data.message}`,
@@ -142,12 +145,8 @@ export default defineStore("cartStore", {
     },
     couponPercent(item) {
       return `-${100 - (item.final_total / item.total) * 100}%`; // -10% 英文顯示
-      // return `${((item.final_total / item.total) * 100)}%`;
     },
     loadCouponCode() {
-      // if(this.cart.total===this.cart.final_total){
-      //   console.log('equal');
-      // }
       if (
         (this.cart.carts !== undefined && this.cart.carts.length < 0) ||
         this.cart.total === this.cart.final_total

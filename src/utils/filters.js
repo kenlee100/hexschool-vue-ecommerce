@@ -36,7 +36,5 @@ export function ddmmyyyy(time) {
   let mm = today.getMonth() + 1;
   const mmName = monthNames[mm - 1].slice(0, 3);
   let dd = today.getDate();
-  // if (dd < 10) dd = `0${dd}`;
-  // // if (mm < 10) mm = `0${mm}`;
   return `${dd}, ${mmName} ${yyyy}`;
 }

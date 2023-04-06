@@ -16,6 +16,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import PageHeader from "@/components/PageHeader.vue";
 import { useLoadingState } from "@/stores/common.js";
