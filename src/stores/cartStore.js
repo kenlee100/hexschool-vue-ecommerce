@@ -64,6 +64,7 @@ export default defineStore("cartStore", {
         const res = await axios.delete(
           `${VITE_URL}/api/${VITE_PATH}/cart/${content.id}`
         );
+        this.removeCoupon();
         await this.getCartList();
         useLoadingState().isProcessing = false;
         const {
@@ -109,6 +110,7 @@ export default defineStore("cartStore", {
                 const { message } = res.data;
                 this.getCartList();
                 useLoadingState().isProcessing = false;
+                this.removeCoupon();
                 toast.fire({
                   icon: "success",
                   title: `${message} 購物車`,
@@ -164,6 +166,11 @@ export default defineStore("cartStore", {
           couponText: "",
         };
       }
+    },
+    removeCoupon() {
+      localStorage.removeItem("coupon");
+      this.couponState.codeName = "";
+      this.couponState.couponText = "";
     },
   },
   getters: {},

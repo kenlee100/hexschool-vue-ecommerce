@@ -82,17 +82,26 @@
               <div class="flex flex-col space-y-2 pb-3">
                 <div class="flex justify-between">
                   <p class="font-bold ch-body">小計：</p>
-                  <p class="flex-shrink-0 en-caption-01 line-through">
+                  <p
+                    class="flex-shrink-0 en-caption-01"
+                    :class="{ 'line-through': couponState.couponText !== '' }"
+                  >
                     ${{ $filters.currency(Math.round(finalTotal)) }}
                   </p>
                 </div>
-                <div class="flex justify-between">
+                <div
+                  v-if="finalTotal !== order.total"
+                  class="flex justify-between"
+                >
                   <p class="font-bold ch-body">折扣後：</p>
                   <p class="flex-shrink-0 en-caption-01">
                     ${{ $filters.currency(Math.round(order.total)) }}
                   </p>
                 </div>
-                <div class="flex justify-between">
+                <div
+                  v-if="couponState.couponText !== ''"
+                  class="flex justify-between"
+                >
                   <p class="font-bold ch-body">優惠券：</p>
                   <p class="font-bold ch-body text-netural-netural-300">
                     {{ couponState.codeName }}

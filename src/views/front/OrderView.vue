@@ -35,7 +35,10 @@
                   >
                     <div class="flex flex-col items-end min-w-[50px] space-y-1">
                       <div
-                        class="en-caption-02 line-through text-right"
+                        class="en-caption-02 text-right"
+                        :class="{
+                          'line-through': couponState.couponText !== '',
+                        }"
                         v-if="item.final_total !== item.total"
                       >
                         ${{ $filters.currency(Math.round(item.total)) }}
@@ -71,17 +74,26 @@
             <div class="flex flex-col space-y-2 pb-3">
               <div class="flex justify-between">
                 <p class="font-bold ch-body">小計：</p>
-                <p class="flex-shrink-0 en-caption-01 line-through">
+                <p
+                  class="flex-shrink-0 en-caption-01"
+                  :class="{ 'line-through': couponState.couponText !== '' }"
+                >
                   ${{ $filters.currency(cart.total) }}
                 </p>
               </div>
-              <div class="flex justify-between">
+              <div
+                v-if="cart.final_total !== cart.total"
+                class="flex justify-between"
+              >
                 <p class="font-bold ch-body">折扣後：</p>
                 <p class="flex-shrink-0 en-caption-01">
                   ${{ $filters.currency(Math.round(cart.final_total)) }}
                 </p>
               </div>
-              <div class="flex justify-between">
+              <div
+                v-if="couponState.couponText !== ''"
+                class="flex justify-between"
+              >
                 <p class="font-bold ch-body">優惠券：</p>
                 <p class="font-bold ch-body text-netural-netural-300">
                   {{ couponState.codeName }}
@@ -132,10 +144,10 @@
               placeholder="請輸入 Email"
               rules="required|email"
             ></VField>
-            <error-message
+            <ErrorMessage
               name="Email"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
           <div class="space-y-2">
             <label for="name" class="flex items-center text-heading-4 font-bold"
@@ -143,7 +155,8 @@
             >
             <VField
               id="name"
-              name="姓名"
+              name="name"
+              label="姓名"
               type="text"
               class="form-input"
               :class="{ 'border-2 border-red-700': errors['姓名'] }"
@@ -151,10 +164,10 @@
               rules="required"
               v-model="form.user.name"
             ></VField>
-            <error-message
-              name="姓名"
+            <ErrorMessage
+              name="name"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
 
           <div class="space-y-2">
@@ -165,7 +178,8 @@
             >
             <VField
               id="tel"
-              name="手機"
+              name="tel"
+              label="手機"
               type="tel"
               class="form-input"
               :class="{ 'border-2 border-red-700': errors['手機'] }"
@@ -173,10 +187,10 @@
               :rules="isPhone"
               v-model="form.user.tel"
             ></VField>
-            <error-message
-              name="手機"
+            <ErrorMessage
+              name="tel"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
           <div class="space-y-2">
             <label
@@ -187,7 +201,8 @@
             <div class="form-select">
               <VField
                 id="county"
-                name="縣市"
+                name="county"
+                label="縣市"
                 :class="{ 'border-2 border-red-700': errors['縣市'] }"
                 rules="required"
                 as="select"
@@ -203,22 +218,22 @@
                 </option>
               </VField>
             </div>
-
-            <error-message
-              name="縣市"
+            <ErrorMessage
+              name="county"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
           <div class="space-y-2">
             <label
-              for="county"
+              for="district"
               class="flex items-center text-heading-4 font-bold"
               ><span class="text-red-700 mr-1 mt-2">*</span>地區</label
             >
             <div class="form-select">
               <VField
-                id="county"
-                name="地區"
+                id="district"
+                name="district"
+                label="地區"
                 :class="{ 'border-2 border-red-700': errors['地區'] }"
                 rules="required"
                 as="select"
@@ -235,10 +250,10 @@
               </VField>
             </div>
 
-            <error-message
-              name="地區"
+            <ErrorMessage
+              name="district"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
           <div class="space-y-2">
             <label
@@ -248,7 +263,8 @@
             >
             <VField
               id="address"
-              name="地址"
+              name="address"
+              label="地址"
               type="text"
               class="form-input"
               :class="{ 'border-2 border-red-700': errors['地址'] }"
@@ -256,17 +272,18 @@
               rules="required"
               v-model="form.user.address"
             ></VField>
-            <error-message
-              name="地址"
+            <ErrorMessage
+              name="address"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
           <div class="space-y-2">
             <label for="paid" class="text-heading-4 font-bold">付款方式</label>
             <div class="form-select">
               <VField
                 id="paid"
-                name="付款"
+                name="paid"
+                label="付款"
                 as="select"
                 v-model="form.user.paidMethod"
               >

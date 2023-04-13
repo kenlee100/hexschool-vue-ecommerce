@@ -125,7 +125,10 @@
               <div class="flex flex-col space-y-2 pb-3">
                 <div class="flex justify-between">
                   <p class="font-bold ch-body">小計：</p>
-                  <p class="flex-shrink-0 en-caption-01 line-through">
+                  <p
+                    class="flex-shrink-0 en-caption-01"
+                    :class="{ 'line-through': couponState.couponText !== '' }"
+                  >
                     ${{ $filters.currency(cart.total) }}
                   </p>
                 </div>
@@ -260,6 +263,7 @@ export default {
             this.getCartList();
           });
       } catch (err) {
+        useLoadingState().isProcessing = false;
         useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
