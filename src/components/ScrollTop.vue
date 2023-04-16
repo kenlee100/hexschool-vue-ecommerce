@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed z-30 right-3 bottom-10 flex justify-center items-center w-12 h-12 rounded-full cursor-pointer transition-all opacity-0 invisible bg-secondary-secondary-100 text-netural-netural-100 shadow-lg"
+    class="fixed z-20 right-3 bottom-10 flex justify-center items-center w-12 h-12 rounded-full cursor-pointer transition-all opacity-0 invisible bg-secondary-secondary-100 text-netural-netural-100 shadow-lg"
     :class="{ '!opacity-100 !visible': isShow }"
     title="返回最上層"
     @click="scrollToTop"
