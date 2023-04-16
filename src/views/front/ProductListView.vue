@@ -33,7 +33,7 @@
             class="overflow-x-auto lg:overflow-visible flex flex-row items-center lg:flex-col w-full"
           >
             <li
-              @click="searchCategory('全部地區')"
+              @click="changeCategory('全部地區')"
               class="group lg:w-full"
               :class="{ active: currentCategory === '全部地區' }"
             >
@@ -48,7 +48,7 @@
               :key="item"
               class="group lg:w-full"
               :class="{ active: currentCategory === item }"
-              @click="searchCategory(item)"
+              @click="changeCategory(item)"
             >
               <div
                 class="flex items-center h-[48px] lg:h-auto after:content-['chevron\_right'] after:hidden lg:after:block group-[.active]:after:block after:ml-auto after:ch-heading-3 after:font-['Material_Symbols_Outlined'] p-3 lg:border-b lg:border-gray-200 cursor-pointer transition-all group-[.active]:bg-netural-netural-400 group-[.active]:text-netural-netural-100"
@@ -113,33 +113,38 @@ export default {
   },
 
   methods: {
-    ...mapActions(productsStore, ["getProductsAll", "searchCategory"]),
+    ...mapActions(productsStore, [
+      "getProductsAll",
+      "searchCategory",
+      "changeCategory",
+    ]),
     changePage(num) {
       this.pagination.current_page = num;
       this.paginationData.current_page = num;
     },
-  },
-  watch: {
-    "$route.query.category": {
-      handler(category) {
-        this.currentCategory = category;
-      },
-      deep: true,
+    searchQueryContent() {
+      if (this.categoryData.includes(this.$route.query.category)) {
+        this.changeCategory(this.$route.query.category);
+      } else {
+        if (this.$route.query.category === "全部地區") return;
+        this.searchArea = this.$route.query.category || "";
+        this.searchCategory(this.searchArea);
+      }
     },
   },
   computed: {
-    ...mapState(productsStore, ["categoryData", "pagination", "modifyData"]),
-    ...mapWritableState(productsStore, [
+    ...mapState(productsStore, [
+      "categoryData",
+      "pagination",
+      "modifyData",
       "currentCategory",
-      "searchArea",
-      "paginationData",
     ]),
+    ...mapWritableState(productsStore, ["searchArea", "paginationData"]),
   },
   async mounted() {
     useLoadingState().isLoading = true;
     await this.getProductsAll();
-    this.currentCategory = this.$route.query.category || "全部地區";
-    this.searchCategory(this.currentCategory);
+    this.searchQueryContent();
   },
 };
 </script>
