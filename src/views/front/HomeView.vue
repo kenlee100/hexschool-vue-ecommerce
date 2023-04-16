@@ -145,7 +145,7 @@
       <div
         v-for="item in spotImages"
         :key="item.chTitle"
-        @click="searchCategory(item.category)"
+        @click="changeCategory(item.category)"
         class="relative aspect-square bg-netural-netural-400 cursor-pointer"
       >
         <div
@@ -484,6 +484,7 @@ export default {
       "getProducts",
       "addCart",
       "searchCategory",
+      "changeCategory",
     ]),
   },
   computed: {

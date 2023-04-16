@@ -108,7 +108,13 @@ export const productsStore = defineStore("productData", {
         this.categoryData = [...setItem.add(item.category)];
       });
     },
-    searchCategory(category) {
+    changeCategory(category) {
+      this.searchArea = "";
+      this.currentCategory = category;
+      this.changeQuery(category);
+      this.filterData(category);
+    },
+    filterData(category) {
       let filterCategoryData = [];
       let filterSearch = [];
       // 條件1 地區/景點
@@ -130,12 +136,24 @@ export const productsStore = defineStore("productData", {
         this.modifyData = filterSearch;
       } else if (category !== "") {
         this.modifyData = filterCategoryData;
-      } else {
-        this.modifyData = this.productsAll;
-        this.currentCategory = "全部地區";
-        if (category === "") category = this.currentCategory;
       }
-      router.push(`/products?category=${category}`);
+    },
+    searchCategory(category) {
+      this.currentCategory = "";
+      if (category === "") {
+        this.currentCategory = "全部地區";
+        this.modifyData = this.productsAll;
+        this.changeQuery(this.currentCategory);
+      } else if (this.categoryData.includes(category)) {
+        // searchArea 符合 categoryData 時，顯示符合的分類選單
+        this.changeCategory(category);
+      } else {
+        this.filterData(category);
+        this.changeQuery(category);
+      }
+    },
+    changeQuery(query) {
+      router.push(`/products?category=${query}`);
       this.pagination.current_page = 1;
     },
     pageNum() {
