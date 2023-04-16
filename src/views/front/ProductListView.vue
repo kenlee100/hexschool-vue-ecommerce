@@ -111,7 +111,6 @@ export default {
     PageHeader,
     ProductItem,
   },
-
   methods: {
     ...mapActions(productsStore, [
       "getProductsAll",

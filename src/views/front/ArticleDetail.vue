@@ -117,6 +117,7 @@ export default {
     articleId: async function (val) {
       // 換頁時可能會抓不到id而錯誤
       if (!val) return;
+      useLoadingState().isLoading = true;
       this.articleContent = await this.changeArticleContent(val);
     },
   },
@@ -138,11 +139,6 @@ export default {
       this.$route.params.id
     );
     await this.getArticles();
-    this.$router.afterEach(() => {
-      this.$nextTick(() => {
-        useLoadingState().isLoading = true;
-      });
-    });
   },
 };
 </script>
