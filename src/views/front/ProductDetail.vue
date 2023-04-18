@@ -1,6 +1,6 @@
 <template>
   <div v-if="productContent.hasOwnProperty('imagesUrl')">
-    <swiper
+    <Swiper
       v-if="productContent.imagesUrl && productContent.imagesUrl.length >= 3"
       :pagination="{
         clickable: true,
@@ -23,7 +23,7 @@
       }"
       class="flex product-slider"
     >
-      <swiper-slide
+      <SwiperSlide
         v-for="(item, index) in productContent.imagesUrl"
         :key="item.id"
       >
@@ -32,9 +32,9 @@
           :src="item.imageUrl"
           :alt="`${productContent.title}${index + 1}`"
         />
-      </swiper-slide>
-    </swiper>
-    <swiper
+      </SwiperSlide>
+    </Swiper>
+    <Swiper
       v-else-if="productContent.imagesUrl.length < 3 || productContent.imageUrl"
       :slidesPerView="1"
       :spaceBetween="0"
@@ -49,7 +49,7 @@
       :modules="modules"
       class="flex common-slider"
     >
-      <swiper-slide
+      <SwiperSlide
         v-for="(item, index) in productContent.imagesUrl"
         :key="item.id"
       >
@@ -58,8 +58,8 @@
           :src="item.imageUrl"
           :alt="`${productContent.title}${index + 1}`"
         />
-      </swiper-slide>
-    </swiper>
+      </SwiperSlide>
+    </Swiper>
   </div>
   <div v-else-if="productContent.hasOwnProperty('imageUrl')">
     <img
@@ -210,7 +210,7 @@
         其他行程推薦
       </h2>
       <div>
-        <swiper
+        <Swiper
           :pagination="{
             clickable: true,
           }"
@@ -237,7 +237,7 @@
           }"
           class="flex common-slider"
         >
-          <swiper-slide v-for="(item, index) in filterOtherItem" :key="item.id">
+          <SwiperSlide v-for="(item, index) in filterOtherItem" :key="item.id">
             <ProductItem
               :product-data="item"
               :item-index="index"
@@ -245,8 +245,8 @@
               text-content-class="!ml-0 !mt-0"
               @change-content="changeProductContent"
             />
-          </swiper-slide>
-        </swiper>
+          </SwiperSlide>
+        </Swiper>
       </div>
     </div>
   </div>

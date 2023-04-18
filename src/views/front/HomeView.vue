@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-[375px] lg:h-[720px] main-slider">
-    <swiper
+    <Swiper
       :slides-per-view="1"
       :space-between="0"
       :modules="modules"
@@ -12,7 +12,7 @@
       navigation
       :pagination="{ clickable: true }"
     >
-      <swiper-slide v-for="item in sliderImages" :key="item.id">
+      <SwiperSlide v-for="item in sliderImages" :key="item.id">
         <div class="flex flex-col h-full container">
           <div
             class="relative z-10 flex flex-col items-center justify-center h-full"
@@ -47,8 +47,8 @@
             :style="`background-image: url('${item.imageUrl}')`"
           ></div>
         </div>
-      </swiper-slide>
-    </swiper>
+      </SwiperSlide>
+    </Swiper>
   </div>
   <section class="relative z-10 mt-4 lg:-mt-[60px]">
     <div class="container">
@@ -93,7 +93,7 @@
           <ProductItem :product-data="item" :item-index="index" />
         </template>
       </div>
-      <swiper
+      <Swiper
         :slidesPerView="1"
         :spaceBetween="24"
         :pagination="{
@@ -104,13 +104,13 @@
         :modules="modules"
         class="flex lg:!hidden common-slider"
       >
-        <swiper-slide
+        <SwiperSlide
           v-for="(item, index) in products.slice(0, 6)"
           :key="item.id"
         >
           <ProductItem :product-data="item" :item-index="index" />
-        </swiper-slide>
-      </swiper>
+        </SwiperSlide>
+      </Swiper>
       <div class="flex justify-end">
         <router-link
           to="/products"
@@ -188,7 +188,7 @@
           :key="item.id"
         />
       </div>
-      <swiper
+      <Swiper
         :slidesPerView="1"
         :spaceBetween="24"
         :pagination="{
@@ -199,10 +199,10 @@
         :modules="modules"
         class="flex lg:!hidden common-slider"
       >
-        <swiper-slide v-for="item in articles.slice(0, 6)" :key="item.id">
+        <SwiperSlide v-for="item in articles.slice(0, 6)" :key="item.id">
           <ArticleItem :article-data="item" />
-        </swiper-slide>
-      </swiper>
+        </SwiperSlide>
+      </Swiper>
       <div class="flex justify-end">
         <router-link
           to="/article"
