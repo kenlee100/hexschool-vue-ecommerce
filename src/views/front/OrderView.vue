@@ -14,13 +14,6 @@
               v-for="item in cart.carts"
               :key="item.id"
             >
-              <!-- <div class="overflow-hidden flex flex-shrink-0 w-[140px]">
-                          <a href="/" class="flex items-center w-full">
-                            <div class="overflow-hidden">
-                              <img class="w-full h-full objec-cover" src="" alt="" />
-                            </div>
-                          </a>
-                        </div> -->
               <div
                 class="flex flex-col md:flex-row md:items-center md:justify-between w-full space-y-4 md:space-y-0"
               >
@@ -42,15 +35,18 @@
                   >
                     <div class="flex flex-col items-end min-w-[50px] space-y-1">
                       <div
-                        class="en-caption-02 line-through text-right"
+                        class="en-caption-02 text-right"
+                        :class="{
+                          'line-through': couponState.couponText !== '',
+                        }"
                         v-if="item.final_total !== item.total"
                       >
-                        ${{ Math.round(item.total) }}
+                        ${{ $filters.currency(Math.round(item.total)) }}
                       </div>
                       <div
                         class="en-body text-right text-secondary-secondary-200"
                       >
-                        ${{ Math.round(item.final_total) }}
+                        ${{ $filters.currency(Math.round(item.final_total)) }}
                       </div>
                     </div>
                   </div>
@@ -75,26 +71,30 @@
           <div
             class="flex flex-col p-4 md:p-6 space-y-4 bg-netural-netural-200"
           >
-            <div
-              class="flex flex-col space-y-2 pb-3 [&:not(:last-child)]:border-b border-netural-netural-400"
-            >
+            <div class="flex flex-col space-y-2 pb-3">
               <div class="flex justify-between">
                 <p class="font-bold ch-body">小計：</p>
-                <p class="flex-shrink-0 en-caption-01 line-through">
-                  ${{ cart.total }}
+                <p
+                  class="flex-shrink-0 en-caption-01"
+                  :class="{ 'line-through': couponState.couponText !== '' }"
+                >
+                  ${{ $filters.currency(cart.total) }}
                 </p>
               </div>
-              <div class="flex justify-between">
+              <div
+                v-if="cart.final_total !== cart.total"
+                class="flex justify-between"
+              >
                 <p class="font-bold ch-body">折扣後：</p>
                 <p class="flex-shrink-0 en-caption-01">
-                  ${{ Math.round(cart.final_total) }}
+                  ${{ $filters.currency(Math.round(cart.final_total)) }}
                 </p>
               </div>
-              <div class="flex justify-between">
+              <div
+                v-if="couponState.couponText !== ''"
+                class="flex justify-between"
+              >
                 <p class="font-bold ch-body">優惠券：</p>
-                <!-- <p class="flex-shrink-0 en-caption-01 line-through">
-                            ${{ cart.total }}
-                          </p> -->
                 <p class="font-bold ch-body text-netural-netural-300">
                   {{ couponState.codeName }}
                 </p>
@@ -103,7 +103,7 @@
             <div class="flex justify-between">
               <p class="font-bold ch-heading-4">總計:</p>
               <p class="flex-shrink-0 en-body text-secondary-secondary-200">
-                ${{ Math.round(cart.final_total) }}
+                ${{ $filters.currency(Math.round(cart.final_total)) }}
               </p>
             </div>
           </div>
@@ -128,7 +128,12 @@
           @submit="createOrder"
         >
           <div class="space-y-2">
-            <label for="email" class="text-heading-4 font-bold">Email</label>
+            <label
+              for="email"
+              class="flex items-center text-heading-4 font-bold"
+            >
+              <span class="text-red-700 mr-1 mt-2">*</span>Email</label
+            >
             <VField
               id="email"
               name="Email"
@@ -139,97 +144,146 @@
               placeholder="請輸入 Email"
               rules="required|email"
             ></VField>
-            <error-message
+            <ErrorMessage
               name="Email"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
-
           <div class="space-y-2">
-            <label for="name" class="text-heading-4 font-bold"
-              >收件人姓名</label
+            <label for="name" class="flex items-center text-heading-4 font-bold"
+              ><span class="text-red-700 mr-1 mt-2">*</span>收件人姓名</label
             >
             <VField
               id="name"
-              name="姓名"
+              name="name"
+              label="姓名"
               type="text"
               class="form-input"
-              :class="{ 'border-2 border-red-700': errors['姓名'] }"
+              :class="{ 'border-2 border-red-700': errors['name'] }"
               placeholder="請輸入姓名"
               rules="required"
               v-model="form.user.name"
             ></VField>
-            <error-message
-              name="姓名"
+            <ErrorMessage
+              name="name"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
 
           <div class="space-y-2">
-            <label for="phone" class="text-heading-4 font-bold"
-              >收件人手機</label
+            <label
+              for="phone"
+              class="flex items-center text-heading-4 font-bold"
+              ><span class="text-red-700 mr-1 mt-2">*</span>收件人手機</label
             >
             <VField
               id="tel"
-              name="手機"
+              name="tel"
+              label="手機"
               type="tel"
               class="form-input"
-              :class="{ 'border-2 border-red-700': errors['手機'] }"
+              :class="{ 'border-2 border-red-700': errors['tel'] }"
               placeholder="請輸入手機"
               :rules="isPhone"
               v-model="form.user.tel"
             ></VField>
-            <error-message
-              name="手機"
+            <ErrorMessage
+              name="tel"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
           <div class="space-y-2">
-            <label for="city" class="text-heading-4 font-bold">地區</label>
+            <label
+              for="county"
+              class="flex items-center text-heading-4 font-bold"
+              ><span class="text-red-700 mr-1 mt-2">*</span>縣市</label
+            >
             <div class="form-select">
               <VField
-                id="city"
-                name="地區"
-                :class="{ 'border-2 border-red-700': errors['地區'] }"
+                id="county"
+                name="county"
+                label="縣市"
+                :class="{ 'border-2 border-red-700': errors['county'] }"
                 rules="required"
                 as="select"
-                v-model="form.user.city"
+                v-model="form.user.county"
               >
-                <option value="" selected disabled>請選擇地區</option>
-                <option value="台北市">台北市</option>
-                <option value="高雄市">高雄市</option>
+                <option value="" selected disabled>請選擇縣市</option>
+                <option
+                  :value="county"
+                  v-for="(item, county) in twzipcode"
+                  :key="county"
+                >
+                  {{ county }}
+                </option>
               </VField>
             </div>
-            <error-message
-              name="地區"
+            <ErrorMessage
+              name="county"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
           <div class="space-y-2">
-            <label for="address" class="text-heading-4 font-bold"
-              >收件人地址</label
+            <label
+              for="district"
+              class="flex items-center text-heading-4 font-bold"
+              ><span class="text-red-700 mr-1 mt-2">*</span>地區</label
+            >
+            <div class="form-select">
+              <VField
+                id="district"
+                name="district"
+                label="地區"
+                :class="{ 'border-2 border-red-700': errors['district'] }"
+                rules="required"
+                as="select"
+                v-model="form.user.district"
+              >
+                <option value="" selected disabled>請選擇地區</option>
+                <option
+                  :value="item"
+                  v-for="item in filterDistrict"
+                  :key="item"
+                >
+                  {{ item }}
+                </option>
+              </VField>
+            </div>
+
+            <ErrorMessage
+              name="district"
+              class="block ch-body font-bold text-red-700"
+            />
+          </div>
+          <div class="space-y-2">
+            <label
+              for="address"
+              class="flex items-center text-heading-4 font-bold"
+              ><span class="text-red-700 mr-1 mt-2">*</span>地址</label
             >
             <VField
               id="address"
-              name="地址"
+              name="address"
+              label="地址"
               type="text"
               class="form-input"
-              :class="{ 'border-2 border-red-700': errors['地址'] }"
+              :class="{ 'border-2 border-red-700': errors['address'] }"
               placeholder="請輸入地址"
               rules="required"
               v-model="form.user.address"
             ></VField>
-            <error-message
-              name="地址"
+            <ErrorMessage
+              name="address"
               class="block ch-body font-bold text-red-700"
-            ></error-message>
+            />
           </div>
           <div class="space-y-2">
             <label for="paid" class="text-heading-4 font-bold">付款方式</label>
             <div class="form-select">
               <VField
                 id="paid"
-                name="付款"
+                name="paid"
+                label="付款"
                 as="select"
                 v-model="form.user.paidMethod"
               >
@@ -259,6 +313,7 @@
     </div>
   </div>
 </template>
+
 <script>
 const { VITE_URL, VITE_PATH } = import.meta.env;
 import { mapActions, mapState } from "pinia";
@@ -268,22 +323,26 @@ import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";
 import pageImage from "@/assets/images/img/image/page_order.jpg";
+import twzipcode from "@/utils/twzipcode.js";
 export default {
   data() {
     return {
+      selectCounty: "",
       form: {
         user: {
           name: "",
           email: "",
           tel: "",
           address: "",
-          city: "",
+          county: "",
+          district: "",
           paidMethod: "線上刷卡",
         },
         message: "",
       },
       coupon: "",
       pageImage,
+      twzipcode,
     };
   },
   components: {
@@ -319,12 +378,24 @@ export default {
         //解構賦值
         const { orderId } = res.data;
         this.$refs.form.resetForm(); //VeeValidate 重設表單 resetForm方法
-        this.form.message = ""; // 清除textarea欄位
-        useLoadingState().isProcessing = false;
+
         await this.getCartList();
         this.orderFinishInfo = res.data;
-        this.goNextStep(3, `/checkout/${orderId}`);
+        toast
+          .fire({
+            icon: "success",
+            title: `訂單已送出`,
+          })
+          .then(() => {
+            this.form.message = ""; // 清除textarea欄位
+            useLoadingState().isProcessing = false;
+            useLoadingState().isLoading = true;
+            setTimeout(() => {
+              this.goNextStep(3, `/checkout/${orderId}`);
+            }, 2000);
+          });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
@@ -334,6 +405,19 @@ export default {
   },
   computed: {
     ...mapState(cartStore, ["cart", "currentStep", "couponState"]),
+    filterDistrict() {
+      const districtData = this.twzipcode[this.form.user.county] || {};
+      return Object.keys(districtData);
+    },
+  },
+  watch: {
+    // 選取縣市時預設選第一個
+    "form.user.county": {
+      handler() {
+        this.form.user.district = this.filterDistrict[0];
+      },
+      deep: true,
+    },
   },
   async mounted() {
     useLoadingState().isLoading = true;

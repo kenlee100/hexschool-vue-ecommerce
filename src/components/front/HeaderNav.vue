@@ -28,13 +28,6 @@
             </ul>
           </nav>
           <div class="flex space-x-2">
-            <div
-              class="flex items-center justify-center w-12 h-12 cursor-pointer"
-            >
-              <div
-                class="flex-shrink-0 w-5 h-5 bg-secondary-secondary-200 transition-all ease-in-out duration-300 icon-favorite hover:icon-favorite-solid"
-              ></div>
-            </div>
             <router-link
               to="/cart"
               class="relative flex items-center justify-center w-12 h-12 cursor-pointer"
@@ -76,6 +69,7 @@
     </div>
   </header>
 </template>
+
 <script>
 import useNavListMenu from "@/stores/navList.js";
 import { useMenuStore } from "@/stores/common.js";
@@ -97,6 +91,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .animate__animated.animate__pulse {
   --animate-duration: 0.5s;

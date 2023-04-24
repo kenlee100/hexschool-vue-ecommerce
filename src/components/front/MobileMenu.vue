@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-x-0 bottom-0 z-20 md:hidden flex flex-col h-[calc(100%-72px)] bg-netural-netural-400 transition-all"
+    class="fixed inset-x-0 bottom-0 z-30 md:hidden flex flex-col h-[calc(100%-72px)] bg-netural-netural-400 transition-all"
     :class="toggle ? 'translate-x-0' : '-translate-x-full'"
   >
     <nav class="flex flex-col h-full justify-center items-center py-4">
@@ -22,6 +22,7 @@
     </nav>
   </div>
 </template>
+
 <script>
 import { mapState, mapWritableState } from "pinia";
 import useNavListMenu from "@/stores/navList.js";

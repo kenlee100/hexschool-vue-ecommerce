@@ -2,11 +2,11 @@
   <div v-if="pages.total_pages > 1" class="flex items-center justify-center">
     <nav class="py-8">
       <ul class="flex items-center justify-center space-x-2">
-        <li class="group" :class="{ disabled: !pages.has_pre }">
+        <li class="group" :class="{ disabled: pages.current_page <= 1 }">
           <a
             class="flex items-center justify-center w-12 h-12 rounded bg-netural-netural-200 text-netural-netural-400 group-[.disabled]:opacity-30 group-[.disabled]:cursor-not-allowed font-semibold ch-heading-4"
             href="#"
-            @click.prevent="getList(pages.current_page - 1)"
+            @click.prevent="$emit('change-page', pages.current_page - 1)"
           >
             <span class="material-symbols-outlined"> chevron_left </span>
           </a>
@@ -33,11 +33,14 @@
             >{{ index + 1 }}</a
           >
         </li>
-        <li class="group" :class="{ disabled: !pages.has_next }">
+        <li
+          class="group"
+          :class="{ disabled: pages.current_page >= pages.total_pages }"
+        >
           <a
             class="flex items-center justify-center w-12 h-12 rounded bg-netural-netural-200 text-netural-netural-400 group-[.disabled]:opacity-30 group-[.disabled]:cursor-not-allowed font-semibold ch-heading-4"
             href="#"
-            @click.prevent="getList(pages.current_page + 1)"
+            @click.prevent="$emit('change-page', pages.current_page + 1)"
           >
             <span class="material-symbols-outlined"> chevron_right </span>
           </a>

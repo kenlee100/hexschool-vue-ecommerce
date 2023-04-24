@@ -52,6 +52,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import PageHeader from "@/components/PageHeader.vue";
 import { useLoadingState } from "@/stores/common.js";
@@ -114,6 +115,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
 .accordion-item-enter-active,
 .accordion-item-leave-active {

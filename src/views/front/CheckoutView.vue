@@ -23,7 +23,7 @@
                     <img
                       class="w-[140px] h-[90px] object-cover"
                       :src="item.product.imageUrl"
-                      alt=""
+                      :alt="item.product.title"
                     />
                   </div>
                 </router-link>
@@ -45,30 +45,21 @@
                   <div
                     class="flex items-center justify-end flex-shrink-0 min-w-[120px]"
                   >
-                    <!-- <div
-                      v-if="item.final_total !== item.total"
-                      class="hidden lg:flex items-center p-2 rounded en-caption-02 bg-netural-netural-400 text-netural-netural-100 text-center"
-                    >
-                      {{ couponPercent(item) }}
-                    </div> -->
                     <div class="flex flex-col items-end min-w-[50px] space-y-1">
                       <div
                         v-if="item.final_total !== item.total"
                         class="en-caption-02 line-through text-right"
                       >
-                        ${{ Math.round(item.total) }}
+                        ${{ $filters.currency(Math.round(item.total)) }}
                       </div>
                       <div
                         class="en-body text-right text-secondary-secondary-200"
                       >
-                        ${{ Math.round(item.final_total) }}
+                        ${{ $filters.currency(Math.round(item.final_total)) }}
                       </div>
                     </div>
                   </div>
                 </div>
-                <!-- <div
-                  class="flex flex-1 justify-between items-center md:justify-end md:flex-shrink-0 space-x-6"
-                ></div> -->
               </div>
             </div>
           </template>
@@ -88,22 +79,29 @@
             <div
               class="flex flex-col p-4 md:p-6 space-y-4 bg-netural-netural-200"
             >
-              <div
-                class="flex flex-col space-y-2 pb-3 [&:not(:last-child)]:border-b border-netural-netural-400"
-              >
+              <div class="flex flex-col space-y-2 pb-3">
                 <div class="flex justify-between">
                   <p class="font-bold ch-body">小計：</p>
-                  <p class="flex-shrink-0 en-caption-01 line-through">
-                    ${{ Math.round(finalTotal) }}
+                  <p
+                    class="flex-shrink-0 en-caption-01"
+                    :class="{ 'line-through': couponState.couponText !== '' }"
+                  >
+                    ${{ $filters.currency(Math.round(finalTotal)) }}
                   </p>
                 </div>
-                <div class="flex justify-between">
+                <div
+                  v-if="finalTotal !== order.total"
+                  class="flex justify-between"
+                >
                   <p class="font-bold ch-body">折扣後：</p>
                   <p class="flex-shrink-0 en-caption-01">
-                    ${{ Math.round(order.total) }}
+                    ${{ $filters.currency(Math.round(order.total)) }}
                   </p>
                 </div>
-                <div class="flex justify-between">
+                <div
+                  v-if="couponState.couponText !== ''"
+                  class="flex justify-between"
+                >
                   <p class="font-bold ch-body">優惠券：</p>
                   <p class="font-bold ch-body text-netural-netural-300">
                     {{ couponState.codeName }}
@@ -113,7 +111,7 @@
               <div class="flex justify-between">
                 <p class="font-bold ch-heading-4">總計:</p>
                 <p class="flex-shrink-0 en-body text-secondary-secondary-200">
-                  ${{ Math.round(order.total) }}
+                  ${{ $filters.currency(Math.round(order.total)) }}
                 </p>
               </div>
             </div>
@@ -127,7 +125,7 @@
           <div class="flex flex-col w-full space-y-4">
             <h3 class="ch-heading-2 font-bold">訂單明細</h3>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">訂單編號：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -135,7 +133,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300"
             >
               <p class="font-bold ch-heading-4">訂單建立時間：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -143,7 +141,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">信箱：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -151,7 +149,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">姓名：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -159,15 +157,16 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">收件地址：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
-                {{ order.user.city }} {{ order.user.address }}
+                {{ order.user.county }}{{ order.user.district
+                }}{{ order.user.address }}
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">電話：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -175,7 +174,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">付款方式：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -183,17 +182,17 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4 break-all">金額：</p>
               <p
                 class="flex-shrink-0 pt-1 en-body text-secondary-secondary-200"
               >
-                $ {{ Math.round(order.total) }}
+                $ {{ $filters.currency(Math.round(order.total)) }}
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">付款狀態：</p>
               <p
@@ -207,7 +206,7 @@
               </p>
             </div>
             <div
-              class="flex flex-col lg:flex-row justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
+              class="flex flex-col justify-between items-start flex-wrap [&:not(:last-child)]:pb-4 [&:not(:last-child)]:border-b border-netural-netural-300 [&:not(:last-child)]:border-opacity-30 break-all"
             >
               <p class="font-bold ch-heading-4">留言：</p>
               <p class="flex-1 ch-heading-4 break-all lg:text-right">
@@ -228,6 +227,7 @@
     </div>
   </div>
 </template>
+
 <script>
 const { VITE_URL, VITE_PATH } = import.meta.env;
 import { mapActions, mapState } from "pinia";
@@ -252,7 +252,6 @@ export default {
   methods: {
     ...mapActions(cartStore, ["checkStep", "couponPercent", "loadCouponCode"]),
     async getOrder() {
-      // useLoadingState().isLoading = true;
       try {
         await this.$http
           .get(`${VITE_URL}/api/${VITE_PATH}/order/${this.orderId}`)
@@ -266,11 +265,11 @@ export default {
             );
           });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
         });
-        useLoadingState().isLoading = false;
       }
     },
     async payOrder() {
@@ -285,6 +284,9 @@ export default {
               icon: "success",
               title: `付款完成`,
             });
+            setTimeout(() => {
+              this.$router.push("/");
+            }, 3000);
           });
       } catch (err) {
         useLoadingState().isLoading = false;

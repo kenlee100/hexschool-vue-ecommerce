@@ -24,6 +24,7 @@ export const articlesStore = defineStore("articleData", {
             useLoadingState().isLoading = false;
           });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
@@ -34,6 +35,7 @@ export const articlesStore = defineStore("articleData", {
       try {
         return await axios.get(`${VITE_URL}/api/${VITE_PATH}/article/${id}`);
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,

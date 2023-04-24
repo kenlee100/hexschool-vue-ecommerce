@@ -1,6 +1,6 @@
 <template>
   <div v-if="productContent.hasOwnProperty('imagesUrl')">
-    <swiper
+    <Swiper
       v-if="productContent.imagesUrl && productContent.imagesUrl.length >= 3"
       :pagination="{
         clickable: true,
@@ -23,15 +23,18 @@
       }"
       class="flex product-slider"
     >
-      <swiper-slide v-for="item in productContent.imagesUrl" :key="item.id">
+      <SwiperSlide
+        v-for="(item, index) in productContent.imagesUrl"
+        :key="item.id"
+      >
         <img
           class="flex-shrink-0 w-full h-[400px] object-cover"
           :src="item.imageUrl"
-          alt=""
+          :alt="`${productContent.title}${index + 1}`"
         />
-      </swiper-slide>
-    </swiper>
-    <swiper
+      </SwiperSlide>
+    </Swiper>
+    <Swiper
       v-else-if="productContent.imagesUrl.length < 3 || productContent.imageUrl"
       :slidesPerView="1"
       :spaceBetween="0"
@@ -46,27 +49,30 @@
       :modules="modules"
       class="flex common-slider"
     >
-      <swiper-slide v-for="item in productContent.imagesUrl" :key="item.id">
+      <SwiperSlide
+        v-for="(item, index) in productContent.imagesUrl"
+        :key="item.id"
+      >
         <img
           class="flex-shrink-0 w-full h-[400px] object-cover"
           :src="item.imageUrl"
-          alt=""
+          :alt="`${productContent.title}${index + 1}`"
         />
-      </swiper-slide>
-    </swiper>
+      </SwiperSlide>
+    </Swiper>
   </div>
   <div v-else-if="productContent.hasOwnProperty('imageUrl')">
     <img
       class="flex-shrink-0 w-full h-[400px] object-cover"
       :src="productContent.imageUrl"
-      alt=""
+      :alt="productContent.title"
     />
   </div>
   <div v-else>
     <img
       class="flex-shrink-0 w-full h-[400px] object-cover"
       src="https://placehold.co/640x480?text=No+Photo"
-      alt=""
+      alt="預設圖"
     />
   </div>
   <div class="container">
@@ -83,7 +89,7 @@
           class="flex pb-4 [&:not(:last-child)]:mb-4 !mt-3 border-b border-netural-netural-300"
         >
           <div
-            class="flex-shrink-0 w-4 h-4 mt-0.5 [&:not(:last-child)]:mr-2 bg-netural-netural-300 icon-pin"
+            class="flex-shrink-0 w-4 h-4 mt-0.5 lg:mt-1 [&:not(:last-child)]:mr-2 bg-netural-netural-300 icon-pin"
           ></div>
           <div
             class="lg:font-bold ch-caption-2 lg:ch-body text-netural-netural-300"
@@ -96,18 +102,60 @@
         </div>
         <div class="flex flex-col">
           <ul class="flex border-b border-netural-netural-300">
-            <li class="group active">
+            <li
+              class="group"
+              :class="{ active: currentTab === tab }"
+              v-for="tab in tabList"
+              :key="tab"
+              @click="currentTab = tab"
+            >
               <div
-                class="flex items-center justify-center py-2 px-4 bg-netural-netural-200 text-netural-netural-400 font-semibold ch-heading-4 group-[.active]:text-netural-netural-100 group-[.active]:bg-secondary-secondary-100 cursor-pointer"
+                class="flex items-center justify-center py-2 px-4 text-netural-netural-300 font-semibold ch-heading-4 group-[.active]:text-netural-netural-100 group-[.active]:bg-secondary-secondary-100 cursor-pointer"
               >
-                商品內容
+                {{ tab }}
               </div>
             </li>
           </ul>
           <div class="flex flex-col">
-            <div class="pt-5 pb-4 editor-content active">
-              <div v-html="productContent.content"></div>
-            </div>
+            <transition name="fade" mode="out-in">
+              <div
+                class="pt-5 pb-4 editor-content"
+                v-if="currentTab === '行程內容'"
+              >
+                <div v-html="productContent.content"></div>
+              </div>
+              <div class="pt-5 pb-4" v-else-if="currentTab === '注意事項'">
+                <ol
+                  class="space-y-2 pt-3 pl-5 en-caption-02 leading-7.5 font-bold list-decimal"
+                >
+                  <li>
+                    票券有效期限：請確認您所購買的票券有效期限，並於有效期限內使用，逾期無法使用。
+                  </li>
+                  <li>
+                    入場方式：每個景點的入場方式可能不同，請務必確認入場方式，並依照票券使用方式進入。
+                  </li>
+                  <li>
+                    使用時段：有些票券有使用時段限制，請確認使用時段，並在指定時段內使用。
+                  </li>
+                  <li>
+                    套票使用方式：如購買套票，請依照票券上所列明的使用方式及順序使用，並注意各景點的開放時間，以免因時間不足而無法使用。
+                  </li>
+                  <li>
+                    票券轉讓禁止：票券一經售出，不得轉讓他人使用。如經發現違規使用，將依照法律規定處理。
+                  </li>
+                  <li>
+                    退換票：票券一經售出，恕不退換，請務必確認購買內容再進行購買。
+                  </li>
+                  <li>
+                    注意安全：使用票券時，請務必注意人身安全及財物安全，避免遺失或損毀。
+                  </li>
+                  <li>
+                    其他注意事項：請在使用票券前仔細閱讀票券上所列之注意事項，以確保使用順利。
+                  </li>
+                  <li>希望以上注意事項說明能為您提供幫助，祝您旅途愉快！</li>
+                </ol>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -117,12 +165,15 @@
         >
           <div class="space-y-2">
             <div>
-              <span class="en-title">{{ productContent.price }}</span> 元
+              <span class="en-title">{{
+                $filters.currency(productContent.price)
+              }}</span>
+              元
             </div>
             <div class="h6">
               原價
               <span class="en-caption-01 line-through">{{
-                productContent.origin_price
+                $filters.currency(productContent.origin_price)
               }}</span>
               元
             </div>
@@ -145,7 +196,7 @@
           <div class="w-full">
             <button
               type="button"
-              @click="addCart(productContent)"
+              @click="addCart(productContent, qty)"
               class="btn-base w-full text-netural-netural-100 bg-secondary-secondary-200"
             >
               加入購物車
@@ -159,7 +210,7 @@
         其他行程推薦
       </h2>
       <div>
-        <swiper
+        <Swiper
           :pagination="{
             clickable: true,
           }"
@@ -186,7 +237,7 @@
           }"
           class="flex common-slider"
         >
-          <swiper-slide v-for="(item, index) in filterOtherItem" :key="item.id">
+          <SwiperSlide v-for="(item, index) in filterOtherItem" :key="item.id">
             <ProductItem
               :product-data="item"
               :item-index="index"
@@ -194,17 +245,19 @@
               text-content-class="!ml-0 !mt-0"
               @change-content="changeProductContent"
             />
-          </swiper-slide>
-        </swiper>
+          </SwiperSlide>
+        </Swiper>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import { useLoadingState } from "@/stores/common.js";
 import ProductItem from "@/components/front/ProductItem.vue";
 import { mapActions, mapState } from "pinia";
 import { productsStore } from "@/stores/productsStore.js";
+
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Navigation, Pagination } from "swiper";
@@ -223,6 +276,8 @@ export default {
       controlledSwiper: null,
       productContent: {},
       qty: 1,
+      tabList: ["行程內容", "注意事項"],
+      currentTab: "行程內容",
     };
   },
   components: {
@@ -238,6 +293,16 @@ export default {
         useLoadingState().isLoading = false;
         return res.data.product;
       });
+    },
+    toggle(content) {
+      content.active = !content.active;
+    },
+    startTransition(el) {
+      el.style.height = el.scrollHeight + "px";
+    },
+
+    endTransition(el) {
+      el.style.height = "";
     },
   },
   watch: {
@@ -268,6 +333,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scope>
 .common-slider,
 .product-slider {
@@ -275,7 +341,7 @@ export default {
     @apply flex h-auto;
   }
   .swiper-pagination {
-    @apply relative lg:-mt-4;
+    @apply relative mt-4;
   }
   .swiper-pagination-bullet {
     @apply bg-netural-netural-300 transition-all duration-500;
@@ -288,5 +354,20 @@ export default {
   .swiper-pagination {
     @apply static lg:mt-0;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  @apply transition-opacity duration-200;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  @apply opacity-0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  @apply opacity-100;
 }
 </style>

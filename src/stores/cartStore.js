@@ -22,11 +22,11 @@ export default defineStore("cartStore", {
           useLoadingState().isLoading = false;
         });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
         });
-        useLoadingState().isLoading = false;
       }
     },
     // 修改購物車數量
@@ -50,6 +50,7 @@ export default defineStore("cartStore", {
           title: `已更新 品名：${title} 數量`,
         });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
@@ -63,6 +64,7 @@ export default defineStore("cartStore", {
         const res = await axios.delete(
           `${VITE_URL}/api/${VITE_PATH}/cart/${content.id}`
         );
+        this.removeCoupon();
         await this.getCartList();
         useLoadingState().isProcessing = false;
         const {
@@ -75,6 +77,7 @@ export default defineStore("cartStore", {
           title: `${title} ${message}`,
         });
       } catch (err) {
+        useLoadingState().isLoading = false;
         toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
@@ -107,12 +110,14 @@ export default defineStore("cartStore", {
                 const { message } = res.data;
                 this.getCartList();
                 useLoadingState().isProcessing = false;
+                this.removeCoupon();
                 toast.fire({
                   icon: "success",
                   title: `${message} 購物車`,
                 });
               })
               .catch((err) => {
+                useLoadingState().isLoading = false;
                 toast.fire({
                   icon: "error",
                   title: `${err.response.data.message}`,
@@ -142,12 +147,8 @@ export default defineStore("cartStore", {
     },
     couponPercent(item) {
       return `-${100 - (item.final_total / item.total) * 100}%`; // -10% 英文顯示
-      // return `${((item.final_total / item.total) * 100)}%`;
     },
     loadCouponCode() {
-      // if(this.cart.total===this.cart.final_total){
-      //   console.log('equal');
-      // }
       if (
         (this.cart.carts !== undefined && this.cart.carts.length < 0) ||
         this.cart.total === this.cart.final_total
@@ -165,6 +166,11 @@ export default defineStore("cartStore", {
           couponText: "",
         };
       }
+    },
+    removeCoupon() {
+      localStorage.removeItem("coupon");
+      this.couponState.codeName = "";
+      this.couponState.couponText = "";
     },
   },
   getters: {},

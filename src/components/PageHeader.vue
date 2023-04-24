@@ -4,7 +4,7 @@
       <img
         :src="imageUrl"
         class="w-full h-[200px] lg:h-[400px] object-cover"
-        alt=""
+        :alt="this.$route.meta.title"
       />
     </div>
     <div class="container">
@@ -20,6 +20,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   props: {

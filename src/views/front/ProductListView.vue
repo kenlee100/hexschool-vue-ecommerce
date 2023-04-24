@@ -14,13 +14,13 @@
             placeholder="搜尋地區 / 景點"
             name=""
             id=""
-            v-model.trim="searchKeyword"
-            @keydown.enter="goCategory(searchKeyword)"
+            v-model.trim="searchArea"
+            @keyup.enter="searchCategory(searchArea)"
           />
           <button
             type="button"
             class="flex items-center justify-center px-4"
-            @click="goCategory(searchKeyword)"
+            @click="searchCategory(searchArea)"
           >
             <div
               class="flex-shrink-0 w-6 h-6 bg-netural-netural-300 icon-search"
@@ -33,7 +33,7 @@
             class="overflow-x-auto lg:overflow-visible flex flex-row items-center lg:flex-col w-full"
           >
             <li
-              @click="searchCategory('全部地區')"
+              @click="changeCategory('全部地區')"
               class="group lg:w-full"
               :class="{ active: currentCategory === '全部地區' }"
             >
@@ -48,7 +48,7 @@
               :key="item"
               class="group lg:w-full"
               :class="{ active: currentCategory === item }"
-              @click="searchCategory(item)"
+              @click="changeCategory(item)"
             >
               <div
                 class="flex items-center h-[48px] lg:h-auto after:content-['chevron\_right'] after:hidden lg:after:block group-[.active]:after:block after:ml-auto after:ch-heading-3 after:font-['Material_Symbols_Outlined'] p-3 lg:border-b lg:border-gray-200 cursor-pointer transition-all group-[.active]:bg-netural-netural-400 group-[.active]:text-netural-netural-100"
@@ -57,48 +57,17 @@
               </div>
             </li>
           </ul>
-          <!-- 多選checkbox -->
-          <!-- <ul
-            class="grid grid-cols-4 lg:grid-cols-3 gap-3 lg:flex lg:flex-col lg:space-y-2 lg:gap-0"
-          >
-            <li>
-              <div class="el-checkbox el-checkbox-primary">
-                <input id="`all`" class="el-checkbox-input" type="checkbox" />
-                <label class="el-checkbox-style" for="`all`">
-                  <span class="material-symbols-outlined"> done </span>
-                </label>
-                <label class="el-checkbox-label" for="`all`">
-                  <span class="el-checkbox-label__text">全部地區</span>
-                </label>
-              </div>
-            </li>
-            <li v-for="(item, index) in categoryData" :key="item">
-              <div class="el-checkbox el-checkbox-primary">
-                <input
-                  :id="`${item}-${index}`"
-                  class="el-checkbox-input"
-                  type="checkbox"
-                  v-model="selectCategoryStore"
-                  :value="item"
-                  @change="searchCategory(item)"
-                />
-                <label class="el-checkbox-style" :for="`${item}-${index}`">
-                  <span class="material-symbols-outlined"> done </span>
-                </label>
-                <label class="el-checkbox-label" :for="`${item}-${index}`">
-                  <span class="el-checkbox-label__text">{{ item }}</span>
-                </label>
-              </div>
-            </li>
-          </ul> -->
         </div>
       </div>
       <div class="lg:flex-auto w-full lg:w-[75%]">
-        <template v-if="filterProducts.length >= 1">
+        <template v-if="paginationData.data.length > 0">
           <div
             class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-flow-row gap-6"
           >
-            <template v-for="(item, index) in filterProducts" :key="item.id">
+            <template
+              v-for="(item, index) in paginationData.data"
+              :key="item.id"
+            >
               <ProductItem
                 :product-data="item"
                 :item-index="index"
@@ -107,12 +76,10 @@
               />
             </template>
           </div>
-          <PaginationComponent
+          <PaginationCustomComponent
             :pages="pagination"
-            :category="currentCategory"
-            @change-page="getProducts"
-            :get-list="getProducts"
-          ></PaginationComponent>
+            @change-page="changePage"
+          />
         </template>
         <div
           v-else
@@ -124,8 +91,9 @@
     </div>
   </div>
 </template>
+
 <script>
-import PaginationComponent from "@/components/PaginationComponent.vue";
+import PaginationCustomComponent from "@/components/PaginationCustomComponent.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import ProductItem from "@/components/front/ProductItem.vue";
 import { mapActions, mapState, mapWritableState } from "pinia";
@@ -139,44 +107,43 @@ export default {
     };
   },
   components: {
-    PaginationComponent,
+    PaginationCustomComponent,
     PageHeader,
     ProductItem,
   },
   methods: {
     ...mapActions(productsStore, [
-      "getProducts",
+      "getProductsAll",
       "searchCategory",
-      "goCategory",
+      "changeCategory",
     ]),
-  },
-  watch: {
-    "$route.query.category": {
-      handler: function (category) {
-        if (!category) {
-          this.currentCategory = "全部地區";
-        } else {
-          this.currentCategory = category;
-        }
-      },
-      deep: true,
-      immediate: true,
+    changePage(num) {
+      this.pagination.current_page = num;
+      this.paginationData.current_page = num;
+    },
+    searchQueryContent() {
+      if (this.categoryData.includes(this.$route.query.category)) {
+        this.changeCategory(this.$route.query.category);
+      } else {
+        if (this.$route.query.category === "全部地區") return;
+        this.searchArea = this.$route.query.category || "";
+        this.searchCategory(this.searchArea);
+      }
     },
   },
   computed: {
     ...mapState(productsStore, [
-      "products",
-      "pagination",
       "categoryData",
-      "filterProducts",
+      "pagination",
+      "modifyData",
       "currentCategory",
-      "",
     ]),
-    ...mapWritableState(productsStore, ["searchKeyword", "currentCategory"]),
+    ...mapWritableState(productsStore, ["searchArea", "paginationData"]),
   },
   async mounted() {
     useLoadingState().isLoading = true;
-    await this.getProducts();
+    await this.getProductsAll();
+    this.searchQueryContent();
   },
 };
 </script>
