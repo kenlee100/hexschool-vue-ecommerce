@@ -23,7 +23,11 @@ const router = createRouter({
           query: {
             category: "全部地區",
           },
-          meta: { title: `推薦行程`, enTitle: "RECOMMEND" },
+          meta: {
+            title: `推薦行程`,
+            enTitle: "RECOMMEND",
+            menuGroup: "nav-menu",
+          },
         },
         {
           path: "product/:id",
@@ -35,6 +39,12 @@ const router = createRouter({
           path: "article",
           name: "ArticleView",
           component: () => import("@/views/front/ArticleView.vue"),
+          meta: { title: `旅行日記`, enTitle: "BLOG", menuGroup: "nav-menu" },
+        },
+        {
+          path: "article/tags/:tag",
+          name: "ArticleTagView",
+          component: () => import("@/views/front/ArticleView.vue"),
           meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
         {
@@ -43,17 +53,18 @@ const router = createRouter({
           component: () => import("@/views/front/ArticleDetail.vue"),
           meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
+
         {
           path: "about",
           name: "AboutView",
           component: () => import("@/views/front/AboutView.vue"),
-          meta: { title: `關於我們`, enTitle: "ABOUT" },
+          meta: { title: `關於我們`, enTitle: "ABOUT", menuGroup: "nav-menu" },
         },
         {
           path: "faq",
           name: "FaqView",
           component: () => import("@/views/front/FaqView.vue"),
-          meta: { title: `常見問題`, enTitle: "FAQ" },
+          meta: { title: `常見問題`, enTitle: "FAQ", menuGroup: "nav-menu" },
         },
         {
           path: "cart",
