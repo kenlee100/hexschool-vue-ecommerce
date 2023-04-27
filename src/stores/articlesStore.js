@@ -3,13 +3,15 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
 import toast from "@/utils/toast";
+import router from "../router";
 export const articlesStore = defineStore("articleData", {
   state: () => {
     return {
       articles: [],
       articlesItem: {},
       pagination: {},
-      categoryData: [],
+      tagData: [],
+      currentCategory: "all",
     };
   },
   actions: {
@@ -20,7 +22,7 @@ export const articlesStore = defineStore("articleData", {
           .then((res) => {
             this.articles = res.data.articles;
             this.pagination = res.data.pagination;
-            this.filterArticles();
+            this.filterTags();
             useLoadingState().isLoading = false;
           });
       } catch (err) {
@@ -42,13 +44,30 @@ export const articlesStore = defineStore("articleData", {
         });
       }
     },
-    filterArticles() {
+    filterTags() {
       const setItem = new Set();
       this.articles.forEach((item) => {
         item.tag.forEach((tagItem) => {
-          this.categoryData = [...setItem.add(tagItem)];
+          this.tagData = [...setItem.add(tagItem)];
         });
       });
+    },
+
+    changeTag(tag) {
+      router.push(`/article/tags/${tag}`);
+    },
+    changeArticlesCategory(category) {
+      this.currentCategory = category;
+      this.changeTag(category);
+    },
+  },
+  getters: {
+    filterData(state) {
+      return state.currentCategory === "all"
+        ? state.articles
+        : state.articles.filter((item) => {
+            return item.tag.includes(state.currentCategory);
+          });
     },
   },
 });

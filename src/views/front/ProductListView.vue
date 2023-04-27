@@ -3,7 +3,7 @@
   <div class="container">
     <div class="flex flex-col lg:flex-row justify-between lg:space-x-8">
       <div
-        class="flex flex-col self-start w-full lg:w-[260px] mb-6 lg:mb-0 p-4 lg:p-6 border border-netural-netural-300 rounded-md"
+        class="lg:sticky top-[72px] z-20 flex flex-col self-start w-full lg:w-[260px] mb-6 lg:mb-0 p-4 lg:p-6 border border-netural-netural-300 bg-netural-netural-100 rounded-md"
       >
         <div
           class="flex w-full pl-6 lg:pl-4 [&:not(:last-child)]:mb-4 lg:[&:not(:last-child)]:mb-6 bg-netural-netural-200"

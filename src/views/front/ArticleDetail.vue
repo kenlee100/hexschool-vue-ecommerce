@@ -39,15 +39,20 @@
             </p>
           </div>
         </div>
-        <div class="flex items-center flex-wrap gap-x-4 gap-y-3">
-          <div v-for="tag in articleContent.tag" :key="tag">
+        <ArticleTags :tag-data="articleContent.tag" />
+        <!-- <div class="flex items-center flex-wrap gap-x-4 gap-y-3">
+          <div
+            class="px-3 py-1 bg-netural-netural-200"
+            v-for="tag in articleContent.tag"
+            :key="tag"
+          >
             <p
-              class="text-netural-netural-300 font-bold ch-caption-1 whitespace-nowrap"
+              class="text-netural-netural-400 font-bold ch-caption-1 whitespace-nowrap"
             >
-              # {{ tag }}
+              #{{ tag }}
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="pt-9 pb-10 mb-20 border-b-2 border-netural-netural-300">
         <div
@@ -95,6 +100,7 @@
 
 <script>
 import { mapActions, mapState } from "pinia";
+import ArticleTags from "@/components/front/ArticleTags.vue";
 import { useLoadingState } from "@/stores/common.js";
 import { articlesStore } from "@/stores/articlesStore.js";
 export default {
@@ -103,6 +109,7 @@ export default {
       articleContent: {},
     };
   },
+  components: { ArticleTags },
   methods: {
     ...mapActions(articlesStore, ["getArticleItem", "getArticles"]),
     // 事件 改變articleContent 狀態

@@ -237,6 +237,7 @@
       class="grid grid-rows-3 lg:grid-rows-4 grid-cols-2 lg:grid-cols-9 grid-flow-row lg:grid-flow-col gap-6 px-3 lg:px-0"
     >
       <div
+        @click="changeArticlesCategory('住宿')"
         class="col-span-1 lg:col-span-3 lg:row-span-3 lg:w-full aspect-square lg:aspect-auto"
       >
         <div class="overflow-hidden relative flex h-full">
@@ -260,6 +261,7 @@
         </div>
       </div>
       <div
+        @click="changeArticlesCategory('美食')"
         class="row-start-1 row-span-2 col-start-2 lg:col-span-2 lg:row-span-2 lg:aspect-auto w-full h-[calc(100%-47%)] mb-[10%] place-self-center"
       >
         <div class="overflow-hidden relative flex h-full lg:h-[420px]">
@@ -283,6 +285,7 @@
         </div>
       </div>
       <div
+        @click="changeArticlesCategory('體驗')"
         class="row-start-2 row-span-2 col-start-2 lg:col-span-2 lg:row-span-2 lg:aspect-auto w-full h-[calc(100%-47%)] mt-[10%] place-self-center"
       >
         <div class="overflow-hidden relative flex h-full lg:h-[306px]">
@@ -306,6 +309,7 @@
         </div>
       </div>
       <div
+        @click="changeArticlesCategory('購物')"
         class="col-span-1 lg:col-span-3 lg:row-span-2 aspect-square lg:aspect-auto"
       >
         <div
@@ -331,6 +335,7 @@
         </div>
       </div>
       <div
+        @click="changeArticlesCategory('古蹟')"
         class="col-span-1 lg:col-span-4 lg:row-span-2 lg:h-[416px] lg:-mt-[114px] aspect-square lg:aspect-auto"
       >
         <div class="overflow-hidden relative flex h-full lg:h-full">
@@ -478,7 +483,7 @@ export default {
     SwiperSlide,
   },
   methods: {
-    ...mapActions(articlesStore, ["getArticles"]),
+    ...mapActions(articlesStore, ["getArticles", "changeArticlesCategory"]),
     ...mapActions(productsStore, [
       "getProductItem",
       "getProducts",
