@@ -28,6 +28,10 @@
 ```sh
 npm install
 ```
+#### 運行專案
+```sh
+npm run dev
+```
 
 #### 開啟專案
 在瀏覽器網址列輸入以下即可看到畫面
@@ -35,11 +39,7 @@ npm install
 http://localhost:3000/
 ```
 
-#### 運行專案
 
-```sh
-npm run dev
-```
 
 #### 打包專案
 ```sh
