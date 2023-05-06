@@ -362,8 +362,8 @@
 
 <script>
 import { mapActions, mapState, mapWritableState } from "pinia";
-import ProductItem from "@/components/front/ProductItem.vue";
-import ArticleItem from "@/components/front/ArticleItem.vue";
+import ProductItem from "@/components/ProductItem.vue";
+import ArticleItem from "@/components/ArticleItem.vue";
 import { articlesStore } from "@/stores/articlesStore.js";
 import { productsStore } from "@/stores/productsStore.js";
 import { useLoadingState } from "@/stores/common.js";

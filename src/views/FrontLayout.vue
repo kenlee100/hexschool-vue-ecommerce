@@ -16,9 +16,9 @@
 
 <script>
 import { RouterView } from "vue-router";
-import HeaderNav from "@/components/front/HeaderNav.vue";
-import FooterNav from "@/components/front/FooterNav.vue";
-import MobileMenu from "@/components/front/MobileMenu.vue";
+import HeaderNav from "@/components/HeaderNav.vue";
+import FooterNav from "@/components/FooterNav.vue";
+import MobileMenu from "@/components/MobileMenu.vue";
 import ProcessLoader from "@/components/ProcessLoader.vue";
 import ScrollTop from "@/components/ScrollTop.vue";
 import useNavListMenu from "@/stores/navList.js";

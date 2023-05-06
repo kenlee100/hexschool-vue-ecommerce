@@ -254,7 +254,7 @@
 
 <script>
 import { useLoadingState } from "@/stores/common.js";
-import ProductItem from "@/components/front/ProductItem.vue";
+import ProductItem from "@/components/ProductItem.vue";
 import { mapActions, mapState } from "pinia";
 import { productsStore } from "@/stores/productsStore.js";
 

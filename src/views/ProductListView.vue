@@ -95,7 +95,7 @@
 <script>
 import PaginationCustomComponent from "@/components/PaginationCustomComponent.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import ProductItem from "@/components/front/ProductItem.vue";
+import ProductItem from "@/components/ProductItem.vue";
 import { mapActions, mapState, mapWritableState } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
 import { productsStore } from "@/stores/productsStore.js";

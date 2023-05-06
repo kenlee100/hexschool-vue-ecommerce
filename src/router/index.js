@@ -10,7 +10,7 @@ const router = createRouter({
         {
           path: "",
           name: "home",
-          component: () => import("@/views/front/HomeView.vue"),
+          component: () => import("@/views/HomeView.vue"),
           meta: {
             title: `首頁`,
             enTitle: "Home",
@@ -19,7 +19,7 @@ const router = createRouter({
         {
           path: "products",
           name: "ProductListView",
-          component: () => import("@/views/front/ProductListView.vue"),
+          component: () => import("@/views/ProductListView.vue"),
           query: {
             category: "全部地區",
           },
@@ -28,49 +28,49 @@ const router = createRouter({
         {
           path: "product/:id",
           name: "ProductDetail",
-          component: () => import("@/views/front/ProductDetail.vue"),
+          component: () => import("@/views/ProductDetail.vue"),
           meta: { title: `推薦行程`, enTitle: "RECOMMEND" },
         },
         {
           path: "article",
           name: "ArticleView",
-          component: () => import("@/views/front/ArticleView.vue"),
+          component: () => import("@/views/ArticleView.vue"),
           meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
         {
           path: "article/:id",
           name: "ArticleDetail",
-          component: () => import("@/views/front/ArticleDetail.vue"),
+          component: () => import("@/views/ArticleDetail.vue"),
           meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
         {
           path: "about",
           name: "AboutView",
-          component: () => import("@/views/front/AboutView.vue"),
+          component: () => import("@/views/AboutView.vue"),
           meta: { title: `關於我們`, enTitle: "ABOUT" },
         },
         {
           path: "faq",
           name: "FaqView",
-          component: () => import("@/views/front/FaqView.vue"),
+          component: () => import("@/views/FaqView.vue"),
           meta: { title: `常見問題`, enTitle: "FAQ" },
         },
         {
           path: "cart",
           name: "CartView",
-          component: () => import("@/views/front/CartView.vue"),
+          component: () => import("@/views/CartView.vue"),
           meta: { title: `購物車`, enTitle: "CART" },
         },
         {
           path: "order",
           name: "OrderView",
-          component: () => import("@/views/front/OrderView.vue"),
+          component: () => import("@/views/OrderView.vue"),
           meta: { title: `確認訂單`, enTitle: "ORDER" },
         },
         {
           path: "/checkout/:orderId",
           name: "checkout",
-          component: () => import("@/views/front/CheckoutView.vue"),
+          component: () => import("@/views/CheckoutView.vue"),
           meta: {
             title: `訂單完成`,
             enTitle: "CHECKOUT",
@@ -85,7 +85,7 @@ const router = createRouter({
         {
           path: "",
           name: "404",
-          component: () => import("@/views/front/404View.vue"),
+          component: () => import("@/views/404View.vue"),
           meta: { title: `404`, enTitle: "" },
         },
       ],
