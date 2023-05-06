@@ -17,7 +17,7 @@
 <script>
 import { useLoadingState } from "@/stores/common.js";
 import PageHeader from "@/components/PageHeader.vue";
-import AboutItem from "@/components/front/AboutItem.vue";
+import AboutItem from "@/components/AboutItem.vue";
 import aboutImg01 from "/src/assets/images/img/image/about_01.jpg";
 import aboutImg02 from "/src/assets/images/img/image/about_02.jpg";
 import aboutImg03 from "/src/assets/images/img/image/about_03.jpg";

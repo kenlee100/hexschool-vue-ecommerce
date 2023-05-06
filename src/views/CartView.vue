@@ -206,7 +206,7 @@
 const { VITE_URL, VITE_PATH } = import.meta.env;
 import { mapActions, mapState } from "pinia";
 import PageHeader from "@/components/PageHeader.vue";
-import CartStep from "@/components/front/CartStep.vue";
+import CartStep from "@/components/CartStep.vue";
 import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";

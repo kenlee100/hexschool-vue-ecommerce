@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import useNavListMenu from "../../stores/navList.js";
+import useNavListMenu from "@/stores/navList.js";
 import { mapState } from "pinia";
 export default {
   computed: {

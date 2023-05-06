@@ -17,7 +17,7 @@
 <script>
 import PaginationComponent from "@/components/PaginationComponent.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import ArticleItem from "@/components/front/ArticleItem.vue";
+import ArticleItem from "@/components/ArticleItem.vue";
 import { mapActions, mapState } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
 import { articlesStore } from "@/stores/articlesStore.js";
