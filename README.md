@@ -22,7 +22,7 @@
 - Animate.css 4.1.1
 - Swiper 9.1.0 
 - SweetAlert2 11.7.3
-- Sass
+- SCSS
 
 #### 安裝套件
 ```sh
