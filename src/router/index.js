@@ -53,6 +53,7 @@ const router = createRouter({
           component: () => import("@/views/ArticleDetail.vue"),
           meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
+
         {
           path: "about",
           name: "AboutView",
