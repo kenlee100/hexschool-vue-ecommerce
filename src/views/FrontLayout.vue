@@ -7,7 +7,7 @@
     <ScrollTop />
   </div>
   <FooterNav />
-  <VueLoading v-model:active="isLoading">
+  <VueLoading v-model:active="isLoading" transition="none">
     <div
       class="relative w-16 h-16 bg-netural-netural-100 rounded-full rotate-45 animate-animation-compass before:content-[''] before:absolute before:left-1/2 before:top-1/2 before:w-[15px] before:h-[30px] before:skew-x-[5deg] before:skew-y-[60deg] before:-translate-x-1/2 before:-translate-y-1/2 before:bg-primary-primary-200 after:content-[''] after:absolute after:left-1/2 after:top-1/2 after:w-[6px] after:h-[6px] after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:bg-netural-netural-100"
     ></div>
