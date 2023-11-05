@@ -14,26 +14,15 @@ export default defineStore("navListMenu", {
   getters: {
     // 給選單用
     navList({ navRouteData }) {
-      const list = [];
-      for (let i = 0; i < navRouteData.length; i++) {
-        if (
-          navRouteData[i].path === "/" ||
-          navRouteData[i].path === "/product/:id" ||
-          navRouteData[i].path === "/article/:id" ||
-          navRouteData[i].path === "/cart" ||
-          navRouteData[i].path === "/order" ||
-          navRouteData[i].path === "/checkout/:orderId" ||
-          navRouteData[i].name === "404"
-        ) {
-          continue;
-        }
-        list.push({
-          path: navRouteData[i].path,
-          title: navRouteData[i].meta.title,
-          enTitle: navRouteData[i].meta.enTitle,
+      return navRouteData
+        .filter((item) => item.meta.mainMenu)
+        .map((mapItem) => {
+          return {
+            path: mapItem.path,
+            title: mapItem.meta.title,
+            enTitle: mapItem.meta.enTitle,
+          };
         });
-      }
-      return list;
     },
   },
 });
