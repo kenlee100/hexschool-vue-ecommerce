@@ -39,7 +39,7 @@ const router = createRouter({
           path: "article",
           name: "ArticleView",
           component: () => import("@/views/ArticleView.vue"),
-          meta: { title: `旅行日記`, enTitle: "BLOG", mainMenu: "nav-group" },
+          meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
         {
           path: "article/:id",
@@ -47,6 +47,7 @@ const router = createRouter({
           component: () => import("@/views/ArticleDetail.vue"),
           meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
+
         {
           path: "about",
           name: "AboutView",
