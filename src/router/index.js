@@ -42,11 +42,18 @@ const router = createRouter({
           meta: { title: `旅行日記`, enTitle: "BLOG", mainMenu: "nav-group" },
         },
         {
+          path: "article/tags/:tag",
+          name: "ArticleTagView",
+          component: () => import("@/views/ArticleView.vue"),
+          meta: { title: `旅行日記`, enTitle: "BLOG" },
+        },
+        {
           path: "article/:id",
           name: "ArticleDetail",
           component: () => import("@/views/ArticleDetail.vue"),
           meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
+
         {
           path: "about",
           name: "AboutView",
