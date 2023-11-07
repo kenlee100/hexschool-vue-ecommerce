@@ -26,25 +26,25 @@ const router = createRouter({
           meta: {
             title: `推薦行程`,
             enTitle: "RECOMMEND",
-            menuGroup: "nav-menu",
+            mainMenu: "nav-group",
           },
         },
         {
           path: "product/:id",
           name: "ProductDetail",
-          component: () => import("@/views/front/ProductDetail.vue"),
+          component: () => import("@/views/ProductDetail.vue"),
           meta: { title: `推薦行程`, enTitle: "RECOMMEND" },
         },
         {
           path: "article",
           name: "ArticleView",
-          component: () => import("@/views/front/ArticleView.vue"),
-          meta: { title: `旅行日記`, enTitle: "BLOG", menuGroup: "nav-menu" },
+          component: () => import("@/views/ArticleView.vue"),
+          meta: { title: `旅行日記`, enTitle: "BLOG", mainMenu: "nav-group" },
         },
         {
           path: "article/tags/:tag",
           name: "ArticleTagView",
-          component: () => import("@/views/front/ArticleView.vue"),
+          component: () => import("@/views/ArticleView.vue"),
           meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
         {
@@ -57,14 +57,14 @@ const router = createRouter({
         {
           path: "about",
           name: "AboutView",
-          component: () => import("@/views/front/AboutView.vue"),
-          meta: { title: `關於我們`, enTitle: "ABOUT", menuGroup: "nav-menu" },
+          component: () => import("@/views/AboutView.vue"),
+          meta: { title: `關於我們`, enTitle: "ABOUT", mainMenu: "nav-group" },
         },
         {
           path: "faq",
           name: "FaqView",
-          component: () => import("@/views/front/FaqView.vue"),
-          meta: { title: `常見問題`, enTitle: "FAQ", menuGroup: "nav-menu" },
+          component: () => import("@/views/FaqView.vue"),
+          meta: { title: `常見問題`, enTitle: "FAQ", mainMenu: "nav-group" },
         },
         {
           path: "cart",

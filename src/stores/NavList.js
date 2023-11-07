@@ -15,14 +15,12 @@ export default defineStore("navListMenu", {
     // 給選單用
     navList({ navRouteData }) {
       return navRouteData
-        .filter((item) => {
-          return item.meta.menuGroup === "nav-menu";
-        })
-        .map((item) => {
+        .filter((item) => item.meta.mainMenu)
+        .map((mapItem) => {
           return {
-            path: item.path,
-            title: item.meta.title,
-            enTitle: item.meta.enTitle,
+            path: mapItem.path,
+            title: mapItem.meta.title,
+            enTitle: mapItem.meta.enTitle,
           };
         });
     },
