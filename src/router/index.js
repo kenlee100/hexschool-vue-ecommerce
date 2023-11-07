@@ -32,19 +32,19 @@ const router = createRouter({
         {
           path: "product/:id",
           name: "ProductDetail",
-          component: () => import("@/views/front/ProductDetail.vue"),
+          component: () => import("@/views/ProductDetail.vue"),
           meta: { title: `推薦行程`, enTitle: "RECOMMEND" },
         },
         {
           path: "article",
           name: "ArticleView",
-          component: () => import("@/views/front/ArticleView.vue"),
-          meta: { title: `旅行日記`, enTitle: "BLOG", menuGroup: "nav-menu" },
+          component: () => import("@/views/ArticleView.vue"),
+          meta: { title: `旅行日記`, enTitle: "BLOG", mainMenu: "nav-group" },
         },
         {
           path: "article/tags/:tag",
           name: "ArticleTagView",
-          component: () => import("@/views/front/ArticleView.vue"),
+          component: () => import("@/views/ArticleView.vue"),
           meta: { title: `旅行日記`, enTitle: "BLOG" },
         },
         {
