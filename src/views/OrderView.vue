@@ -37,7 +37,7 @@
                       <div
                         class="en-caption-02 text-right"
                         :class="{
-                          'line-through': couponState.couponText !== '',
+                          'line-through': cartCoupon.code,
                         }"
                         v-if="item.final_total !== item.total"
                       >
@@ -76,7 +76,9 @@
                 <p class="font-bold ch-body">小計：</p>
                 <p
                   class="flex-shrink-0 en-caption-01"
-                  :class="{ 'line-through': couponState.couponText !== '' }"
+                  :class="{
+                    'line-through': cartCoupon.code,
+                  }"
                 >
                   ${{ $filters.currency(cart.total) }}
                 </p>
@@ -90,13 +92,10 @@
                   ${{ $filters.currency(Math.round(cart.final_total)) }}
                 </p>
               </div>
-              <div
-                v-if="couponState.couponText !== ''"
-                class="flex justify-between"
-              >
+              <div v-if="cartCoupon.code" class="flex justify-between">
                 <p class="font-bold ch-body">優惠券：</p>
                 <p class="font-bold ch-body text-netural-netural-300">
-                  {{ couponState.codeName }}
+                  {{ cartCoupon.code }}
                 </p>
               </div>
             </div>
@@ -315,7 +314,6 @@
 </template>
 
 <script>
-const { VITE_URL, VITE_PATH } = import.meta.env;
 import { mapActions, mapState } from "pinia";
 import PageHeader from "@/components/PageHeader.vue";
 import CartStep from "@/components/CartStep.vue";
@@ -324,6 +322,7 @@ import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";
 import pageImage from "@/assets/images/img/image/page_order.jpg";
 import twzipcode from "@/utils/twzipcode.js";
+import { createOrder } from "@/apis/order.js";
 export default {
   data() {
     return {
@@ -340,7 +339,6 @@ export default {
         },
         message: "",
       },
-      coupon: "",
       pageImage,
       twzipcode,
     };
@@ -358,7 +356,6 @@ export default {
       "goNextStep",
       "goBackStep",
       "checkStep",
-      "loadCouponCode",
     ]),
     isPhone(value) {
       const phoneNumber = /^(09)[0-9]{8}$/;
@@ -368,43 +365,33 @@ export default {
     async createOrder() {
       useLoadingState().isProcessing = true;
       const order = this.form;
-      try {
-        const res = await this.$http.post(
-          `${VITE_URL}/api/${VITE_PATH}/order`,
-          {
-            data: order,
-          }
-        );
-        //解構賦值
-        const { orderId } = res.data;
-        this.$refs.form.resetForm(); //VeeValidate 重設表單 resetForm方法
+      const res = await createOrder({
+        data: order,
+      });
+      const { orderId } = res;
 
-        await this.getCartList();
-        this.orderFinishInfo = res.data;
-        toast
-          .fire({
-            icon: "success",
-            title: `訂單已送出`,
-          })
-          .then(() => {
-            this.form.message = ""; // 清除textarea欄位
-            useLoadingState().isProcessing = false;
-            useLoadingState().isLoading = true;
-            setTimeout(() => {
-              this.goNextStep(3, `/checkout/${orderId}`);
-            }, 2000);
-          });
-      } catch (err) {
-        useLoadingState().isLoading = false;
-        toast.fire({
-          icon: "error",
-          title: `${err.response.data.message}`,
+      await toast
+        .fire({
+          icon: "success",
+          title: `訂單已送出`,
+        })
+        .then(() => {
+          useLoadingState().isProcessing = false;
+          //解構賦值
+
+          this.$refs.form.resetForm(); //VeeValidate 重設表單 resetForm方法
+          this.form.message = ""; // 清除textarea欄位
+          useLoadingState().isLoading = true;
+
+          setTimeout(async () => {
+            await this.getCartList();
+            this.goNextStep(3, `/checkout/${orderId}`);
+          }, 2000);
         });
-      }
     },
   },
   computed: {
-    ...mapState(cartStore, ["cart", "currentStep", "couponState"]),
+    ...mapState(cartStore, ["cart", "currentStep", "cartCoupon"]),
     filterDistrict() {
       const districtData = this.twzipcode[this.form.user.county] || {};
       return Object.keys(districtData);
@@ -419,12 +406,10 @@ export default {
       deep: true,
     },
   },
-  async mounted() {
+  created() {
+    this.getCartList();
     useLoadingState().isLoading = true;
     this.checkStep(2);
-    this.coupon = localStorage.getItem("coupon");
-    await this.getCartList();
-    this.loadCouponCode();
   },
 };
 </script>

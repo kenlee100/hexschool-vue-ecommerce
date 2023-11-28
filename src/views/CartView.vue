@@ -127,7 +127,9 @@
                   <p class="font-bold ch-body">小計：</p>
                   <p
                     class="flex-shrink-0 en-caption-01"
-                    :class="{ 'line-through': couponState.couponText !== '' }"
+                    :class="{
+                      'line-through': cartCoupon.code,
+                    }"
                   >
                     ${{ $filters.currency(cart.total) }}
                   </p>
@@ -141,10 +143,21 @@
                     ${{ $filters.currency(Math.round(cart.final_total)) }}
                   </p>
                 </div>
-                <div class="flex items-center space-x-2">
+                <div v-if="cartCoupon.code" class="flex items-center space-x-2">
                   <p class="font-bold ch-body text-netural-netural-300">
-                    {{ couponState.couponText }}
+                    已套用 {{ cartCoupon.code }}
                   </p>
+                  <div
+                    class="flex items-center justify-center rounded-full w-6 h-6 bg-netural-netural-300 cursor-pointer"
+                    title="移除優惠券"
+                    @click="removeCoupon"
+                  >
+                    <span
+                      class="material-symbols-outlined ch-heading-4 text-netural-netural-100"
+                    >
+                      close
+                    </span>
+                  </div>
                 </div>
               </div>
               <div class="flex justify-between">
@@ -168,12 +181,12 @@
                     type="text"
                     class="form-input"
                     placeholder="輸入優惠券代碼"
-                    v-model="couponState.codeName"
+                    v-model="couponCode"
                   />
                   <button
                     type="button"
                     class="flex-shrink-0 p-4 whitespace-nowrap bg-netural-netural-400 text-netural-netural-100"
-                    @click="addCoupon(couponState.codeName)"
+                    @click="addCoupon()"
                   >
                     套用
                   </button>
@@ -203,7 +216,6 @@
 </template>
 
 <script>
-const { VITE_URL, VITE_PATH } = import.meta.env;
 import { mapActions, mapState } from "pinia";
 import PageHeader from "@/components/PageHeader.vue";
 import CartStep from "@/components/CartStep.vue";
@@ -211,18 +223,12 @@ import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";
 import pageImage from "@/assets/images/img/image/page_cart.jpg";
+import { addCoupon } from "@/apis/order.js";
 export default {
   data() {
     return {
       isCouponCodeShow: true,
-      orderFinishInfo: {
-        success: true,
-        message: "已建立訂單",
-        total: 0,
-        orderId: "",
-        create_at: Date.now(),
-        email: "",
-      },
+      couponCode: "",
       pageImage,
     };
   },
@@ -239,50 +245,68 @@ export default {
       "goNextStep",
       "checkStep",
       "couponPercent",
-      "loadCouponCode",
     ]),
-    async addCoupon(code) {
+    async addCoupon() {
       useLoadingState().isProcessing = true;
       try {
-        await this.$http
-          .post(`${VITE_URL}/api/${VITE_PATH}/coupon`, {
-            data: {
-              code: this.couponState.codeName,
-            },
-          })
-          .then((res) => {
-            this.isCouponCodeShow = false;
-            this.couponState.codeName = code;
-            this.couponState.couponText = res.data.message;
-            this.storeCouponCode(this.couponState);
-            useLoadingState().isProcessing = false;
-            toast.fire({
-              icon: "success",
-              title: `${res.data.message}`,
-            });
-            this.getCartList();
+        await addCoupon({
+          data: {
+            code: this.couponCode,
+          },
+        }).then(async (res) => {
+          await this.getCartList();
+          this.isCouponCodeShow = false;
+          useLoadingState().isProcessing = false;
+          this.couponCode = "";
+          await toast.fire({
+            icon: "success",
+            title: `${res.message}`,
           });
+        });
       } catch (err) {
         useLoadingState().isProcessing = false;
         useLoadingState().isLoading = false;
-        toast.fire({
+        await toast.fire({
           icon: "error",
           title: `${err.response.data.message}`,
         });
       }
     },
-    storeCouponCode(code) {
-      localStorage.setItem("coupon", JSON.stringify(code));
+    // 要在後台設定一個折扣百分比為 0% 的折扣碼
+    async removeCoupon() {
+      try {
+        await addCoupon({
+          data: {
+            code: "coupon_clear",
+          },
+        }).then(async () => {
+          await this.getCartList();
+          this.isCouponCodeShow = false;
+          useLoadingState().isProcessing = false;
+          await toast.fire({
+            icon: "success",
+            title: `已移除優惠券`,
+          });
+        });
+      } catch (err) {
+        useLoadingState().isProcessing = false;
+        useLoadingState().isLoading = false;
+        await toast.fire({
+          icon: "error",
+          title: `${err.response.data.message}`,
+        });
+      }
     },
   },
   computed: {
-    ...mapState(cartStore, ["cart", "currentStep", "couponState"]),
+    ...mapState(cartStore, ["cart", "currentStep", "cartCoupon"]),
   },
-  async mounted() {
-    this.checkStep(1);
+  created() {
+    this.getCartList();
     useLoadingState().isLoading = true;
-    await this.getCartList();
-    this.loadCouponCode();
+  },
+  mounted() {
+    this.checkStep(1);
   },
 };
 </script>

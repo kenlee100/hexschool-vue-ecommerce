@@ -107,7 +107,7 @@ export default {
       el.style.height = "";
     },
   },
-  mounted() {
+  created() {
     useLoadingState().isLoading = true;
     setTimeout(() => {
       useLoadingState().isLoading = false;

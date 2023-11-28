@@ -140,7 +140,7 @@ export default {
     ]),
     ...mapWritableState(productsStore, ["searchArea", "paginationData"]),
   },
-  async mounted() {
+  async created() {
     useLoadingState().isLoading = true;
     await this.getProductsAll();
     this.searchQueryContent();

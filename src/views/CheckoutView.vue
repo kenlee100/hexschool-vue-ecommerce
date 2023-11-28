@@ -84,7 +84,9 @@
                   <p class="font-bold ch-body">小計：</p>
                   <p
                     class="flex-shrink-0 en-caption-01"
-                    :class="{ 'line-through': couponState.couponText !== '' }"
+                    :class="{
+                      'line-through': couponIsShow,
+                    }"
                   >
                     ${{ $filters.currency(Math.round(finalTotal)) }}
                   </p>
@@ -99,12 +101,12 @@
                   </p>
                 </div>
                 <div
-                  v-if="couponState.couponText !== ''"
+                  v-if="Object.keys(orderCoupon).length"
                   class="flex justify-between"
                 >
                   <p class="font-bold ch-body">優惠券：</p>
                   <p class="font-bold ch-body text-netural-netural-300">
-                    {{ couponState.codeName }}
+                    {{ orderCoupon.code }}
                   </p>
                 </div>
               </div>
@@ -215,7 +217,7 @@
             </div>
             <button
               v-if="!order.is_paid"
-              @click="payOrder"
+              @click="payOrder(this.orderId)"
               type="button"
               class="btn-base bg-secondary-secondary-200 text-netural-netural-100"
             >
@@ -229,7 +231,6 @@
 </template>
 
 <script>
-const { VITE_URL, VITE_PATH } = import.meta.env;
 import { mapActions, mapState } from "pinia";
 import PageHeader from "@/components/PageHeader.vue";
 import CartStep from "@/components/CartStep.vue";
@@ -237,6 +238,7 @@ import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";
 import pageImage from "@/assets/images/img/image/page_checkout.jpg";
+import { getOrder, payOrder } from "@/apis/order.js";
 export default {
   data() {
     return {
@@ -246,66 +248,64 @@ export default {
       },
       finalTotal: {},
       pageImage,
+      orderId: "",
     };
   },
   components: { PageHeader, CartStep },
   methods: {
-    ...mapActions(cartStore, ["checkStep", "couponPercent", "loadCouponCode"]),
-    async getOrder() {
-      try {
-        await this.$http
-          .get(`${VITE_URL}/api/${VITE_PATH}/order/${this.orderId}`)
-          .then((res) => {
-            useLoadingState().isLoading = false;
-            const { order } = res.data;
-            this.order = order;
-            this.finalTotal = Object.entries(this.order.products).reduce(
-              (acc, current) => acc + current[1].total,
-              0
-            );
-          });
-      } catch (err) {
-        useLoadingState().isLoading = false;
-        toast.fire({
-          icon: "error",
-          title: `${err.response.data.message}`,
-        });
-      }
+    ...mapActions(cartStore, ["checkStep", "couponPercent"]),
+    async getOrder(data) {
+      const res = await getOrder(data);
+      useLoadingState().isLoading = false;
+      const { order } = res;
+      this.order = order;
+      this.finalTotal = Object.entries(this.order.products).reduce(
+        (acc, current) => acc + current[1].total,
+        0
+      );
     },
-    async payOrder() {
+    async payOrder(data) {
       useLoadingState().isProcessing = true;
-      try {
-        await this.$http
-          .post(`${VITE_URL}/api/${VITE_PATH}/pay/${this.orderId}`)
-          .then(() => {
-            this.getOrder();
-            useLoadingState().isProcessing = false;
-            toast.fire({
-              icon: "success",
-              title: `付款完成`,
-            });
-            setTimeout(() => {
-              this.$router.push("/");
-            }, 3000);
-          });
-      } catch (err) {
-        useLoadingState().isLoading = false;
-        toast.fire({
-          icon: "error",
-          title: `${err.response.data.message}`,
-        });
-      }
+      await payOrder(data);
+      await this.getOrder(data);
+      await toast.fire({
+        icon: "success",
+        title: `付款完成`,
+      });
+      useLoadingState().isProcessing = false;
     },
   },
   computed: {
-    ...mapState(cartStore, ["currentStep", "couponState"]),
+    ...mapState(cartStore, ["currentStep", "cartCoupon"]),
+    productsId() {
+      return Object.keys(this.order.products)[0];
+    },
+    couponIsShow() {
+      return (
+        this.order.products[this.productsId] &&
+        Object.keys(this.order.products[this.productsId]).includes("coupon")
+      );
+    },
+    orderCoupon() {
+      if (Object.keys(this.order).length) {
+        const firstCheckoutId = Object.keys(this.order.products)[0];
+        const products = this.order.products[firstCheckoutId];
+        if (
+          firstCheckoutId &&
+          Object.keys(products).includes("coupon") &&
+          products.coupon.code !== "coupon_clear"
+        ) {
+          return products.coupon;
+        }
+      }
+      return {};
+    },
   },
-  mounted() {
+  created() {
     useLoadingState().isLoading = true;
     this.checkStep(3);
     this.orderId = this.$route.params.orderId;
-    this.getOrder();
-    this.loadCouponCode();
+    this.getOrder(this.orderId);
   },
 };
 </script>

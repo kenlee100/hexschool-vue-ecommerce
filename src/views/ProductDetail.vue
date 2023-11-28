@@ -262,6 +262,7 @@ import { productsStore } from "@/stores/productsStore.js";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Navigation, Pagination } from "swiper";
 
+import { getProductItem } from "../apis/products";
 // Import Swiper styles
 import "swiper/scss";
 import "swiper/scss/navigation";
@@ -286,13 +287,10 @@ export default {
     SwiperSlide,
   },
   methods: {
-    ...mapActions(productsStore, ["getProductItem", "getProducts", "addCart"]),
+    ...mapActions(productsStore, ["getProducts", "addCart"]),
     async changeProductContent(id) {
-      useLoadingState().isLoading = true;
-      return await this.getProductItem(id).then((res) => {
-        useLoadingState().isLoading = false;
-        return res.data.product;
-      });
+      const { product } = await getProductItem(id);
+      return product;
     },
     toggle(content) {
       content.active = !content.active;
@@ -323,7 +321,7 @@ export default {
       return this.$route.params.id;
     },
   },
-  async mounted() {
+  async created() {
     useLoadingState().isLoading = true;
     this.productContent = await this.changeProductContent(
       this.$route.params.id
