@@ -1,10 +1,10 @@
-const { VITE_URL, VITE_PATH } = import.meta.env;
-import axios from "axios";
 import { defineStore } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
 import cartStore from "@/stores/cartStore.js";
 import toast from "@/utils/toast";
 import router from "../router";
+import { getProducts, getProductsAll } from "../apis/products";
+import { addCart } from "../apis/cart";
 
 export const productsStore = defineStore("productData", {
   state: () => {
@@ -27,80 +27,37 @@ export const productsStore = defineStore("productData", {
   },
   actions: {
     async getProductsAll() {
-      try {
-        const res = await axios.get(
-          `${VITE_URL}/api/${VITE_PATH}/products/all`
-        );
-        this.productsAll = res.data.products;
-        this.modifyData = [...this.productsAll];
-        this.setCategory(this.modifyData);
-        useLoadingState().isLoading = false;
-      } catch (err) {
-        useLoadingState().isLoading = false;
-        toast.fire({
-          icon: "error",
-          title: `${err.response.data.message}`,
-        });
-      }
+      const res = await getProductsAll();
+      this.productsAll = res.products;
+      this.modifyData = [...this.productsAll];
+      this.setCategory(this.modifyData);
     },
     async getProducts(num = 1) {
-      try {
-        const res = await axios.get(
-          `${VITE_URL}/api/${VITE_PATH}/products?page=${num}`
-        );
-        this.products = res.data.products;
-        useLoadingState().isLoading = false;
-      } catch (err) {
-        useLoadingState().isLoading = false;
-        toast.fire({
-          icon: "error",
-          title: `${err.response.data.message}`,
-        });
-      }
+      const res = await getProducts(num);
+      this.products = res.products;
     },
     // 加入購物車
     async addCart(content, qty = 1) {
       useLoadingState().isProcessing = true;
-      await axios
-        .post(`${VITE_URL}/api/${VITE_PATH}/cart`, {
-          data: {
-            product_id: content.id,
-            qty,
-          },
-        })
-        .then((res) => {
-          useLoadingState().isProcessing = false;
-          //解構賦值
-          const {
-            message,
-            // 取出內層的資料
-            data: { product },
-          } = res.data;
-          const { getCartList } = cartStore();
-          getCartList();
-          toast.fire({
-            icon: "success",
-            title: `${product.title} ${message}`,
-          });
-        })
-        .catch((err) => {
-          useLoadingState().isLoading = false;
-          toast.fire({
-            icon: "error",
-            title: `${err.response.data.message}`,
-          });
-        });
-    },
-    async getProductItem(id) {
-      try {
-        return await axios.get(`${VITE_URL}/api/${VITE_PATH}/product/${id}`);
-      } catch (err) {
-        useLoadingState().isLoading = false;
-        toast.fire({
-          icon: "error",
-          title: `${err.response.data.message}`,
-        });
-      }
+      const res = await addCart({
+        data: {
+          product_id: content.id,
+          qty,
+        },
+      });
+      useLoadingState().isProcessing = false;
+      //解構賦值
+      const {
+        message,
+        // 取出內層的資料
+        data: { product },
+      } = res;
+      const { getCartList } = cartStore();
+      await getCartList();
+      await toast.fire({
+        icon: "success",
+        title: `${product.title} ${message}`,
+      });
     },
     setCategory(product) {
       const setItem = new Set();

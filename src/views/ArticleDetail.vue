@@ -97,6 +97,7 @@
 import { mapActions, mapState } from "pinia";
 import { useLoadingState } from "@/stores/common.js";
 import { articlesStore } from "@/stores/articlesStore.js";
+import { getArticleItem } from "../apis/articles";
 export default {
   data() {
     return {
@@ -107,10 +108,8 @@ export default {
     ...mapActions(articlesStore, ["getArticleItem", "getArticles"]),
     // 事件 改變articleContent 狀態
     async changeArticleContent(id) {
-      return await this.getArticleItem(id).then((res) => {
-        useLoadingState().isLoading = false;
-        return res.data.article;
-      });
+      const { article } = await getArticleItem(id);
+      return article;
     },
   },
   watch: {
@@ -133,7 +132,7 @@ export default {
       return this.$route.params.id;
     },
   },
-  async mounted() {
+  async created() {
     useLoadingState().isLoading = true;
     this.articleContent = await this.changeArticleContent(
       this.$route.params.id

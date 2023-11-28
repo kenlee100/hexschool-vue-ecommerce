@@ -34,12 +34,12 @@ export default {
     ArticleItem,
   },
   methods: {
-    ...mapActions(articlesStore, ["getArticles", "getArticleItem"]),
+    ...mapActions(articlesStore, ["getArticles"]),
   },
   computed: {
     ...mapState(articlesStore, ["articles", "pagination"]),
   },
-  async mounted() {
+  async created() {
     useLoadingState().isLoading = true;
     await this.getArticles();
   },

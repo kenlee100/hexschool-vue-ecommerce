@@ -480,7 +480,6 @@ export default {
   methods: {
     ...mapActions(articlesStore, ["getArticles"]),
     ...mapActions(productsStore, [
-      "getProductItem",
       "getProducts",
       "addCart",
       "searchCategory",
@@ -492,7 +491,7 @@ export default {
     ...mapState(productsStore, ["products", "currentCategory"]),
     ...mapWritableState(productsStore, ["searchArea"]),
   },
-  async mounted() {
+  async created() {
     useLoadingState().isLoading = true;
     await this.getArticles();
     await this.getProducts();

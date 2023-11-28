@@ -61,7 +61,7 @@ export default {
     PageHeader,
     AboutItem,
   },
-  mounted() {
+  created() {
     useLoadingState().isLoading = true;
     setTimeout(() => {
       useLoadingState().isLoading = false;

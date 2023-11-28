@@ -30,8 +30,11 @@ export default {
   components: {
     PageHeader,
   },
-  mounted() {
-    useLoadingState().isLoading = false;
+  created() {
+    useLoadingState().isLoading = true;
+    setTimeout(() => {
+      useLoadingState().isLoading = false;
+    }, 300);
   },
 };
 </script>
